@@ -1,0 +1,43 @@
+Arguments: 
+  G:\nodejs\node.exe G:\nodejs\node_global\node_modules\yarn\bin\yarn.js add --dev grunt-babel @babel/core @babel/preset-env
+
+PATH: 
+  G:\java_jdk\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\ProgramData\Oracle\Java\javapath;G:\mysql-8.0.15-winx64\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Common Files\microsoft shared\TigerKin;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Common Files\microsoft shared\TigerKin;D:\Git\cmd;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Common Files\microsoft shared\TigerKin;;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Common Files\microsoft shared\TigerKin;G:\nodejs\;D:\Ruby26-x64\bin;C:\Users\mayn\AppData\Local\Microsoft\WindowsApps;G:\nodejs\node_global;D:\Bandizip\;C:\Users\mayn\AppData\Local\GitHubDesktop\bin;D:\flutter\bin;G:\Microsoft VS Code\bin;C:\Users\mayn\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.16.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\mayn\AppData\Local\Yarn\Cache\v6\npm-ansi-styles-4.2.1-90ae75c424d008d2624c5bf29ead3177ebfcf359-integrity\node_modules\ansi-styles\package.json' -> 'G:\lu-ch\example\luch-request\node_modules\inquirer\node_modules\ansi-styles\package.json'
+
+npm manifest: 
+  {
+    "name": "luch-request",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "babel-eslint": "^10.1.0",
+      "eslint": "^6.8.0",
+      "grunt": "^1.1.0",
+      "grunt-babel": "^8.0.0",
+      "load-grunt-tasks": "^5.1.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
