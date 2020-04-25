@@ -4,6 +4,7 @@
 1. New Feature: h5端 upload 增加 ` files ` ` file `选项。[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file?id=uploadfile "uni.uploadFile")
 1. Enhancement: ` params ` 选项参数格式化方法使用axios 格式化方法
 1. Bug Fix: 对upload 返回data 为空字符串的情况容错
+1. Change: 修改header与全局合并方式。当前：header = Object.assign(全局，局部)
 
 ## 0.0.0 (2019-05)
 
