@@ -9,6 +9,8 @@
     "watch": "rollup -c -w",
     "build": "rollup -c --environment NODE_ENV:production",
     "zipD": "node node/zipDCloudPlugin.js && node node/zipDCloudDemo.js",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +18,7 @@
     "url": "https://github.com/lei-mu/luch-request.git"
   },
   "author": "luch",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lei-mu/luch-request/issues"
   },
