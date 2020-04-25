@@ -11,11 +11,22 @@
 
 安装
 ------------
-使用npm:
+###### 使用npm
 
 ``` javascript
-npm install luch-request
+npm i luch-request -S
 ```
+
+
+###### github
+
+[github](https://github.com/lei-mu/luch-request "github")
+安装依赖后 ` npm run build ` ，使用DCloud/luch-request 文件夹即可
+
+
+###### DCloud插件市场:
+
+[DCloud插件市场](https://ext.dcloud.net.cn/plugin?id=392 "DCloud插件市场")
 
 Example
 ------------
@@ -372,7 +383,8 @@ tip
 
 issue
 ------------
-有任何问题或者建议可以=> <a href="https://ask.dcloud.net.cn/question/74922" target="_blank">issue提交</a>,先给个五星好评QAQ!!
+- DCloud: 有任何问题或者建议可以=> <a href="https://ask.dcloud.net.cn/question/74922" target="_blank">issue提交</a>,先给个五星好评QAQ!!
+- github: [Issues](https://github.com/lei-mu/luch-request/issues "Issues")
 
 
 作者想说
