@@ -1,21 +1,38 @@
 /**
- * Request 2.0.0
+ * Request 2.0.1
  * @Class Request
- * @description luch-request 2.0.0 http请求插件
+ * @description luch-request 2.0.1 http请求插件
  * @Author lu-ch
- * @Date 2020-04-24
+ * @Date 2020-05-01
  * @Email webwork.s@qq.com
  * http://ext.dcloud.net.cn/plugin?id=392
  * hbuilderx:2.6.15
  */
 
-import defaultConfig from './defaultConfig'
 import buildURL from '../helpers/buildURL'
 import buildFullPath from './buildFullPath'
 import { isBoolean } from '../utils'
 
 export default class Request {
-  config = defaultConfig
+  config = {
+    baseUrl: '',
+    header: {},
+    method: 'GET',
+    dataType: 'json',
+    // #ifndef MP-ALIPAY || APP-PLUS
+    responseType: 'text',
+    // #endif
+    custom: {},
+    // #ifdef MP-ALIPAY || MP-WEIXIN
+    timeout: 30000,
+    // #endif
+    // #ifdef APP-PLUS
+    sslVerify: true,
+    // #endif
+    // #ifdef H5
+    withCredentials: false
+    // #endif
+  }
 
   /**
    * @property {Function} request 请求拦截器

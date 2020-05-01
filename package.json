@@ -1,13 +1,13 @@
 {
   "name": "luch-request",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "基于Promise实现uni-app request 请求插件",
   "keywords": ["uni-app", "request", "Promise", "luch"],
   "main": "src/lib/luch-request.js",
   "scripts": {
     "dev": "rollup -c",
     "watch": "rollup -c -w",
-    "build": "rollup -c --environment NODE_ENV:production",
+    "build": "rimraf DCloud && rollup -c --environment NODE_ENV:production",
     "zipD": "node node/zipDCloudPlugin.js && node node/zipDCloudDemo.js",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",

@@ -1,3 +1,7 @@
+## 2.0.1 (2020-04-24)
+
+1. Bug Fix: 修复多实例全局配置共用问题
+
 ## 2.0.0 (2020-04-24)
 
 1. New Feature: 增加 request ` withCredentials `选项（仅h5端支持）
