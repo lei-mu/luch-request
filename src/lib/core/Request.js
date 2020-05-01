@@ -1,10 +1,11 @@
 /**
- * Request 2.0.1
  * @Class Request
- * @description luch-request 2.0.1 http请求插件
+ * @description luch-request http请求插件
+ * @version 2.0.1
  * @Author lu-ch
  * @Date 2020-05-01
  * @Email webwork.s@qq.com
+ * 文档: https://soso.luxe/luch-request/
  * http://ext.dcloud.net.cn/plugin?id=392
  * hbuilderx:2.6.15
  */

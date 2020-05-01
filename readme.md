@@ -1,5 +1,10 @@
 # luch-request
 
+[![npm](https://img.shields.io/npm/l/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
+[![npm](https://img.shields.io/npm/v/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
+[![github](https://img.shields.io/github/package-json/v/lei-mu/luch-request "github")](https://github.com/lei-mu/luch-request "github")
+[![github stars](https://img.shields.io/github/stars/lei-mu/luch-request.svg "github stars")](https://github.com/lei-mu/luch-request "github stars")
+[![github forks](https://img.shields.io/github/forks/lei-mu/luch-request.svg "github forks")](https://github.com/lei-mu/luch-request "github forks")
 
 - 基于 Promise 对象实现更简单的 request 使用方式，支持请求和响应拦截
 - 支持全局挂载
@@ -379,6 +384,7 @@ tip
 - nvue 不支持全局挂载
 - 当前的hbuilderx 版本号：2.6.15
 - 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
+- license: MIT
 
 
 issue
@@ -415,7 +421,7 @@ issue
 
 土豪赞赏
 ------------
-<img src="http://oss.soso.luxe/images/common/my-wechat-qrcode.png" width="150">
+![](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150)
 
 ###### 您的鼓励是我更新的动力
 
