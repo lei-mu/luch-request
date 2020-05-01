@@ -363,6 +363,14 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
 ```
 
 
+luch-request Guide
+------------
+[luch-request 官网地址](https://soso.luxe/luch-request/ "luch-request 官网地址")
+<br>
+[github](https://github.com/lei-mu/luch-request "github")
+
+
+
 常见问题
 ------------
 1. 为什么会请求两次？
