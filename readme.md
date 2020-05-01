@@ -421,7 +421,8 @@ issue
 
 土豪赞赏
 ------------
-![](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150)
+[![wechat 打赏](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150 "wechat 打赏")](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150 "wechat 打赏")
+
 
 ###### 您的鼓励是我更新的动力
 
