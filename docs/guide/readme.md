@@ -1,5 +1,12 @@
+---
+sidebar: auto
+title: 文档
+---
+
 # luch-request
 
+介绍
+------------
 [![npm](https://img.shields.io/npm/l/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
 [![npm](https://img.shields.io/npm/v/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
 [![github](https://img.shields.io/github/package-json/v/lei-mu/luch-request "github")](https://github.com/lei-mu/luch-request "github")
@@ -14,7 +21,7 @@
 - 支持task 操作
 - 支持自定义参数
 
-安装
+快速上手
 ------------
 ###### 使用npm
 
@@ -160,6 +167,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 ```
 luch-request API
 ------------
+### request
 ``` javascript 
  http.request({
     method: 'POST', // 请求方法必须大写
@@ -183,7 +191,9 @@ luch-request API
       // }, 500)
     }
   })
-
+```
+### upload
+``` javascript 
   // 具体参数说明：[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file)
   http.upload('api/upload/img', {
     params: {}, /* 会加在url上 */
@@ -209,6 +219,9 @@ luch-request API
   }).catch(err => {
 
   })
+```
+### download
+``` javascript 
 
   // 具体参数说明：[uni.downloadFile](https://uniapp.dcloud.io/api/request/network-file?id=downloadfile)
   http.download('api/download', {
@@ -228,8 +241,7 @@ luch-request API
   })
 ```
 
-
-请求方法别名 / 实例方法
+### 实例方法
 
 ``` javascript
 http.request(config)
@@ -246,6 +258,7 @@ http.trace(url[, data[, config]])
 
 全局请求配置
 ------------
+### 可配置项
 ``` javascript
 {
     baseUrl: '',
@@ -278,7 +291,7 @@ http.trace(url[, data[, config]])
 ```
 
 
-全局配置修改` setConfig `
+### 全局配置修改` setConfig `
 
 ``` javascript
 /**
@@ -295,7 +308,9 @@ http.setConfig((config) => { /* config 为默认全局配置*/
 })
 ```
 
-自定义验证器` validateStatus `
+自定义验证器
+------------
+### ` validateStatus `
 
 ``` javascript
 /**
@@ -316,7 +331,7 @@ http.validateStatus = (statusCode) => {
 拦截器
 ------------
 
-在请求之前拦截
+### 在请求之前拦截
 
 ``` javascript
 /**
@@ -345,7 +360,7 @@ http.validateStatus = (statusCode) => {
   })
 ```
 
-在请求之后拦截
+### 在请求之后拦截
 
 ``` javascript
 http.interceptor.response((response) => { /* 对响应成功做点什么 （statusCode === 200），必须return response*/
@@ -361,13 +376,6 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
   return response
 })
 ```
-
-
-luch-request Guide
-------------
-[luch-request 官网地址](https://soso.luxe/luch-request/ "luch-request 官网地址")
-<br>
-[github](https://github.com/lei-mu/luch-request "github")
 
 
 
@@ -397,7 +405,7 @@ tip
 
 issue
 ------------
-- DCloud: 有任何问题或者建议可以=> <a href="https://ask.dcloud.net.cn/question/74922" target="_blank">issue提交</a>,先给个五星好评QAQ!!
+- DCloud: 有任何问题或者建议可以=> <a href="https://ask.dcloud.net.cn/question/74922" target="_blank">issue提交</a>,先给个<a href="https://ext.dcloud.net.cn/plugin?id=392" target="_blank">五星好评</a>QAQ!!
 - github: [Issues](https://github.com/lei-mu/luch-request/issues "Issues")
 
 
@@ -405,27 +413,29 @@ issue
 ------------
 - 写代码很容易，为了让你们看懂写文档真的很lei 0.0
 - 最近发现有插件与我雷同，当初接触uni-app 就发现插件市场虽然有封装的不错的request库，但是都没有对多全局配置做处理，都是通过修改源码的方式配置。我首先推出通过class类，并仿照axios的api实现request请求库，并起名‘仿axios封装request网络请求库，支持拦截器全局配置’。他们虽然修改了部分代码，但是功能与性能并没有优化，反而使代码很冗余。希望能推出新的功能，和性能更加强悍的请求库。（2019-05）
-- 任何形式的‘参考’、‘借鉴’，请标明作者
+- 任何形式的‘参考’、‘借鉴’，请标明作者` luch-request `
  ```javascript
  <a href="https://ext.dcloud.net.cn/plugin?id=392">luch-request</a>
  ```
-- 关于问问题
+
+
+我有疑惑
+------------
+### 关于问问题
 1. 首先请善于利用搜索引擎，不管百度，还是Google，遇到问题请先自己尝试解决。自己尝试过无法解决，再问。 
-2. 不要问类似为什么我的xx无法使用这种问题。请仔细阅读文档，检查代码，或者说明运行环境，把相关代码贴至评论或者发送至我的邮箱，还可以点击上面的issue提交，在里面提问，可能我在里面已经回答了。
+2. 不要问类似为什么我的xx无法使用这种问题。请仔细阅读文档，检查代码，或者说明运行环境，把相关代码贴至评论或者发送至我的邮箱，还可以点击<a href="https://ask.dcloud.net.cn/question/74922" target="_blank">DCloud 社区</a>，在里面提问，可能我在里面已经回答了。
 3. 我的代码如果真的出现bug,或者你有好的建议、需求，可以提issue,我看到后会立即解决
 4. 不要问一些弱智问题！！！
 5. 如第四条
-- 如何问问题
+
+### 如何问问题
 1. 问问题之前请换位思考，如果自己要解决这个问题，需要哪些信息
 2. 仔细阅读文档，检查代码
 3. 说明运行环境，比如：app端 ios、android 版本号、手机机型、普遍现象还是个别现象（越详细越好）
-4. 发出代码片段或者截图至邮箱（很重要）
-5. 或者可以在上方的'issue提交' 里发出详细的问题描述
+4. 发出代码片段或者截图至邮箱（很重要）`webwork.s@qq.com`
+5. 或者可以在<a href="https://ask.dcloud.net.cn/question/74922" target="_blank">DCloud 社区</a>里发出详细的问题描述
 6. 以上都觉得解决不了你的问题，可以加QQ:`370306150`
 
-个人网站
-------------
-- 虽然我的网站里还啥都没有，但我还是放在这，<a href="https://soso.luxe/luch-request/" target="_blank">万一有人点呢</a> 0.0
 
 土豪赞赏
 ------------

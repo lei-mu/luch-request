@@ -2,7 +2,13 @@
   "name": "luch-request",
   "version": "2.0.1",
   "description": "基于Promise实现uni-app request 请求插件",
-  "keywords": ["uni-app", "request", "Promise", "luch"],
+  "keywords": [
+    "uni-app",
+    "request",
+    "Promise",
+    "luch",
+    "luch-request"
+  ],
   "main": "src/lib/luch-request.js",
   "scripts": {
     "dev": "rollup -c",
@@ -45,6 +51,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-uglify": "^6.0.4",
-    "rollup-plugin-zip": "^1.0.0"
+    "rollup-plugin-zip": "^1.0.0",
+    "vuepress": "^1.4.1"
   }
 }
