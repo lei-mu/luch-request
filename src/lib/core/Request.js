@@ -72,7 +72,7 @@ export default class Request {
   }
 
   requestComFail = (response) => {
-    return response
+    return Promise.reject(response)
   }
 
   /**
@@ -103,7 +103,7 @@ export default class Request {
    * @prop {Object} [options.method = config.method] - 请求方法
    * @returns {Promise<unknown>}
    */
-  async request(options = {}) {
+  request(options = {}) {
     return new Promise((resolve, reject) => {
       options.baseUrl = this.config.baseUrl
       options.dataType = options.dataType || this.config.dataType
@@ -164,7 +164,7 @@ export default class Request {
             resolve(response)
           } else {
             response = this.requestComFail(response)
-            reject(response)
+            resolve(response)
           }
         }
       })
@@ -345,7 +345,7 @@ export default class Request {
             resolve(response)
           } else {
             response = this.requestComFail(response)
-            reject(response)
+            resolve(response)
           }
         }
       }
@@ -400,7 +400,7 @@ export default class Request {
             resolve(response)
           } else {
             response = this.requestComFail(response)
-            reject(response)
+            resolve(response)
           }
         }
       })
