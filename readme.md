@@ -365,7 +365,7 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
 
 luch-request Guide
 ------------
-[luch-request 官网地址](https://soso.luxe/luch-request/ "luch-request 官网地址")
+[luch-request 官网地址](https://quanzhan.co/luch-request/ "luch-request 官网地址")
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
@@ -425,7 +425,7 @@ issue
 
 个人网站
 ------------
-- 虽然我的网站里还啥都没有，但我还是放在这，<a href="https://soso.luxe/luch-request/" target="_blank">万一有人点呢</a> 0.0
+- 虽然我的网站里还啥都没有，但我还是放在这，<a href="https://quanzhan.co/luch-request/" target="_blank">万一有人点呢</a> 0.0
 
 土豪赞赏
 ------------
