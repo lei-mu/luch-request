@@ -40,6 +40,7 @@ module.exports = {
     nav: [
       {text: '首页', link: '/'},
       {text: '文档', link: '/guide/'},
+      {text: '常见问题', link: '/issue/'},
       {text: '更新记录', link: 'https://github.com/lei-mu/luch-request/releases', target: '_blank'},
       {
         text: '相关资源',

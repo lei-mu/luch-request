@@ -14,9 +14,12 @@ title: 相关文章
 jwt 无痛刷新
 ------------
 
-### dcloud kysin
+#### dcloud kysin
 [axios如何利用promise无痛刷新token](https://segmentfault.com/a/1190000020210980 "axios如何利用promise无痛刷新token")
 <br>
 [axios如何利用promise无痛刷新token二](https://segmentfault.com/a/1190000020986592 "axios如何利用promise无痛刷新token二")
 <br>
 [axios+async/await无痛刷新token](https://www.jianshu.com/p/b3ede35ad70a "axios+async/await无痛刷新token")
+
+#### learnku php_yt
+[uniapp 小程序 Laravel+jwt 权限认证完整系列](https://learnku.com/articles/44023)
