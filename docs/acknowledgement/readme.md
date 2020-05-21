@@ -21,5 +21,5 @@ title: 鸣谢
 插件贡献
 ------------
 - `353754391@qq.com` 提出多实例共用同一全局配置bug
-- `370681295@qq.com` 提出 ` params ` 选项参数格式化数组等存在问题。已改为axios 参数格式化方案。
+- `370681295@qq.com` - [@zouyaoji](https://github.com/zouyaoji) 提出 ` params ` 选项参数格式化数组等存在问题。已改为axios 参数格式化方案。
 - ...
