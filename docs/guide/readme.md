@@ -30,6 +30,13 @@ npm i luch-request -S
 ```
 
 
+::: warning
+cli 用户不要使用npm 包。[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
+:::
+
+
+
+
 ###### github
 
 [github](https://github.com/lei-mu/luch-request "github")
@@ -350,6 +357,9 @@ http.validateStatus = (statusCode) => {
     // if (config.custom.auth) {
     //   config.header.token = 'token'
     // }
+    // if (config.custom.loading) {
+    //  uni.showLoading()
+    // }
     /**
     /* 演示cancel 函数
     if (!token) { // 如果token不存在，调用cancel 会取消本次请求，不会进入响应拦截器，但是该函数的catch() 仍会执行
@@ -378,22 +388,6 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
 ```
 
 
-
-常见问题
-------------
-1. 为什么会请求两次？
-    - 总有些小白问这些很那啥的问题，有两种可能，一种是‘post三次握手’，还有一种可能是`本地访问接口时跨域请求，所以浏览器会先发一个option 去预测能否成功，然后再发一个真正的请求`（自己观察请求头，Request Method，百度简单请求）。
-2. 如何跨域？
-    - 问的人不少，可以先百度了解一下。<a href="https://ask.dcloud.net.cn/article/35267" target="_blank">如何跨域</a>
-3. post 怎么传不了数组的参数啊？
-    - <a href="https://uniapp.dcloud.io/api/request/request" target="_blank">uni-request</a> <br>
-      可以点击看一下uni-request 的api 文档，data支持的文件类型只有<code>Object/String/ArrayBuffer</code>这个真跟我没啥关系 0.0
-4. TypeError: undefined is not an object (evaluating 'this.$http.get')
-    - 不知道为啥问的人这么多？太基础了，百度学习一下 export default 和export，头大。
-    - `import { http } from '@/utils/luch-request/index.js'`   
-5. 什么参数需要在` setConfig ` 设置？什么参数需要在` request ` 拦截器设置？
-    - ` setConfig ` 适用于设置一些静态的/默认的参数；比如header 里的一些默认值、默认全局参数（全局请求配置）。` token ` 并不适合在这里设置。
-    - ` interceptor.request ` 拦截器适用范围较广，但我仍然建议把一些静态的东西放在 ` setConfig ` 里。拦截器会在每次请求调用，而 ` setConfig ` 仅在调用时修改一遍。
 
 tip
 ------------
