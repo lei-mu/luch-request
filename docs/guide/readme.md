@@ -357,6 +357,9 @@ http.validateStatus = (statusCode) => {
     // if (config.custom.auth) {
     //   config.header.token = 'token'
     // }
+    // if (config.custom.loading) {
+    //  uni.showLoading()
+    // }
     /**
     /* 演示cancel 函数
     if (!token) { // 如果token不存在，调用cancel 会取消本次请求，不会进入响应拦截器，但是该函数的catch() 仍会执行
