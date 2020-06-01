@@ -65,7 +65,7 @@ export default {
     // })
     copy({
       targets: [
-        {src: ['src/lib/utils.js', 'src/lib/core', 'src/lib/helpers'], dest: 'DCloud/luch-request'},
+        {src: ['src/lib/utils.js', 'src/lib/core', 'src/lib/helpers', 'src/lib/adapters'], dest: 'DCloud/luch-request'},
         {src: 'src/lib/luch-request.js', dest: 'DCloud/luch-request', rename: 'index.js'},
         {src: ['example/request-demo'], dest: 'DCloud/'},
       ]

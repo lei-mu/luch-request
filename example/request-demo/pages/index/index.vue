@@ -79,8 +79,14 @@ export default {
 		localGetData() {
 			test
 				.get('/user/list', { params: { id: '111' } })
-				.then(res => {})
-				.catch(err => {});
+				.then(res => {
+					console.log('test  then');
+					console.log(res);
+				})
+				.catch(err => {
+					console.log('test err');
+					console.log(err);
+				});
 		}
 	}
 };

@@ -18,7 +18,7 @@ import defaults from './defaults'
 import { isPlainObject } from '../utils'
 
 export default class Request {
-  constructor(arg) {
+  constructor(arg = {}) {
     if (!isPlainObject(arg)) {
       arg = {}
       console.warn('设置全局参数必须接收一个Object')
@@ -28,16 +28,6 @@ export default class Request {
       request: new InterceptorManager(),
       response: new InterceptorManager()
     }
-  }
-
-
-  /**
-   * 自定义验证器，如果返回true 则进入响应拦截器的响应成功函数(resolve)，否则进入响应拦截器的响应错误函数(reject)
-   * @param { Number } statusCode - 请求响应体statusCode（只读）
-   * @return { Boolean } 如果为true,则 resolve, 否则 reject
-   */
-  validateStatus(statusCode) {
-    return statusCode === 200
   }
 
   /**
@@ -174,11 +164,13 @@ export default class Request {
 
   upload(url, config = {}) {
     config.url = url
+    config.method = 'UPLOAD'
     return this._middleware(config)
   }
 
   download(url, config = {}) {
     config.url = url
+    config.method = 'DOWNLOAD'
     return this._middleware(config)
   }
 }

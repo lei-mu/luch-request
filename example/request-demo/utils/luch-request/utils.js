@@ -93,3 +93,39 @@ export function forEach (obj, fn) {
 export function isBoolean(val) {
   return typeof val === 'boolean'
 }
+
+/**
+ * 是否为真正的对象{} new Object
+ * @param {any} obj - 检测的对象
+ * @returns {boolean}
+ */
+export function isPlainObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+
+
+/**
+ * Function equal to merge with the difference being that no reference
+ * to original objects is kept.
+ *
+ * @see merge
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+export function deepMerge(/* obj1, obj2, obj3, ... */) {
+  let result = {}
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val)
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val)
+    } else {
+      result[key] = val
+    }
+  }
+  for (let i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue)
+  }
+  return result
+}
