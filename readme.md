@@ -13,6 +13,7 @@
 - 支持文件上传/下载
 - 支持task 操作
 - 支持自定义参数
+- 支持多拦截器
 
 安装
 ------------
@@ -76,6 +77,10 @@ http.get('/user/login', {
          // setTimeout(() => {
          //   task.abort()
          // }, 500)
+    },
+    // 自定义验证器。statusCode必存在。非必填
+    validateStatus: function validateStatus(statusCode) {
+       return statusCode >= 200 && statusCode < 300
     }
 }).then(res => {
 
@@ -115,7 +120,11 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
          // setTimeout(() => {
          //   task.abort()
          // }, 500)
-    }
+    },
+     // 自定义验证器。statusCode必存在。非必填
+     validateStatus: function validateStatus(statusCode) {
+        return statusCode >= 200 && statusCode < 300
+     }
 }).then(res => {
 
 }).catch(err => {
@@ -158,210 +167,6 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 
   })
 ```
-luch-request API
-------------
-``` javascript 
- http.request({
-    method: 'POST', // 请求方法必须大写
-    url: '/user/12345',
-    data: {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    },
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
-    // #endif
-    params: { // 会拼接到url上
-      token: '1111'
-    },
-    // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
-    custom: {}, // 自定义参数
-    // 返回当前请求的task, options。请勿在此处修改options。非必填
-    getTask: (task, options) => {
-      // setTimeout(() => {
-      //   task.abort()
-      // }, 500)
-    }
-  })
-
-  // 具体参数说明：[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file)
-  http.upload('api/upload/img', {
-    params: {}, /* 会加在url上 */
-    // #ifdef APP-PLUS || H5
-    files: [], // 需要上传的文件列表。使用 files 时，filePath 和 name 不生效。App、H5（ 2.6.15+）
-    // #endif
-    // #ifdef MP-ALIPAY
-    fileType: 'image/video/audio', // 仅支付宝小程序，且必填。
-    // #endif
-    filePath: '', // 要上传文件资源的路径。
-    name: 'file', // 文件对应的 key , 开发者在服务器端通过这个 key 可以获取到文件二进制内容
-    header: {}, /* 会与全局header合并，如有同名属性，局部覆盖全局 */
-    custom: {}, // 自定义参数
-    formData: {}, // HTTP 请求中其他额外的 form data
-    // 返回当前请求的task, options。请勿在此处修改options。非必填
-    getTask: (task, options) => {
-      // setTimeout(() => {
-      //   task.abort()
-      // }, 500)
-    }
-  }).then(res => {
-    // 返回的res.data 已经进行JSON.parse
-  }).catch(err => {
-
-  })
-
-  // 具体参数说明：[uni.downloadFile](https://uniapp.dcloud.io/api/request/network-file?id=downloadfile)
-  http.download('api/download', {
-    params: {}, /* 会加在url上 */
-    header: {}, /* 会与全局header合并，如有同名属性，局部覆盖全局 */
-    custom: {}, // 自定义参数
-    // 返回当前请求的task, options。非必填
-    getTask: (task, options) => {
-      // setTimeout(() => {
-      //   task.abort()
-      // }, 500)
-    }
-  }).then(res => {
-
-  }).catch(err => {
-
-  })
-```
-
-
-请求方法别名 / 实例方法
-
-``` javascript
-http.request(config)
-http.get(url[, config])
-http.upload(url[, config])
-http.delete(url[, data[, config]])
-http.head(url[, data[, config]])
-http.post(url[, data[, config]])
-http.put(url[, data[, config]])
-http.connect(url[, data[, config]])
-http.options(url[, data[, config]])
-http.trace(url[, data[, config]])
-```
-
-全局请求配置
-------------
-``` javascript
-{
-    baseUrl: '',
-    header: {},
-    method: 'GET',
-    dataType: 'json',
-    // #ifndef MP-ALIPAY || APP-PLUS
-    responseType: 'text',
-    // #endif
-    // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
-    custom: {}, // 全局自定义参数默认值
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000,
-    // #endif
-    // #ifdef APP-PLUS
-    sslVerify: true,
-    // #endif
-    // #ifdef H5
-    // 跨域请求时是否携带凭证（cookies）仅H5支持（HBuilderX 2.6.15+）
-    withCredentials: false,
-    // #endif
-    // 局部优先级高于全局，返回当前请求的task,options。请勿在此处修改options。非必填
-    // getTask: (task, options) => {
-    // 相当于设置了请求超时时间500ms
-    //   setTimeout(() => {
-    //     task.abort()
-    //   }, 500)
-    // }
-  }
-```
-
-
-全局配置修改` setConfig `
-
-``` javascript
-/**
-     * @description 修改全局默认配置
-     * @param {Function}   
-*/
-http.setConfig((config) => { /* config 为默认全局配置*/
-    config.baseUrl = 'http://www.bbb.cn'; /* 根域名 */
-    config.header = {
-        a: 1, // 演示用
-        b: 2  // 演示用
-    }
-    return config
-})
-```
-
-自定义验证器` validateStatus `
-
-``` javascript
-/**
- * 自定义验证器，如果返回true 则进入响应拦截器的响应成功函数(resolve)，否则进入响应拦截器的响应错误函数(reject)
- * @param { Number } statusCode - 请求响应体statusCode（只读）
- * @return { Boolean } 如果为true,则 resolve, 否则 reject
-*/
-http.validateStatus = (statusCode) => { // 默认
-     return statusCode === 200
-}
-
-// 举个栗子
-http.validateStatus = (statusCode) => {
-   return statusCode && statusCode >= 200 && statusCode < 300
-}
-```
-
-拦截器
-------------
-
-在请求之前拦截
-
-``` javascript
-/**
- * @param { Function} cancel - 取消请求,调用cancel 会取消本次请求，但是该函数的catch() 仍会执行; 不会进入响应拦截器
- *
- * @param {String} text ['handle cancel'| any] - catch((err) => {}) err.errMsg === 'handle cancel'。非必传，默认'handle cancel'
- * @cancel {Object} config - catch((err) => {}) err.config === config; 非必传，默认为request拦截器修改之前的config
- * function cancel(text, config) {}
- */
- http.interceptor.request((config, cancel) => { /* cancel 为函数，如果调用会取消本次请求。需要注意：调用cancel,本次请求的catch仍会执行。必须return config */
-    config.header = {
-      ...config.header,
-      a: 1 // 演示拦截器header加参
-    }
-    // 演示custom 用处
-    // if (config.custom.auth) {
-    //   config.header.token = 'token'
-    // }
-    /**
-    /* 演示cancel 函数
-    if (!token) { // 如果token不存在，调用cancel 会取消本次请求，不会进入响应拦截器，但是该函数的catch() 仍会执行
-      cancel('token 不存在', config) //  把修改后的config传入，之后响应就可以拿到修改后的config。 如果调用了cancel但是不传修改后的config，则catch((err) => {}) err.config 为request拦截器修改之前的config
-    }
-    **/
-    return config
-  })
-```
-
-在请求之后拦截
-
-``` javascript
-http.interceptor.response((response) => { /* 对响应成功做点什么 （statusCode === 200），必须return response*/
-  //  if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
-  //    return Promise.reject(response) // return Promise.reject 可使promise状态进入catch
- // if (response.config.custom.verification) { // 演示自定义参数的作用
-  //   return response.data
-  // }
-  console.log(response)
-  return response
-}, (response) => { /*  对响应错误做点什么 （statusCode !== 200），必须return response*/
-  console.log(response)
-  return response
-})
-```
-
 
 luch-request Guide
 ------------
