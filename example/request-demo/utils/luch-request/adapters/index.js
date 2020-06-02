@@ -53,6 +53,7 @@ export default (config) => {
       requestTask = uni.downloadFile({..._config,complete})
     } else {
       const optionalKeys = [
+        'method',
         'data',
         'dataType ',
         // #ifndef MP-ALIPAY || APP-PLUS

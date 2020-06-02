@@ -1,13 +1,14 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.0
+ * @version 3.0.1
  * @Author lu-ch
- * @Date 2020-06-01
+ * @Date 2020-06-02
  * @Email webwork.s@qq.com
  * 文档: https://quanzhan.co/luch-request/
- * http://ext.dcloud.net.cn/plugin?id=392
- * hbuilderx:2.7.9
+ * github: https://github.com/lei-mu/luch-request
+ * DCloud: http://ext.dcloud.net.cn/plugin?id=392
+ * HBuilderX: 2.7.9
  */
 
 
