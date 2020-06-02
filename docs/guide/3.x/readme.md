@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-title: 文档
+title: 3.x文档
 ---
 
 # luch-request 3.x
