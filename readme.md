@@ -190,7 +190,7 @@ luch-request Guide
     - `import { http } from '@/utils/luch-request/index.js'`   
 5. 什么参数需要在` setConfig ` 设置？什么参数需要在` request ` 拦截器设置？
     - ` setConfig ` 适用于设置一些静态的/默认的参数；比如header 里的一些默认值、默认全局参数（全局请求配置）。` token ` 并不适合在这里设置。
-    - ` interceptor.request ` 拦截器适用范围较广，但我仍然建议把一些静态的东西放在 ` setConfig ` 里。拦截器会在每次请求调用，而 ` setConfig ` 仅在调用时修改一遍。
+    - ` interceptors.request ` 拦截器适用范围较广，但我仍然建议把一些静态的东西放在 ` setConfig ` 里。拦截器会在每次请求调用，而 ` setConfig ` 仅在调用时修改一遍。
 
 tip
 ------------
