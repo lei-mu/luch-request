@@ -11,27 +11,27 @@ import Request from '@/utils/luch-request/index.js'
 
 
 const getTokenStorage = () => {
-	let token = ''
-	try{
-		token = uni.getStorageSync('token')
-	}catch(e){
-		//TODO handle the exception
-	}
-	return token
+  let token = ''
+  try {
+    token = uni.getStorageSync('token')
+  } catch (e) {
+    //TODO handle the exception
+  }
+  return token
 }
 
 const test = new Request()
 /**
  * 修改全局配置示例
-const test = new Request({
+ const test = new Request({
 	header: {a:1}, // 举例
 	baseURL: 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest',
 	validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置
 		return statusCode >= 200 && statusCode < 300
 	}
 })
-test.config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
-**/
+ test.config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
+ **/
 
 test.setConfig((config) => { /* 设置全局配置 */
   config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
@@ -54,8 +54,8 @@ test.interceptors.request.use((config) => { /* 请求之前拦截器。可以使
   }
   */
   return config
-},(config) => {
-	return Promise.reject(config)
+}, (config) => {
+  return Promise.reject(config)
 })
 
 
@@ -64,7 +64,7 @@ test.interceptors.response.use((response) => { /* 请求之后拦截器。可以
     return Promise.reject(response)
   }
   return response
-}, (response) => { // 请求错误做点什么。可以使用async await 做异步操作 
+}, (response) => { // 请求错误做点什么。可以使用async await 做异步操作
   return Promise.reject(response)
 })
 
@@ -81,20 +81,19 @@ http.setConfig((config) => { /* 设置全局配置 */
 })
 
 
-
 http.interceptors.request.use((config) => { /* 请求之前拦截器。可以使用async await 做异步操作 */
   config.header = {
     ...config.header,
     token: getTokenStorage()
   }
- /*
+  /*
  if (!token) { // 如果token不存在，return Promise.reject(config) 会取消本次请求
    return Promise.reject(config)
  }
  */
   return config
-},(config) => {
-	return Promise.reject(config)
+}, (config) => {
+  return Promise.reject(config)
 })
 
 // 必须使用异步函数，注意
@@ -103,8 +102,8 @@ http.interceptors.response.use(async (response) => { /* 请求之后拦截器。
   //   return Promise.reject(response)
   // }
   return response
-}, (response) => { // 请求错误做点什么。可以使用async await 做异步操作 
-  console.log(response);
+}, (response) => { // 请求错误做点什么。可以使用async await 做异步操作
+  console.log(response)
   return response
 })
 
