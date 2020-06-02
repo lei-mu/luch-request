@@ -170,7 +170,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 
 luch-request Guide
 ------------
-[luch-request 官网地址](https://quanzhan.co/luch-request/ "luch-request 官网地址")
+[luch-request 官网地址](https://quanzhan.co/luch-request/3.x/ "luch-request 官网地址")
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
@@ -195,7 +195,7 @@ luch-request Guide
 tip
 ------------
 - nvue 不支持全局挂载
-- 当前的hbuilderx 版本号：2.6.15
+- 当前的hbuilderx 版本号：2.7.9
 - 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
 - license: MIT
 

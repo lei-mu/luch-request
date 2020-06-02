@@ -1,6 +1,6 @@
 {
   "name": "luch-request",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "基于Promise实现uni-app request 请求插件",
   "keywords": [
     "uni-app",
@@ -35,6 +35,7 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-arrow-functions": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
+    "@vuepress/plugin-pwa": "^1.5.0",
     "archiver": "^4.0.1",
     "babel-eslint": "^10.1.0",
     "babel-preset-es2015": "^6.24.1",
@@ -65,10 +66,24 @@
       "commit-msg": "validate-commit-msg"
     },
     "validate-commit-msg": {
-      "types": ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"],
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert"
+      ],
       "scope": {
         "required": false,
-        "allowed": ["*"],
+        "allowed": [
+          "*"
+        ],
         "validate": false,
         "multiple": false
       },

@@ -3,7 +3,7 @@ sidebar: auto
 title: 文档
 ---
 
-# luch-request
+# luch-request 3.x
 
 介绍
 ------------
@@ -20,6 +20,7 @@ title: 文档
 - 支持文件上传/下载
 - 支持task 操作
 - 支持自定义参数
+- 支持多拦截器
 
 快速上手
 ------------
@@ -28,11 +29,6 @@ title: 文档
 ``` javascript
 npm i luch-request -S
 ```
-
-
-::: warning
-cli 用户不要使用npm 包。[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
-:::
 
 
 
@@ -90,7 +86,10 @@ http.get('/user/login', {
          // setTimeout(() => {
          //   task.abort()
          // }, 500)
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+	//	return statusCode >= 200 && statusCode < 300
+	//}
 }).then(res => {
 
 }).catch(err => {
@@ -129,7 +128,10 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
          // setTimeout(() => {
          //   task.abort()
          // }, 500)
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+  	//	return statusCode >= 200 && statusCode < 300
+  	//}
 }).then(res => {
 
 }).catch(err => {
@@ -165,7 +167,10 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
       //     uploadTask.abort();
       //   }
       // });
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+    //	return statusCode >= 200 && statusCode < 300
+    //}
   }).then(res => {
     // 返回的res.data 已经进行JSON.parse
   }).catch(err => {
@@ -196,7 +201,10 @@ luch-request API
       // setTimeout(() => {
       //   task.abort()
       // }, 500)
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+    //	return statusCode >= 200 && statusCode < 300
+    //}
   })
 ```
 ### upload
@@ -220,7 +228,10 @@ luch-request API
       // setTimeout(() => {
       //   task.abort()
       // }, 500)
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+    //	return statusCode >= 200 && statusCode < 300
+    //}
   }).then(res => {
     // 返回的res.data 已经进行JSON.parse
   }).catch(err => {
@@ -240,7 +251,10 @@ luch-request API
       // setTimeout(() => {
       //   task.abort()
       // }, 500)
-    }
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+   	//	return statusCode >= 200 && statusCode < 300
+   	//}
   }).then(res => {
 
   }).catch(err => {
@@ -268,7 +282,7 @@ http.trace(url[, data[, config]])
 ### 可配置项
 ``` javascript
 {
-    baseUrl: '',
+    baseURL: '',
     header: {},
     method: 'GET',
     dataType: 'json',
@@ -293,7 +307,11 @@ http.trace(url[, data[, config]])
     //   setTimeout(() => {
     //     task.abort()
     //   }, 500)
-    // }
+    // },
+    // 全局自定义验证器。参数为statusCode 且必存在，不用判断空情况。
+    validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置
+        return statusCode >= 200 && statusCode < 300
+    }
   }
 ```
 
@@ -306,34 +324,26 @@ http.trace(url[, data[, config]])
      * @param {Function}   
 */
 http.setConfig((config) => { /* config 为默认全局配置*/
-    config.baseUrl = 'http://www.bbb.cn'; /* 根域名 */
+    config.baseURL = 'http://www.bbb.cn'; /* 根域名 */
     config.header = {
         a: 1, // 演示用
         b: 2  // 演示用
     }
     return config
 })
+
+// 方式二
+const test = new Request({
+    header: {a:1}, // 演示
+    // ... 其他全局配置项
+})
+
+
+// 方式三
+test.config.header = {c:1}
+test.config.baseURL = 'https://quanzhan.co'
 ```
 
-自定义验证器
-------------
-### ` validateStatus `
-
-``` javascript
-/**
- * 自定义验证器，如果返回true 则进入响应拦截器的响应成功函数(resolve)，否则进入响应拦截器的响应错误函数(reject)
- * @param { Number } statusCode - 请求响应体statusCode（只读）
- * @return { Boolean } 如果为true,则 resolve, 否则 reject
-*/
-http.validateStatus = (statusCode) => { // 默认
-     return statusCode === 200
-}
-
-// 举个栗子
-http.validateStatus = (statusCode) => {
-   return statusCode && statusCode >= 200 && statusCode < 300
-}
-```
 
 拦截器
 ------------
@@ -341,39 +351,34 @@ http.validateStatus = (statusCode) => {
 ### 在请求之前拦截
 
 ``` javascript
-/**
- * @param { Function} cancel - 取消请求,调用cancel 会取消本次请求，但是该函数的catch() 仍会执行; 不会进入响应拦截器
- *
- * @param {String} text ['handle cancel'| any] - catch((err) => {}) err.errMsg === 'handle cancel'。非必传，默认'handle cancel'
- * @cancel {Object} config - catch((err) => {}) err.config === config; 非必传，默认为request拦截器修改之前的config
- * function cancel(text, config) {}
- */
- http.interceptor.request((config, cancel) => { /* cancel 为函数，如果调用会取消本次请求。需要注意：调用cancel,本次请求的catch仍会执行。必须return config */
-    config.header = {
-      ...config.header,
-      a: 1 // 演示拦截器header加参
+http.interceptors.request.use((config) => { // 可使用async await 做异步操作
+  config.header = {
+    ...config.header,
+    a: 1 // 演示拦截器header加参
+  }
+  // 演示custom 用处
+  // if (config.custom.auth) {
+  //   config.header.token = 'token'
+  // }
+  // if (config.custom.loading) {
+  //  uni.showLoading()
+  // }
+  /**
+   /* 演示
+   if (!token) { // 如果token不存在，return Promise.reject(config) 会取消本次请求
+      return Promise.reject(config)
     }
-    // 演示custom 用处
-    // if (config.custom.auth) {
-    //   config.header.token = 'token'
-    // }
-    // if (config.custom.loading) {
-    //  uni.showLoading()
-    // }
-    /**
-    /* 演示cancel 函数
-    if (!token) { // 如果token不存在，调用cancel 会取消本次请求，不会进入响应拦截器，但是该函数的catch() 仍会执行
-      cancel('token 不存在', config) //  把修改后的config传入，之后响应就可以拿到修改后的config。 如果调用了cancel但是不传修改后的config，则catch((err) => {}) err.config 为request拦截器修改之前的config
-    }
-    **/
-    return config
-  })
+   **/
+  return config
+}, config => { // 可使用async await 做异步操作
+  return Promise.reject(config)
+})
 ```
 
 ### 在请求之后拦截
 
 ``` javascript
-http.interceptor.response((response) => { /* 对响应成功做点什么 （statusCode === 200），必须return response*/
+http.interceptors.response.use((response) => { /* 对响应成功做点什么 可使用async await 做异步操作*/
   //  if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
   //    return Promise.reject(response) // return Promise.reject 可使promise状态进入catch
  // if (response.config.custom.verification) { // 演示自定义参数的作用
@@ -381,9 +386,9 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
   // }
   console.log(response)
   return response
-}, (response) => { /*  对响应错误做点什么 （statusCode !== 200），必须return response*/
+}, (response) => { /*  对响应错误做点什么 （statusCode !== 200）*/
   console.log(response)
-  return response
+  return Promise.reject(response)
 })
 ```
 
@@ -392,7 +397,7 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
 tip
 ------------
 - nvue 不支持全局挂载
-- 当前的hbuilderx 版本号：2.6.15
+- 当前的hbuilderx 版本号：2.7.9
 - 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
 - license: MIT
 

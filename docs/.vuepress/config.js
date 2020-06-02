@@ -6,7 +6,7 @@ module.exports = {
       description: '基于Promise实现uni-app request 请求插件'
     }
   },
-  base: '/luch-request/',
+  base: '/luch-request/3.x/',
   title: 'luch-request',
   description: '基于Promise实现uni-app request 请求插件',
   head: [
@@ -32,7 +32,7 @@ module.exports = {
     // 假如文档不是放在仓库的根目录下：
     docsDir: 'docs',
     // 假如文档放在一个特定的分支下：
-    docsBranch: 'docs',
+    docsBranch: 'docs-3.x',
     // 默认是 false, 设置为 true 来启用
     editLinks: true,
     // 默认为 "Edit this page"
@@ -41,6 +41,13 @@ module.exports = {
       {text: '首页', link: '/'},
       {text: '文档', link: '/guide/'},
       {text: '常见问题', link: '/issue/'},
+      {
+        text: '3.x',
+        ariaLabel: '3.x文档',
+        items: [
+          {text: '2.x文档', link: '/2.x/', target: '_blank'},
+        ]
+      },
       {text: '更新记录', link: 'https://github.com/lei-mu/luch-request/releases', target: '_blank'},
       {
         text: '相关资源',
@@ -58,6 +65,14 @@ module.exports = {
           {text: '社区', link: 'https://ask.dcloud.net.cn/question/74922', target: '_blank'}
         ]
       }
-    ]
-  }
+    ],
+    lastUpdated: 'Last Updated',
+  },
+  plugins: ['@vuepress/pwa',{
+    serviceWorker: true,
+    updatePopup: {
+      message: '此文档有新的内容', // defaults to 'New content is available.'
+      buttonText: '更新' // defaults to 'Refresh'
+    }
+  }]
 }
