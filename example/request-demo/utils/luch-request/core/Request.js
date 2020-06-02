@@ -1,13 +1,13 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 2.0.1
+ * @version 3.0.0
  * @Author lu-ch
- * @Date 2020-05-01
+ * @Date 2020-06-01
  * @Email webwork.s@qq.com
- * 文档: https://soso.luxe/luch-request/
+ * 文档: https://quanzhan.co/luch-request/
  * http://ext.dcloud.net.cn/plugin?id=392
- * hbuilderx:2.6.15
+ * hbuilderx:2.7.9
  */
 
 
@@ -18,6 +18,19 @@ import defaults from './defaults'
 import { isPlainObject } from '../utils'
 
 export default class Request {
+  /**
+   * @param {Object} arg - 全局配置
+   * @param {String} arg.baseURL - 全局根路径
+   * @param {Object} arg.header - 全局header
+   * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
+   * @param {String} arg.dataType = [json] - 全局默认的dataType
+   * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。App和支付宝小程序不支持
+   * @param {Object} arg.custom - 全局默认的自定义参数
+   * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认30000。仅微信小程序（2.10.0）、支付宝小程序支持
+   * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
+   * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
+   * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
+   */
   constructor(arg = {}) {
     if (!isPlainObject(arg)) {
       arg = {}
@@ -29,18 +42,16 @@ export default class Request {
       response: new InterceptorManager()
     }
   }
+
   /**
    * @Function
    * @param {Request~setConfigCallback} f - 设置全局默认配置
    */
   setConfig(f) {
-		console.log(f(this.config))
     this.config = f(this.config)
   }
 
   _middleware(config) {
-		console.log('-345-')
-		console.log(this.config)
     config = mergeConfig(this.config, config)
     let chain = [dispatchRequest, undefined]
     let promise = Promise.resolve(config)
@@ -164,7 +175,7 @@ export default class Request {
 
   // #endif
 
- upload(url, config = {}) {
+  upload(url, config = {}) {
     config.url = url
     config.method = 'UPLOAD'
     return this._middleware(config)
@@ -183,23 +194,4 @@ export default class Request {
  * @return {Object} - 返回操作后的config
  * @callback Request~setConfigCallback
  * @param {Object} config - 全局默认config
- */
-/**
- * 请求拦截器回调
- * @return {Object} - 返回操作后的config
- * @callback Request~requestCallback
- * @param {Object} config - 全局config
- * @param {Function} [cancel] - 取消请求钩子，调用会取消本次请求
- */
-/**
- * 响应拦截器回调
- * @return {Object} - 返回操作后的response
- * @callback Request~responseCallback
- * @param {Object} response - 请求结果 response
- */
-/**
- * 响应错误拦截器回调
- * @return {Object} - 返回操作后的response
- * @callback Request~responseErrCallback
- * @param {Object} response - 请求结果 response
  */

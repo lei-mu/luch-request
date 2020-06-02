@@ -1,8 +1,5 @@
 <template>
 	<view class="content">
-		<view>
-			<navigator url="/pages/refreshToken/refreshToken"><button type="success">测试刷新token</button></navigator>
-		</view>
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
 			<text class="title">{{ title }}</text>
@@ -79,14 +76,8 @@ export default {
 		localGetData() {
 			test
 				.get('/user/list', { params: { id: '111' } })
-				.then(res => {
-					console.log('test  then');
-					console.log(res);
-				})
-				.catch(err => {
-					console.log('test err');
-					console.log(err);
-				});
+				.then(res => {})
+				.catch(err => {});
 		}
 	}
 };

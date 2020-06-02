@@ -11,8 +11,14 @@ const mergeKeys = (keys, globalsConfig, config2) => {
   })
   return config
 }
+/**
+ *
+ * @param globalsConfig - 当前实例的全局配置
+ * @param config2 - 当前的局部配置
+ * @return - 合并后的配置
+ */
 export default (globalsConfig, config2 = {}) => {
-  const method = config2.method || 'GET'
+  const method = config2.method || globalsConfig.method || 'GET'
   let config = {
     baseURL: globalsConfig.baseURL || '',
     method: method,
