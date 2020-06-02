@@ -170,7 +170,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 
 luch-request Guide
 ------------
-[luch-request 官网地址](https://quanzhan.co/luch-request/3.x/ "luch-request 官网地址")
+[luch-request 官网地址](https://quanzhan.co/luch-request/ "luch-request 官网地址")
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
