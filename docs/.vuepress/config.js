@@ -68,12 +68,15 @@ module.exports = {
     ],
     lastUpdated: 'Last Updated',
   },
-  plugins: ['@vuepress/pwa',{
-    serviceWorker: true,
-    updatePopup: {
-      message: '此文档有新的内容', // defaults to 'New content is available.'
-      buttonText: '更新' // defaults to 'Refresh'
-    }
-  }],
+  plugins: [
+    ['@vuepress/pwa',{
+      serviceWorker: true,
+      updatePopup: {
+        message: '此文档有新的内容', // defaults to 'New content is available.'
+        buttonText: '更新' // defaults to 'Refresh'
+      }
+    }],
+    '@vuepress/active-header-links
+  ],
   smoothScroll: true
 }
