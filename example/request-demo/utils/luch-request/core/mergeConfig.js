@@ -1,5 +1,12 @@
 import {deepMerge, isObject} from '../utils'
 
+/**
+ * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
+ * @param {Array} keys - 配置项
+ * @param {Object} globalsConfig - 当前的全局配置
+ * @param {Object} config2 - 局部配置
+ * @return {{}}
+ */
 const mergeKeys = (keys, globalsConfig, config2) => {
   let config = {}
   keys.forEach(prop => {
@@ -43,19 +50,23 @@ export default (globalsConfig, config2 = {}) => {
   if (method === 'DOWNLOAD') {
 
   } else if (method === 'UPLOAD') {
-    delete config.header['content-type']
-    delete config.header['Content-Type']
+    if (isObject(config.header)) {
+      delete config.header['content-type']
+      delete config.header['Content-Type']
+    }
     const uploadKeys = [
-      // #ifdef MP-ALIPAY
-      'fileType',
-      // #endif
-      'name', 'formData',
       // #ifdef APP-PLUS || H5
       'files',
       // #endif
-      // #ifdef H5
-      'file'
+      // #ifdef MP-ALIPAY
+      'fileType',
       // #endif
+      // #ifdef H5
+      'file',
+      // #endif
+      'filePath',
+      'name',
+      'formData',
     ]
     uploadKeys.forEach(prop => {
       if (typeof config2[prop] !== 'undefined') {
@@ -65,18 +76,18 @@ export default (globalsConfig, config2 = {}) => {
   } else {
     const defaultsKeys = [
       'data',
+      // #ifdef MP-ALIPAY || MP-WEIXIN
+      'timeout',
+      // #endif
       'dataType',
       // #ifndef MP-ALIPAY || APP-PLUS
       'responseType',
       // #endif
-      // #ifdef MP-ALIPAY || MP-WEIXIN
-      'timeout',
+      // #ifdef APP-PLUS
+      'sslVerify',
       // #endif
       // #ifdef H5
-      'withCredentials',
-      // #endif
-      // #ifdef APP-PLUS
-      'sslVerify'
+      'withCredentials'
       // #endif
     ]
     config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
