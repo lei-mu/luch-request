@@ -76,7 +76,7 @@ module.exports = {
         buttonText: '更新' // defaults to 'Refresh'
       }
     }],
-    '@vuepress/active-header-links
+    '@vuepress/active-header-links'
   ],
   smoothScroll: true
 }

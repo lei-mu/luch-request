@@ -3,6 +3,11 @@ sidebar: auto
 title: 3.x文档
 ---
 
+
+<ClientOnly>
+<cm-notice message="最新版本为3.0.2版本，请所有<3.0.2用户升级到最新版本。"/>
+</ClientOnly>
+
 # luch-request 3.x
 
 介绍
