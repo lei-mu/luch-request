@@ -1,0 +1,12 @@
+**/.*
+*.iml
+example/
+node_modules/
+dist/
+docs/
+DCloud/
+node/
+zipDist/
+babel.config.js
+gruntfile.js
+rollup.config.js
