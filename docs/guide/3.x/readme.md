@@ -26,6 +26,7 @@ title: 3.x文档
 - 支持task 操作
 - 支持自定义参数
 - 支持多拦截器
+- 对参数的处理比uni.request 更强
 
 快速上手
 ------------
@@ -34,7 +35,18 @@ title: 3.x文档
 ``` javascript
 npm i luch-request -S
 ```
+cli 用户使用npm 包需增加以下配置([什么是cli用户](https://uniapp.dcloud.io/quickstart?id=_2-%e9%80%9a%e8%bf%87vue-cli%e5%91%bd%e4%bb%a4%e8%a1%8c))<br>
+项目根路径下创建`vue.config.js` 文件，增加以下内容
+``` javascript 
+// vue.config.js
+ module.exports = {
+      transpileDependencies: ['luch-request']
+ }
+```
 
+::: warning
+cli 用户不要使用npm 包。如要使用，尝试增加以下配置[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
+:::
 
 
 
@@ -438,7 +450,7 @@ issue
 3. 说明运行环境，比如：app端 ios、android 版本号、手机机型、普遍现象还是个别现象（越详细越好）
 4. 发出代码片段或者截图至邮箱（很重要）`webwork.s@qq.com`
 5. 或者可以在<a href="https://ask.dcloud.net.cn/question/74922" target="_blank">DCloud 社区</a>里发出详细的问题描述
-6. 以上都觉得解决不了你的问题，可以加QQ:`370306150`
+6. 以上都觉得解决不了你的问题或问题过于复杂难以描述，可以加QQ:`370306150`
 
 
 土豪赞赏
