@@ -1,4 +1,4 @@
-import {deepMerge, isObject} from '../utils'
+import {deepMerge} from '../utils'
 
 /**
  * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
@@ -29,31 +29,20 @@ export default (globalsConfig, config2 = {}) => {
   let config = {
     baseURL: globalsConfig.baseURL || '',
     method: method,
-    url: config2.url || ''
+    url: config2.url || '',
+    params: config2.params || {},
+    custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
+    header: deepMerge(globalsConfig.header || {}, config2.header || {})
   }
-  const mergeDeepPropertiesKeys = ['header', 'params', 'custom']
   const defaultToConfig2Keys = ['getTask', 'validateStatus']
-  mergeDeepPropertiesKeys.forEach(prop => {
-    if (isObject(config2[prop])) {
-      config[prop] = deepMerge(globalsConfig[prop], config2[prop])
-    } else if (typeof config2[prop] !== 'undefined') {
-      config[prop] = config2[prop]
-    } else if (isObject(globalsConfig[prop])) {
-      config[prop] = deepMerge(globalsConfig[prop])
-    } else if (typeof globalsConfig[prop] !== 'undefined') {
-      config[prop] = globalsConfig[prop]
-    }
-  })
   config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
 
   // eslint-disable-next-line no-empty
   if (method === 'DOWNLOAD') {
 
   } else if (method === 'UPLOAD') {
-    if (isObject(config.header)) {
-      delete config.header['content-type']
-      delete config.header['Content-Type']
-    }
+    delete config.header['content-type']
+    delete config.header['Content-Type']
     const uploadKeys = [
       // #ifdef APP-PLUS || H5
       'files',

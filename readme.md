@@ -22,6 +22,7 @@
 ``` javascript
 npm i luch-request -S
 ```
+使用npm前阅读[快速上手](https://quanzhan.co/luch-request/guide/3.x/#快速上手 "快速上手")
 
 
 ###### github

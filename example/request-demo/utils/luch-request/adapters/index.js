@@ -37,6 +37,8 @@ export default (config) => {
     }
     let requestTask
     if (config.method === 'UPLOAD') {
+      delete _config.header['content-type']
+      delete _config.header['Content-Type']
       let otherConfig = {
         // #ifdef MP-ALIPAY
         fileType: config.fileType,

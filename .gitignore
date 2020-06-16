@@ -5,6 +5,11 @@
 yarn-error.log
 node_modules/
 dist
-DCloud/
+DCloud/*
+!DCloud/luch-request/
+
+
 zipDist/
-example/request-demo-2
+
+example/*
+!/example/request-demo
