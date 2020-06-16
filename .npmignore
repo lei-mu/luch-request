@@ -5,6 +5,7 @@ node_modules/
 dist/
 docs/
 DCloud/
+test/
 node/
 zipDist/
 babel.config.js
