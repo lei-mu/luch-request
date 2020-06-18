@@ -15,10 +15,13 @@ module.exports = {
     ['meta', {'name': 'author', content: 'luch'}],
     ['meta', {'name': 'keywords', content: 'luch,luch-requst,luch-request官网,luch的个人博客,uni-app,request插件'}],
     ['script', {}, `
-            var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?7b23607ef1c743909207973e8e7eae6d";
-    var s = document.getElementsByTagName("script")[0]; 
-    s.parentNode.insertBefore(hm, s);
+          var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d64f5f90a8b778dcc6ae876318d0b091";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
         `]
   ],
   themeConfig: {
