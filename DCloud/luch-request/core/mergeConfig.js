@@ -76,7 +76,10 @@ export default (globalsConfig, config2 = {}) => {
       'sslVerify',
       // #endif
       // #ifdef H5
-      'withCredentials'
+      'withCredentials',
+      // #endif
+      // #ifdef APP-PLUS
+      'firstIpv4',
       // #endif
     ]
     config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}

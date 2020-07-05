@@ -1,10 +1,18 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{ title }}</text>
-			<button @click="upload">上传</button>
+		<image class="logo" src="/static/logo.jpg"></image>
+		<button type="default" @click="upload">文件上传</button>
+		<button type="default" @click="globalGetData">全局调用</button>
+		<button type="default" @click="localGetData">局部调用</button>
+		<view class="nav-list">
+			luch-request:
+			<a href="https://www.quanzhan.co/luch-request/" target="_blank">luch-request官网</a>
 		</view>
+		<view class="nav-list">
+			我的博客：
+			<a href="https://www.quanzhan.co/" target="_blank">luch的博客</a>
+		</view>
+		<view class="footer-text"></view>
 	</view>
 </template>
 
@@ -127,10 +135,19 @@ export default {
 	height: 200upx;
 	width: 200upx;
 	margin-top: 200upx;
+	margin-bottom: 100rpx;
 }
 
 .title {
 	font-size: 36upx;
 	color: #8f8f94;
+}
+.footer-text {
+	padding-top: 30rpx;
+	color: red;
+	text-align: center;
+}
+.nav-list {
+	padding-top: 15rpx;
 }
 </style>

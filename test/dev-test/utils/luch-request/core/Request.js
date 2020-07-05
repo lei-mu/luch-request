@@ -1,14 +1,14 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.3
+ * @version 3.0.4
  * @Author lu-ch
- * @Date 2020-06-16
+ * @Date 2020-07-05
  * @Email webwork.s@qq.com
- * 文档: https://quanzhan.co/luch-request/
+ * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
  * DCloud: http://ext.dcloud.net.cn/plugin?id=392
- * HBuilderX: 2.7.9
+ * HBuilderX: beat-2.7.14 alpha-2.8.0
  */
 
 
@@ -30,6 +30,7 @@ export default class Request {
    * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认30000。仅微信小程序（2.10.0）、支付宝小程序支持
    * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
    * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
+   * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
    * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
    */
   constructor(arg = {}) {
@@ -52,7 +53,7 @@ export default class Request {
     this.config = f(this.config)
   }
 
-  _middleware(config) {
+  middleware(config) {
     config = mergeConfig(this.config, config)
     let chain = [dispatchRequest, undefined]
     let promise = Promise.resolve(config)
@@ -84,11 +85,11 @@ export default class Request {
    * @returns {Promise<unknown>}
    */
   request(config = {}) {
-    return this._middleware(config)
+    return this.middleware(config)
   }
 
   get(url, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       method: 'GET',
       ...options
@@ -96,7 +97,7 @@ export default class Request {
   }
 
   post(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'POST',
@@ -106,7 +107,7 @@ export default class Request {
 
   // #ifndef MP-ALIPAY
   put(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'PUT',
@@ -118,7 +119,7 @@ export default class Request {
 
   // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
   delete(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'DELETE',
@@ -130,7 +131,7 @@ export default class Request {
 
   // #ifdef APP-PLUS || H5 || MP-WEIXIN
   connect(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'CONNECT',
@@ -142,7 +143,7 @@ export default class Request {
 
   // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
   head(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'HEAD',
@@ -154,7 +155,7 @@ export default class Request {
 
   // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
   options(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'OPTIONS',
@@ -166,7 +167,7 @@ export default class Request {
 
   // #ifdef APP-PLUS || H5 || MP-WEIXIN
   trace(url, data, options = {}) {
-    return this.request({
+    return this.middleware({
       url,
       data,
       method: 'TRACE',
@@ -179,13 +180,13 @@ export default class Request {
   upload(url, config = {}) {
     config.url = url
     config.method = 'UPLOAD'
-    return this._middleware(config)
+    return this.middleware(config)
   }
 
   download(url, config = {}) {
     config.url = url
     config.method = 'DOWNLOAD'
-    return this._middleware(config)
+    return this.middleware(config)
   }
 }
 

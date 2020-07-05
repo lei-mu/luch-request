@@ -1,11 +1,11 @@
 /**
- * @version 3.0.3
+ * @version 3.0.4
  * @Author lu-ch
  * @Email webwork.s@qq.com
- * 文档: https://quanzhan.co/luch-request/
+ * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
  * DCloud: http://ext.dcloud.net.cn/plugin?id=392
- * HBuilderX: 2.7.9
+ * HBuilderX: beat-2.7.14 alpha-2.8.0
  */
 import Request from '@/utils/luch-request/index.js'
 
@@ -40,6 +40,10 @@ test.setConfig((config) => { /* 设置全局配置 */
     a: 1, // 演示
     b: 2 // 演示
   }
+  config.custom = {
+    // auth: false, // 是否传token
+    // loading: false // 是否使用loading
+  }
   return config
 })
 
@@ -48,6 +52,15 @@ test.interceptors.request.use((config) => { /* 请求之前拦截器。可以使
     ...config.header,
     a: 3 // 演示
   }
+  /**
+	 * custom {Object} - 自定义参数
+	 */
+  // if (config.custom.auth) {
+  //   config.header.token = '123456'
+  // }
+  // if (config.custom.loading) {
+  //   uni.showLoading()
+  // }
   /*
   if (!token) { // 如果token不存在，return Promise.reject(config) 会取消本次请求
     return Promise.reject(config)
@@ -60,11 +73,17 @@ test.interceptors.request.use((config) => { /* 请求之前拦截器。可以使
 
 
 test.interceptors.response.use((response) => { /* 请求之后拦截器。可以使用async await 做异步操作  */
+  // if (response.config.custom.loading) {
+  //    uni.hideLoading()
+  //  }
   if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
     return Promise.reject(response)
   }
   return response
 }, (response) => { // 请求错误做点什么。可以使用async await 做异步操作
+  // if (response.config.custom.loading) {
+  //    uni.hideLoading()
+  //  }
   return Promise.reject(response)
 })
 
@@ -96,7 +115,7 @@ http.interceptors.request.use((config) => { /* 请求之前拦截器。可以使
   return Promise.reject(config)
 })
 
-// 必须使用异步函数，注意
+
 http.interceptors.response.use(async (response) => { /* 请求之后拦截器。可以使用async await 做异步操作  */
   // if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
   //   return Promise.reject(response)
