@@ -50,8 +50,9 @@ module.exports = {
           {text: '2.x文档', link: '/guide/2.x/'},
         ]
       },
+      {text: '指南', link: '/handbook/'},
       {text: '常见问题', link: '/issue/'},
-      {text: '更新记录', link: 'https://github.com/lei-mu/luch-request/releases', target: '_blank'},
+      {text: '更新记录', link: 'https://github.com/lei-mu/luch-request/releases', target: '_blank', rel: 'nofollow noopener noreferrer'},
       {
         text: '相关资源',
         ariaLabel: '相关资源',
@@ -60,12 +61,13 @@ module.exports = {
         ]
       },
       {text: '鸣谢', link: '/acknowledgement/'},
+      {text: '博客', link: 'https://www.quanzhan.co/', target: '_blank'},
       {
         text: 'DCloud',
         ariaLabel: 'DCloud',
         items: [
-          {text: '插件市场', link: 'https://ext.dcloud.net.cn/plugin?id=392', target: '_blank'},
-          {text: '社区', link: 'https://ask.dcloud.net.cn/question/74922', target: '_blank'}
+          {text: '插件市场', link: 'https://ext.dcloud.net.cn/plugin?id=392', target: '_blank', rel: 'nofollow noopener noreferrer'},
+          {text: '社区', link: 'https://ask.dcloud.net.cn/question/74922', target: '_blank', rel: 'nofollow noopener noreferrer'}
         ]
       }
     ],

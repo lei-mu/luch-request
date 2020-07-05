@@ -4,10 +4,10 @@ heroImage: /assets/img/logo.jpg
 heroText: luch-request
 tagline: 基于Promise实现uni-app request 请求插件
 actionText: 快速上手 →
-actionLink: /guide/3.x/
+actionLink: /handbook/
 features:
 - title: 项目级别
-  details: 从创建开始就严格遵守代码开发规范，使插件可以低成本的引入项目使用。
+  details: 更小的体积，易用的api，方便的自定义能力。
 - title: 稳定维护
   details: luch-request 至今已至少有17个版本的迭代。下载次数超1W。
 - title: 代码简洁
@@ -15,9 +15,9 @@ features:
 - title: 条件编译
   details: 插件开发使用了`条件编译`避免了不同终端可能产生的冗余代码。
 - title: 规范
-  details: 没有什么比遵守规范更重要的了。
-- title: luch-request
-  details: 即使你现在因一时妥协选择了其它request插件， 终有一天，你还是会需要一个`luch-request`。
+  details: eslint、rollup等构建工具辅助开发。
+- title: 方便简单的自定义能力
+  details: 有` custom ` 自定义参数的支持，满足你所有的自定义要求。
 footer: MIT Licensed | Copyright © 2020 quanzhan.co
 ---
 

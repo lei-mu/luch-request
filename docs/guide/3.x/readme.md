@@ -3,20 +3,15 @@ sidebar: auto
 title: 3.x文档
 ---
 
-
-<ClientOnly>
-<cm-notice message="最新版本为3.0.3版本，请所有<3.0.3用户升级到最新版本。"/>
-</ClientOnly>
-
 # luch-request 3.x
 
 介绍
 ------------
-[![npm](https://img.shields.io/npm/l/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
-[![npm](https://img.shields.io/npm/v/luch-request "npm")](https://www.npmjs.com/package/luch-request "npm")
-[![github](https://img.shields.io/github/package-json/v/lei-mu/luch-request "github")](https://github.com/lei-mu/luch-request "github")
-[![github stars](https://img.shields.io/github/stars/lei-mu/luch-request.svg "github stars")](https://github.com/lei-mu/luch-request "github stars")
-[![github forks](https://img.shields.io/github/forks/lei-mu/luch-request.svg "github forks")](https://github.com/lei-mu/luch-request "github forks")
+<a href="https://www.npmjs.com/package/luch-request" target="_blank" rel="noopener noreferrer nofollow" title="npm"><img src="https://img.shields.io/npm/l/luch-request" alt="npm"></a>
+<a href="https://www.npmjs.com/package/luch-request" target="_blank" rel="noopener noreferrer nofollow" title="npm"><img src="https://img.shields.io/npm/v/luch-request" alt="npm"></a>
+<a href="https://github.com/lei-mu/luch-request" target="_blank" rel="noopener noreferrer nofollow" title="github"><img src="https://img.shields.io/github/package-json/v/lei-mu/luch-request" alt="github"></a>
+<a href="https://github.com/lei-mu/luch-request" target="_blank" rel="noopener noreferrer nofollow" title="github stars"><img src="https://img.shields.io/github/stars/lei-mu/luch-request.svg" alt="github stars"></a>
+<a href="https://github.com/lei-mu/luch-request" target="_blank" rel="noopener noreferrer nofollow" title="github forks"><img src="https://img.shields.io/github/forks/lei-mu/luch-request.svg" alt="github forks"></a>
 
 - 基于 Promise 对象实现更简单的 request 使用方式，支持请求和响应拦截
 - 支持全局挂载
@@ -30,12 +25,13 @@ title: 3.x文档
 
 快速上手
 ------------
-###### 使用npm
+### npm
 
-``` javascript
+```` javascript
 npm i luch-request -S
-```
-cli 用户使用npm 包需增加以下配置([什么是cli用户](https://uniapp.dcloud.io/quickstart?id=_2-%e9%80%9a%e8%bf%87vue-cli%e5%91%bd%e4%bb%a4%e8%a1%8c))<br>
+````
+cli 用户使用npm 包需增加以下配置(<a href="https://uniapp.dcloud.io/quickstart?id=_2-%e9%80%9a%e8%bf%87vue-cli%e5%91%bd%e4%bb%a4%e8%a1%8c" target="_blank" rel="noopener noreferrer nofollow">什么是cli用户</a>)
+<br>
 项目根路径下创建`vue.config.js` 文件，增加以下内容
 ``` javascript 
 // vue.config.js
@@ -45,20 +41,22 @@ cli 用户使用npm 包需增加以下配置([什么是cli用户](https://uniapp
 ```
 
 ::: warning
-cli 用户不要使用npm 包。如要使用，尝试增加以下配置[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
+cli用户使用npm包，为什么要加以上配置[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
 :::
 
+### github
+
+<a href="https://github.com/lei-mu/luch-request" target="_blank" rel="noopener noreferrer nofollow">GitHub</a>
+<br>
+使用DCloud/luch-request 文件夹即可
 
 
-###### github
+### DCloud插件市场
 
-[github](https://github.com/lei-mu/luch-request "github")
-安装依赖后 ` npm run build ` ，使用DCloud/luch-request 文件夹即可
+<a href="https://ext.dcloud.net.cn/plugin?id=392" target="_blank" rel="noopener noreferrer nofollow">DCloud插件市场</a>
 
 
-###### DCloud插件市场:
 
-[DCloud插件市场](https://ext.dcloud.net.cn/plugin?id=392 "DCloud插件市场")
 
 Example
 ------------
@@ -94,6 +92,9 @@ http.get('/user/login', {
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
+    // #endif
+    // #ifdef APP-PLUS
+    firstIpv4: false, // DNS解析时优先使用ipv4 仅 App-Android 支持 (HBuilderX 2.8.0+)
     // #endif
     // #ifdef H5
     withCredentials: false, // 跨域请求时是否携带凭证（cookies）仅H5支持（HBuilderX 2.6.15+）
@@ -136,6 +137,9 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
+    // #endif
+   // #ifdef APP-PLUS
+    firstIpv4: false, // DNS解析时优先使用ipv4 仅 App-Android 支持 (HBuilderX 2.8.0+)
     // #endif
     // #ifdef H5
     withCredentials: false, // 跨域请求时是否携带凭证（cookies）仅H5支持（HBuilderX 2.6.15+）
@@ -211,6 +215,9 @@ luch-request API
     params: { // 会拼接到url上
       token: '1111'
     },
+    // #ifdef APP-PLUS
+    firstIpv4: false, // DNS解析时优先使用ipv4 仅 App-Android 支持 (HBuilderX 2.8.0+)
+    // #endif
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {}, // 自定义参数
     // 返回当前请求的task, options。请勿在此处修改options。非必填
@@ -278,10 +285,42 @@ luch-request API
 
   })
 ```
-
+### middleware
+所有请求方式的超集。包含UPLOAD、DOWNLOAD方法。对应method使用对应参数。
+``` javascript 
+ http.middleware({
+    method: 'POST', // 请求方法必须大写 [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE|UPLOAD|DOWNLOAD]
+    url: '/user/12345',
+    data: {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    },
+    // #ifdef MP-ALIPAY || MP-WEIXIN
+    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
+    // #endif
+    params: { // 会拼接到url上
+      token: '1111'
+    },
+    // #ifdef APP-PLUS
+    firstIpv4: false, // DNS解析时优先使用ipv4 仅 App-Android 支持 (HBuilderX 2.8.0+)
+    // #endif
+    // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
+    custom: {}, // 自定义参数
+    // 返回当前请求的task, options。请勿在此处修改options。非必填
+    getTask: (task, options) => {
+      // setTimeout(() => {
+      //   task.abort()
+      // }, 500)
+    },
+    //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
+    //	return statusCode >= 200 && statusCode < 300
+    //}
+  })
+```
 ### 实例方法
 
 ``` javascript
+http.middleware(config)
 http.request(config)
 http.get(url[, config])
 http.upload(url[, config])
@@ -317,6 +356,9 @@ http.trace(url[, data[, config]])
     // #ifdef H5
     // 跨域请求时是否携带凭证（cookies）仅H5支持（HBuilderX 2.6.15+）
     withCredentials: false,
+    // #endif
+    // #ifdef APP-PLUS
+    firstIpv4: false, // DNS解析时优先使用ipv4 仅 App-Android 支持 (HBuilderX 2.8.0+)
     // #endif
     // 局部优先级高于全局，返回当前请求的task,options。请勿在此处修改options。非必填
     // getTask: (task, options) => {
@@ -411,46 +453,6 @@ http.interceptors.response.use((response) => { /* 对响应成功做点什么 �
 
 
 
-tip
-------------
-- nvue 不支持全局挂载
-- 当前的hbuilderx 版本号：2.7.9
-- 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
-- license: MIT
-
-
-issue
-------------
-- DCloud: 有任何问题或者建议可以=> <a href="https://ask.dcloud.net.cn/question/74922" target="_blank">issue提交</a>,先给个<a href="https://ext.dcloud.net.cn/plugin?id=392" target="_blank">五星好评</a>QAQ!!
-- github: [Issues](https://github.com/lei-mu/luch-request/issues "Issues")
-
-
-作者想说
-------------
-- 写代码很容易，为了让你们看懂写文档真的很lei 0.0
-- 最近发现有插件与我雷同，当初接触uni-app 就发现插件市场虽然有封装的不错的request库，但是都没有对多全局配置做处理，都是通过修改源码的方式配置。我首先推出通过class类，并仿照axios的api实现request请求库，并起名‘仿axios封装request网络请求库，支持拦截器全局配置’。他们虽然修改了部分代码，但是功能与性能并没有优化，反而使代码很冗余。希望能推出新的功能，和性能更加强悍的请求库。（2019-05）
-- 任何形式的‘参考’、‘借鉴’，请标明作者` luch-request `
- ```javascript
- <a href="https://ext.dcloud.net.cn/plugin?id=392">luch-request</a>
- ```
-
-
-我有疑惑
-------------
-### 关于问问题
-1. 首先请善于利用搜索引擎，不管百度，还是Google，遇到问题请先自己尝试解决。自己尝试过无法解决，再问。 
-2. 不要问类似为什么我的xx无法使用这种问题。请仔细阅读文档，检查代码，或者说明运行环境，把相关代码贴至评论或者发送至我的邮箱，还可以点击<a href="https://ask.dcloud.net.cn/question/74922" target="_blank">DCloud 社区</a>，在里面提问，可能我在里面已经回答了。
-3. 我的代码如果真的出现bug,或者你有好的建议、需求，可以提issue,我看到后会立即解决
-4. 不要问一些弱智问题！！！
-5. 如第四条
-
-### 如何问问题
-1. 问问题之前请换位思考，如果自己要解决这个问题，需要哪些信息
-2. 仔细阅读文档，检查代码
-3. 说明运行环境，比如：app端 ios、android 版本号、手机机型、普遍现象还是个别现象（越详细越好）
-4. 发出代码片段或者截图至邮箱（很重要）`webwork.s@qq.com`
-5. 或者可以在<a href="https://ask.dcloud.net.cn/question/74922" target="_blank">DCloud 社区</a>里发出详细的问题描述
-6. 以上都觉得解决不了你的问题或问题过于复杂难以描述，可以加QQ:`370306150`
 
 
 土豪赞赏

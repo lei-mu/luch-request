@@ -23,7 +23,7 @@
 ``` javascript
 npm i luch-request -S
 ```
-使用npm前阅读[快速上手](https://quanzhan.co/luch-request/guide/3.x/#快速上手 "快速上手")
+使用npm前阅读[快速上手](https://www.quanzhan.co/luch-request/handbook/#npm "快速上手")
 
 
 ###### github
@@ -172,7 +172,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 
 luch-request Guide
 ------------
-[luch-request 官网地址](https://quanzhan.co/luch-request/ "luch-request 官网地址")
+[luch-request 官网地址](https://www.quanzhan.co/luch-request/ "luch-request 官网地址")
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
@@ -197,7 +197,7 @@ luch-request Guide
 tip
 ------------
 - nvue 不支持全局挂载
-- 当前的hbuilderx 版本号：2.7.9
+- 当前的hbuilderx 版本号：beat-2.7.14 alpha-2.8.0
 - 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
 - license: MIT
 
@@ -232,7 +232,7 @@ issue
 
 个人网站
 ------------
-- 虽然我的网站里还啥都没有，但我还是放在这，<a href="https://quanzhan.co/luch-request/" target="_blank">万一有人点呢</a> 0.0
+- 欢迎大家都来踩一踩<a href="https://www.quanzhan.co/" target="_blank">luch的博客</a> 0.0
 
 土豪赞赏
 ------------

@@ -13,7 +13,9 @@ title: 鸣谢
 
 土豪赞赏
 ------------
-[![wechat 打赏](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150 "wechat 打赏")](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150 "wechat 打赏")
+<br>
+<img src="https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150" alt="wechat 打赏">
+
 
 赞助名单
 ------------
@@ -23,7 +25,7 @@ title: 鸣谢
 
 插件贡献
 ------------
-- [高卓彦](https://github.com/Super-GZY) 提出`3.0.0`版本存在所有请求都为GET请求bug,已在3.0.1版本修复
+- <a href="https://github.com/Super-GZY" target="_blank" rel="noopener noreferrer nofollow">高卓彦</a> 提出`3.0.0`版本存在所有请求都为GET请求bug,已在3.0.1版本修复
 - `353754391@qq.com` 提出多实例共用同一全局配置bug
-- `370681295@qq.com` - [@zouyaoji](https://github.com/zouyaoji) 提出 ` params ` 选项参数格式化数组等存在问题。已改为axios 参数格式化方案。
+- `370681295@qq.com` - <a href="https://github.com/zouyaoji" target="_blank" rel="noopener noreferrer nofollow">@zouyaoji</a> 提出 ` params ` 选项参数格式化数组等存在问题。已改为axios 参数格式化方案。
 - ...
