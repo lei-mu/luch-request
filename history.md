@@ -1,3 +1,8 @@
+## 3.0.4 (2020-07-05)
+
+1. New Feature: request 方法增加 ` firstIpv4 `配置项  
+1. New Feature: 增加 ` middleware `通用请求方法
+
 ## 3.0.3 (2020-06-16)
 
 1. Bug Fix: 修复` params ` 选项对数组格式化错误bug
