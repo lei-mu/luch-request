@@ -73,7 +73,10 @@ export default (config) => {
         'sslVerify',
         // #endif
         // #ifdef H5
-        'withCredentials'
+        'withCredentials',
+        // #endif
+        // #ifdef APP-PLUS
+        'firstIpv4',
         // #endif
       ]
       requestTask = uni.request({..._config,...mergeKeys(optionalKeys, config)})

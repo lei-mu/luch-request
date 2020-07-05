@@ -21,6 +21,9 @@ export default {
   // #ifdef H5
   withCredentials: false,
   // #endif
+  // #ifdef APP-PLUS
+  firstIpv4: false,
+  // #endif
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300
   }
