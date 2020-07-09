@@ -176,7 +176,12 @@ luch-request Guide
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
+友情链接
+------------
+#### vue-admin-beautiful
+**vue-admin-beautiful** ——[企业级、通用型中后台前端解决方案（基于vue/cli 4 最新版，同时支持电脑，手机，平板）](https://github.com/chuzhixin/vue-admin-beautiful)
 
+**vue-admin-beautiful** ——[在线演示](http://beautiful.panm.cn/vue-admin-beautiful/#/index)
 
 常见问题
 ------------
@@ -234,12 +239,7 @@ issue
 ------------
 - 欢迎大家都来踩一踩<a href="https://www.quanzhan.co/" target="_blank">luch的博客</a> 0.0
 
-友情链接
-------------
-#### vue-admin-beautiful
-**vue-admin-beautiful** ——[企业级、通用型中后台前端解决方案（基于vue/cli 4 最新版，同时支持电脑，手机，平板）](https://github.com/chuzhixin/vue-admin-beautiful)
 
-**vue-admin-beautiful** ——[在线演示](http://beautiful.panm.cn/vue-admin-beautiful/#/index)
 
 
 土豪赞赏
