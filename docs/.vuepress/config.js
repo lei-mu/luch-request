@@ -3,22 +3,31 @@ module.exports = {
     '/': {
       lang: 'zh-CN',
       title: 'luch-request',
-      description: '基于Promise实现uni-app request 请求插件'
+      description: 'luch-request 是一个基于Promise开发的uni-app跨平台、项目级别的请求库，它有更小的体积，易用的api，方便简单的自定义能力。luch-request官网,luch的博客,uni-app,request插件,uni request封装,uni request插件'
     }
   },
   base: '/luch-request/',
   title: 'luch-request',
-  description: '基于Promise实现uni-app request 请求插件',
+  description: 'luch-request 是一个基于Promise开发的uni-app跨平台、项目级别的请求库，它有更小的体积，易用的api，方便简单的自定义能力。luch-request官网,luch的博客,uni-app,request插件,uni request封装,uni request插件',
   head: [
     ['meta', {'http-equiv': 'X-UA-Compatible', content: 'IE=Edge'}],
     ['meta', {'name': 'renderer', content: 'webkit'}],
     ['meta', {'name': 'author', content: 'luch'}],
-    ['meta', {'name': 'keywords', content: 'luch,luch-requst,luch-request官网,luch的个人博客,uni-app,request插件'}],
+    ['meta', {'name': 'keywords', content: 'luch,luch-requst,luch-request官网,luch的个人博客,uni-app,request插件,uni request封装,uni request插件'}],
     ['script', {}, `
           var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?d64f5f90a8b778dcc6ae876318d0b091";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+        `],
+    ['script', {}, `
+;(function(){
+ var hm = document.createElement("script");
+  hm.src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+  hm.id = "sozz"
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();

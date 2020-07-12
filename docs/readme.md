@@ -2,7 +2,7 @@
 home: true
 heroImage: /assets/img/logo.jpg
 heroText: luch-request
-tagline: 基于Promise实现uni-app request 请求插件
+tagline: 基于Promise开发的uni-app跨平台请求库
 actionText: 快速上手 →
 actionLink: /handbook/
 features:

@@ -6,15 +6,16 @@ title: 鸣谢
 前言
 ------------
 感谢每一位贡献者<br>
-对于对插件做出贡献的，本人将在此处列出<br>
+对插件**做出贡献**或对此插件进行**打赏**，本人将在此处列出，以表示感谢<br>
 贡献者可以提出一个名称、一个网址显示在此处。<br>
-如果你不想自己的名字显示在这里，可以发邮件或者qq<br>
+如果你不想自己的名字显示在这里，可以发邮件或者qq向我说明情况<br>
 侵权删！
 
 土豪赞赏
 ------------
 <br>
-<img src="https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150" alt="wechat 打赏">
+<img src="https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150" alt="wechat 打赏" title="微信打赏" style="margin-right: 5%">
+<img src="https://oss.quanzhan.co/images/common/my-alipay-qrcode.jpg?x-oss-process=image/resize,m_lfit,h_150,w_150" alt="wechat 打赏" title="支付宝打赏">
 
 
 赞助名单

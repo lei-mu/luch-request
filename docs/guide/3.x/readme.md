@@ -457,7 +457,7 @@ http.interceptors.response.use((response) => { /* 对响应成功做点什么 �
 
 土豪赞赏
 ------------
-[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")
+[打赏事宜具体说明](/acknowledgement/)
 
 
 ###### 您的鼓励是我更新的动力
