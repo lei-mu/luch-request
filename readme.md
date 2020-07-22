@@ -179,12 +179,12 @@ luch-request Guide
 友情链接
 ------------
 #### vue-admin-beautiful
-**vue-admin-beautiful** ——[企业级、通用型中后台前端解决方案（基于vue/cli 4 最新版，同时支持电脑，手机，平板）](https://github.com/chuzhixin/vue-admin-beautiful)
+**vue-admin-beautiful** ——<a href="https://github.com/chuzhixin/vue-admin-beautiful" target="_blank">企业级、通用型中后台前端解决方案（基于vue/cli 4 最新版，同时支持电脑，手机，平板）</a>
 
-**vue-admin-beautiful** ——[在线演示](http://beautiful.panm.cn/vue-admin-beautiful/#/index)
+**vue-admin-beautiful** ——<a href="http://beautiful.panm.cn/vue-admin-beautiful/#/index" target="_blank">在线演示</a>
 
 #### uView
-[uView 文档](https://uviewui.com) ——超棒的移动跨端框架，文档详细，上手容易
+<a href="https://uviewui.com" target="_blank">uView 文档</a> ——超棒的移动跨端框架，文档详细，上手容易
 
 常见问题
 ------------
