@@ -183,6 +183,9 @@ luch-request Guide
 
 **vue-admin-beautiful** ——[在线演示](http://beautiful.panm.cn/vue-admin-beautiful/#/index)
 
+#### uView
+[uView 文档](https://uviewui.com) ——超棒的移动跨端框架，文档详细，上手容易
+
 常见问题
 ------------
 1. 为什么会请求两次？
@@ -225,8 +228,7 @@ issue
 1. 首先请善于利用搜索引擎，不管百度，还是Google，遇到问题请先自己尝试解决。自己尝试过无法解决，再问。 
 2. 不要问类似为什么我的xx无法使用这种问题。请仔细阅读文档，检查代码，或者说明运行环境，把相关代码贴至评论或者发送至我的邮箱，还可以点击上面的issue提交，在里面提问，可能我在里面已经回答了。
 3. 我的代码如果真的出现bug,或者你有好的建议、需求，可以提issue,我看到后会立即解决
-4. 不要问一些弱智问题！！！
-5. 如第四条
+
 - 如何问问题
 1. 问问题之前请换位思考，如果自己要解决这个问题，需要哪些信息
 2. 仔细阅读文档，检查代码
@@ -244,7 +246,7 @@ issue
 
 土豪赞赏
 ------------
-[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](http://oss.soso.luxe/images/common/my-wechat-qrcode.png?imageView2/1/w/150/h/150 "wechat 打赏")
+[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")
 
 
 ###### 您的鼓励是我更新的动力
