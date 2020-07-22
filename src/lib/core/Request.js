@@ -188,6 +188,11 @@ export default class Request {
     config.method = 'DOWNLOAD'
     return this.middleware(config)
   }
+  mUpload (url, config = {}) {
+    config.url = url
+    config.method = 'MULTIPLE'
+    return this.middleware(config)
+  }
 }
 
 

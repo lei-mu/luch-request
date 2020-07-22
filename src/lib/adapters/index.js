@@ -17,22 +17,25 @@ const mergeKeys = (keys, config2) => {
   })
   return config
 }
+const reqComplete = (resolve, reject, response, config) => {
+  response.config = config
+  try {
+    // 对可能字符串不是json 的情况容错
+    if (typeof response.data === 'string') {
+      response.data = JSON.parse(response.data)
+    }
+    // eslint-disable-next-line no-empty
+  } catch (e) {
+  }
+  settle(resolve, reject, response)
+}
 export default (config) => {
   return new Promise((resolve, reject) => {
     const _config = {
       url: buildURL(buildFullPath(config.baseURL, config.url), config.params),
       header: config.header,
       complete: (response) => {
-        response.config = config
-        try {
-          // 对可能字符串不是json 的情况容错
-          if (typeof response.data === 'string') {
-            response.data = JSON.parse(response.data)
-          }
-          // eslint-disable-next-line no-empty
-        } catch (e) {
-        }
-        settle(resolve, reject, response)
+        reqComplete(resolve, reject, response, config)
       }
     }
     let requestTask
@@ -58,6 +61,44 @@ export default (config) => {
       requestTask = uni.uploadFile({..._config, ...otherConfig, ...mergeKeys(optionalKeys, config)})
     } else if (config.method === 'DOWNLOAD') {
       requestTask = uni.downloadFile(_config)
+    } else if (config.method === 'MULTIPLE') {
+      delete _config.header['content-type']
+      delete _config.header['Content-Type']
+      let allFiles = config.mFiles.every(p1 => typeof p1 !== 'string')
+      let allowUseFiles = false
+      // #ifdef APP-PLUS || H5
+      allowUseFiles = true
+      // #endif
+      if (allFiles && allowUseFiles) {
+        // #ifdef APP-PLUS || H5
+        let otherConfig = {
+          files: config.mFiles
+        }
+        const optionalKeys = [
+          'formData'
+        ]
+        requestTask = uni.uploadFile({..._config, ...otherConfig, ...mergeKeys(optionalKeys, config)})
+        // #endif
+      } else {
+        let queue = config.mFiles.map(p1 => {
+          return new Promise((resolve1, reject1) => {
+            let otherConfig = {
+              // #ifdef MP-ALIPAY
+              fileType: config.fileType,
+              // #endif
+            }
+            if (typeof p1 === 'string') {
+              otherConfig = {
+
+              }
+            } else {
+
+            }
+            uni.uploadFile({..._config, ...otherConfig, ...mergeKeys(optionalKeys, config)})
+          })
+        })
+        resolve(Promise.all(queue))
+      }
     } else {
       const optionalKeys = [
         'data',
@@ -79,9 +120,9 @@ export default (config) => {
         'firstIpv4',
         // #endif
       ]
-      requestTask = uni.request({..._config,...mergeKeys(optionalKeys, config)})
+      requestTask = uni.request({..._config, ...mergeKeys(optionalKeys, config)})
     }
-    if (config.getTask) {
+    if (config.getTask && requestTask) {
       config.getTask(requestTask, config)
     }
   })

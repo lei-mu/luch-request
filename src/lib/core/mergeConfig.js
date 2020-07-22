@@ -62,6 +62,18 @@ export default (globalsConfig, config2 = {}) => {
         config[prop] = config2[prop]
       }
     })
+  } else if (method === 'MULTIPLE') {
+    const multipleKeys = [
+      'mFiles',
+      'name',
+      'formData',
+      'fileType'
+    ]
+    multipleKeys.forEach(prop => {
+      if (typeof config2[prop] !== 'undefined') {
+        config[prop] = config2[prop]
+      }
+    })
   } else {
     const defaultsKeys = [
       'data',

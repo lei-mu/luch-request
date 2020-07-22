@@ -2,5 +2,5 @@ import adapter from '../adapters/index'
 
 
 export default (config) => {
-  return adapter(config)
+  return config.method === 'MULTIPLE' ? a : adapter(config)
 }
