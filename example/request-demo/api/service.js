@@ -15,7 +15,6 @@ const getTokenStorage = () => {
   try {
     token = uni.getStorageSync('token')
   } catch (e) {
-    //TODO handle the exception
   }
   return token
 }
