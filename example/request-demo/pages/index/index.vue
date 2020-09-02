@@ -4,6 +4,7 @@
 		<button type="default" @click="upload">文件上传</button>
 		<button type="default" @click="globalGetData">全局调用</button>
 		<button type="default" @click="localGetData">局部调用</button>
+		<navigator url="/pages/goods-list/goods-list"><button type="default">api 抽离</button></navigator>
 		<view class="nav-list">
 			luch-request:
 			<a href="https://www.quanzhan.co/luch-request/" target="_blank">luch-request官网</a>
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { test } from '@/common/service.js'; // 局部引入
+import { test } from '@/api/service.js'; // 局部引入
 export default {
 	data() {
 		return {

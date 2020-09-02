@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { test } from '@/common/service.js'; // 局部引入
+import { test } from '@/api/service.js'; // 局部引入
 export default {
 	data() {
 		return {

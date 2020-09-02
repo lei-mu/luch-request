@@ -5,7 +5,11 @@
       "style": {
       }
     }
-  ],
+      ,{
+            "path" : "pages/goods-list/goods-list",
+            "style" : {}
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "luch-request demo",
