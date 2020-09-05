@@ -3,7 +3,7 @@ export type DiffKeys<K extends string | number | symbol> = keyof Record<K, never
 export type LuchPromise<T = any> = Promise<LuchResponse<T>>
 
 export interface LuchRequestConfig {
-  baseUrl?: string;
+  baseURL?: string;
   url?: string;
 
   params?: LooseObject;
@@ -20,6 +20,7 @@ export interface LuchRequestConfig {
   timeout?: number;
   sslVerify?: boolean;
   withCredentials?: boolean;
+  firstIpv4?: boolean;
 
   getTask?: (task: any, options: any) => void;
   validateStatus?: (statusCode: number) => boolean | void;
