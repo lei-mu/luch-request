@@ -40,6 +40,10 @@ export interface LuchResponse<T = any> {
   header: LooseObject;
 };
 
+export interface LuchDownloadResponse extends LuchResponse {
+  tempFilePath: string;
+}
+
 export interface LuchError {
   config: LuchRequestConfig;
   statusCode?: number;
@@ -54,10 +58,15 @@ export abstract class LuchRequestAbstract {
   config: LuchRequestConfig;
   interceptors: {
     request: {
-      use(onSend?: (config: LuchRequestConfig) => LuchRequestConfig): void;
+      use(
+        onSend?: (config: LuchRequestConfig) => LuchRequestConfig
+      ): void;
     };
     response: {
-      use(onSend?: (response: LuchResponse) => LuchResponse, onError?: (response: LuchError) => any): void;
+      use(
+        onSend?: (response: LuchResponse) => LuchResponse,
+        onError?: (response: LuchError) => LuchError | Promise<LuchError>
+      ): void;
     };
   };
   middleware<T>(config: LuchRequestConfig): LuchPromise<T>;
@@ -72,6 +81,8 @@ export abstract class LuchRequestAbstract {
   options<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
   trace<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
 
+  download(url: string, config?: LuchRequestConfig): Promise<LuchDownloadResponse>;
+  
   setConfig(onSend: (config: LuchRequestConfig) => LuchRequestConfig | void): void;
 };
 
