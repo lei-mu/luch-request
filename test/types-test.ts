@@ -1,6 +1,10 @@
 import LuchRequest from "../src/lib/luch-request"
 const luchRequest = new LuchRequest();
 
+luchRequest.setConfig(config => {
+  return config
+})
+
 // LuchRequestAbstract
 luchRequest
 
@@ -29,16 +33,16 @@ interface UserInfo {
 export const reqLogin = () => {
   return luchRequest.get<UserInfo>("/api/login")
 }
-// mock get userInfo
-(async () => {
-  const result = await reqLogin()
-  // interface UserInfo
-  result.data
-})
+  // mock get userInfo
+  ; (async () => {
+    const result = await reqLogin()
+    // interface UserInfo
+    result.data
+  })
 
 // mock request download
 const url = "xxx/xxx/xxx/xxx"
-luchRequest.download(url).then(response=>{
-  // HttpDownloadResponse.tempFilePath
-  response.tempFilePath
-})
+  ; (async () => {
+    const result = await luchRequest.download(url)
+    result.tempFilePath
+  })

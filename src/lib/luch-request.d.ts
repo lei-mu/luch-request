@@ -1,5 +1,5 @@
-export type DiffKeys<K extends string> = K;
-export type HttpPromise<T> = Promise<HttpResponse<T>>;
+type DiffKeys<K extends string> = K;
+type HttpPromise<T> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
   abort: () => void;
@@ -82,7 +82,7 @@ export abstract class HttpRequestAbstract {
 
   download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
   
-  setConfig(onSend: (config: HttpRequestConfig) => HttpRequestConfig | void): void;
+  setConfig(onSend: (config: HttpRequestConfig) => HttpRequestConfig): void;
 }
 
 declare class HttpRequest extends HttpRequestAbstract { }
