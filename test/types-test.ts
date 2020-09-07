@@ -35,3 +35,10 @@ export const reqLogin = () => {
   // interface UserInfo
   result.data
 })
+
+// mock request download
+const url = "xxx/xxx/xxx/xxx"
+luchRequest.download(url).then(response=>{
+  // HttpDownloadResponse.tempFilePath
+  response.tempFilePath
+})

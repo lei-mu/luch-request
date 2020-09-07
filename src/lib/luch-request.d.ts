@@ -1,5 +1,5 @@
 export type DiffKeys<K extends string> = K;
-export type HttpPromise<T = any> = Promise<HttpResponse<T>>;
+export type HttpPromise<T> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
   abort: () => void;
@@ -68,17 +68,17 @@ export abstract class HttpRequestAbstract {
       ): void;
     };
   }
-  middleware<T>(config: HttpRequestConfig): HttpPromise<T>;
-  request<T>(config: HttpRequestConfig): HttpPromise<T>;
-  get<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  upload<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  delete<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  head<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  post<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  put<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  connect<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  options<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  trace<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  middleware<T = any>(config: HttpRequestConfig): HttpPromise<T>;
+  request<T = any>(config: HttpRequestConfig): HttpPromise<T>;
+  get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  upload<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  delete<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  head<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  post<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  put<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  connect<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  options<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  trace<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
 
   download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
   
