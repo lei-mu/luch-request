@@ -1,90 +1,89 @@
-export type LooseObject = Record<string | number | symbol, any>;
-export type DiffKeys<K extends string | number | symbol> = keyof Record<K, never>;
-export type LuchPromise<T = any> = Promise<LuchResponse<T>>;
+export type DiffKeys<K extends string> = K;
+export type HttpPromise<T = any> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
   abort: () => void;
   offHeadersReceived: () => void;
   onHeadersReceived: () => void;
-};
+}
 
-export interface LuchRequestConfig {
+export interface HttpRequestConfig {
   baseURL?: string;
   url?: string;
 
-  params?: LooseObject;
-  data?: LooseObject;
+  params?: Record<string, any>;
+  data?: Record<string, any>;
 
   name?: string;
-  formData?: LooseObject;
+  formData?: Record<string, any>;
 
-  header?: LooseObject;
+  header?: Record<string, any>;
   method?: DiffKeys<"GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD">;
   dataType?: DiffKeys<"json">;
   responseType?: DiffKeys<"text" | "arraybuffer">;
-  custom?: LooseObject;
+  custom?: Record<string, any>;
   timeout?: number;
   sslVerify?: boolean;
   withCredentials?: boolean;
 
-  getTask?: (task: RequestTask, options: LuchRequestConfig) => void;
+  getTask?: (task: RequestTask, options: HttpRequestConfig) => void;
   validateStatus?: (statusCode: number) => boolean | void;
-};
+}
 
-export interface LuchResponse<T = any> {
-  config: LuchRequestConfig;
+export interface HttpResponse<T = any> {
+  config: HttpRequestConfig;
   statusCode: number;
   cookies: Array<string>;
   data: T;
   errMsg: string;
-  header: LooseObject;
-};
+  header: Record<string, any>;
+}
 
-export interface LuchDownloadResponse extends LuchResponse {
+export interface HttpDownloadResponse extends HttpResponse {
   tempFilePath: string;
 }
 
-export interface LuchError {
-  config: LuchRequestConfig;
+export interface HttpError {
+  config: HttpRequestConfig;
   statusCode?: number;
   cookies?: Array<string>;
   data?: any;
   errMsg: string;
-  header?: LooseObject;
-};
+  header?: Record<string, any>;
+}
 
-export abstract class LuchRequestAbstract {
-  constructor(config?: LuchRequestConfig);
-  config: LuchRequestConfig;
+export abstract class HttpRequestAbstract {
+  constructor(config?: HttpRequestConfig);
+  config: HttpRequestConfig;
   interceptors: {
     request: {
       use(
-        onSend?: (config: LuchRequestConfig) => LuchRequestConfig
+        onSend?: (config: HttpRequestConfig) => HttpRequestConfig
       ): void;
     };
     response: {
       use(
-        onSend?: (response: LuchResponse) => LuchResponse,
-        onError?: (response: LuchError) => LuchError | Promise<LuchError>
+        onSend?: (response: HttpResponse) => HttpResponse,
+        onError?: (response: HttpError) => HttpError | Promise<HttpError>
       ): void;
     };
-  };
-  middleware<T>(config: LuchRequestConfig): LuchPromise<T>;
-  request<T>(config: LuchRequestConfig): LuchPromise<T>;
-  get<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  upload<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  delete<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  head<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  post<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  put<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  connect<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  options<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
-  trace<T>(url: string, config?: LuchRequestConfig): LuchPromise<T>;
+  }
+  middleware<T>(config: HttpRequestConfig): HttpPromise<T>;
+  request<T>(config: HttpRequestConfig): HttpPromise<T>;
+  get<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  upload<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  delete<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  head<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  post<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  put<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  connect<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  options<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  trace<T>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
 
-  download(url: string, config?: LuchRequestConfig): Promise<LuchDownloadResponse>;
+  download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
   
-  setConfig(onSend: (config: LuchRequestConfig) => LuchRequestConfig | void): void;
-};
+  setConfig(onSend: (config: HttpRequestConfig) => HttpRequestConfig | void): void;
+}
 
-declare class LuchRequest extends LuchRequestAbstract { };
-export default LuchRequest;
+declare class HttpRequest extends HttpRequestAbstract { }
+export default HttpRequest;
