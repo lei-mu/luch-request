@@ -14,8 +14,13 @@ export interface HttpRequestConfig {
   params?: Record<string, any>;
   data?: Record<string, any>;
 
+  // ---上传参数 start---
   name?: string;
   formData?: Record<string, any>;
+  filePath?: string;
+  files?: Array<string>;
+  file?: File;
+  // ---上传参数 end---
 
   header?: Record<string, any>;
   method?: DiffKeys<"GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD">;
@@ -23,12 +28,14 @@ export interface HttpRequestConfig {
   responseType?: DiffKeys<"text" | "arraybuffer">;
   custom?: Record<string, any>;
   timeout?: number;
+  firstIpv4?: boolean;
   sslVerify?: boolean;
   withCredentials?: boolean;
 
   getTask?: (task: RequestTask, options: HttpRequestConfig) => void;
   validateStatus?: (statusCode: number) => boolean | void;
 }
+
 
 export interface HttpResponse<T = any> {
   config: HttpRequestConfig;
