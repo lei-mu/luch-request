@@ -8,31 +8,49 @@ export interface RequestTask {
 }
 
 export interface HttpRequestConfig {
+  /** 请求基地址 */
   baseURL?: string;
+  /** 请求服务器接口地址 */
   url?: string;
 
+  /** 请求查询参数，自动拼接为查询字符串 */
   params?: Record<string, any>;
+  /** 请求体参数 */
   data?: Record<string, any>;
 
-  // ---上传参数 start---
+  /** 文件对应的 key */
   name?: string;
+  /** HTTP 请求中其他额外的 form data */
   formData?: Record<string, any>;
+  /** 要上传文件资源的路径。 */
   filePath?: string;
+  /** 需要上传的文件列表。使用 files 时，filePath 和 name 不生效，App、H5（ 2.6.15+） */
   files?: Array<string>;
+  /** 要上传的文件对象，仅H5（2.6.15+）支持 */
   file?: File;
-  // ---上传参数 end---
 
+  /** 请求头信息 */
   header?: Record<string, any>;
+  /** 请求方式 */
   method?: DiffKeys<"GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD">;
+  /** 如果设为 json，会尝试对返回的数据做一次 JSON.parse */
   dataType?: DiffKeys<"json">;
+  /** 设置响应的数据类型，App和支付宝小程序不支持 */
   responseType?: DiffKeys<"text" | "arraybuffer">;
+  /** 自定义参数 */
   custom?: Record<string, any>;
+  /** 超时时间，仅微信小程序（2.10.0）、支付宝小程序支持 */
   timeout?: number;
+  /** DNS解析时优先使用ipv4，仅 App-Android 支持 (HBuilderX 2.8.0+) */
   firstIpv4?: boolean;
+  /** 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+） */
   sslVerify?: boolean;
+  /** 跨域请求时是否携带凭证（cookies）仅H5支持（HBuilderX 2.6.15+） */
   withCredentials?: boolean;
 
+  /** 返回当前请求的task, options。请勿在此处修改options。 */
   getTask?: (task: RequestTask, options: HttpRequestConfig) => void;
+  /**  全局自定义验证器 */
   validateStatus?: (statusCode: number) => boolean | void;
 }
 

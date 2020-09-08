@@ -14,7 +14,7 @@ luchRequest.config
 const data = new FormData()
 // LuchRequestAbstract.interceptors
 luchRequest.interceptors.request.use(config => {
-  return config
+  return config.file
 })
 luchRequest.interceptors.response.use(
   response => {
