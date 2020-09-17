@@ -1,4 +1,5 @@
 type DiffKeys<K extends string> = K;
+type AnyObject = Record<string | number | symbol, any>
 type HttpPromise<T> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
@@ -14,14 +15,14 @@ export interface HttpRequestConfig {
   url?: string;
 
   /** 请求查询参数，自动拼接为查询字符串 */
-  params?: Record<string, any>;
+  params?: AnyObject;
   /** 请求体参数 */
-  data?: Record<string, any>;
+  data?: AnyObject;
 
   /** 文件对应的 key */
   name?: string;
   /** HTTP 请求中其他额外的 form data */
-  formData?: Record<string, any>;
+  formData?: AnyObject;
   /** 要上传文件资源的路径。 */
   filePath?: string;
   /** 需要上传的文件列表。使用 files 时，filePath 和 name 不生效，App、H5（ 2.6.15+） */
@@ -30,15 +31,15 @@ export interface HttpRequestConfig {
   file?: File;
 
   /** 请求头信息 */
-  header?: Record<string, any>;
+  header?: AnyObject;
   /** 请求方式 */
   method?: DiffKeys<"GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD">;
   /** 如果设为 json，会尝试对返回的数据做一次 JSON.parse */
-  dataType?: DiffKeys<"json">;
+  dataType?: DiffKeys<"json" | string>;
   /** 设置响应的数据类型，App和支付宝小程序不支持 */
   responseType?: DiffKeys<"text" | "arraybuffer">;
   /** 自定义参数 */
-  custom?: Record<string, any>;
+  custom?: AnyObject;
   /** 超时时间，仅微信小程序（2.10.0）、支付宝小程序支持 */
   timeout?: number;
   /** DNS解析时优先使用ipv4，仅 App-Android 支持 (HBuilderX 2.8.0+) */
@@ -61,7 +62,7 @@ export interface HttpResponse<T = any> {
   cookies: Array<string>;
   data: T;
   errMsg: string;
-  header: Record<string, any>;
+  header: AnyObject;
 }
 
 export interface HttpDownloadResponse extends HttpResponse {
@@ -74,39 +75,36 @@ export interface HttpError {
   cookies?: Array<string>;
   data?: any;
   errMsg: string;
-  header?: Record<string, any>;
+  header?: AnyObject;
 }
-
+export interface HttpInterceptorManager<V, E> {
+  use(
+    onFulfilled?: (config: V) => V,
+    onRejected?: (config: E) => Promise<E> | E
+  ): void;
+  eject(id: number): void;
+}
 export abstract class HttpRequestAbstract {
   constructor(config?: HttpRequestConfig);
   config: HttpRequestConfig;
   interceptors: {
-    request: {
-      use(
-        onSend?: (config: HttpRequestConfig) => HttpRequestConfig
-      ): void;
-    };
-    response: {
-      use(
-        onSend?: (response: HttpResponse) => HttpResponse,
-        onError?: (response: HttpError) => HttpError | Promise<HttpError>
-      ): void;
-    };
+    request: HttpInterceptorManager<HttpRequestConfig, HttpRequestConfig>;
+    response: HttpInterceptorManager<HttpResponse, HttpError>;
   }
   middleware<T = any>(config: HttpRequestConfig): HttpPromise<T>;
   request<T = any>(config: HttpRequestConfig): HttpPromise<T>;
   get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
   upload<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  delete<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  head<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  post<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  put<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  connect<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  options<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  trace<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
+  delete<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  head<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  post<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  put<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  connect<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  options<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  trace<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
 
   download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
-  
+
   setConfig(onSend: (config: HttpRequestConfig) => HttpRequestConfig): void;
 }
 
