@@ -4,7 +4,11 @@ const luchRequest = new LuchRequest();
 luchRequest.setConfig(config => {
   return config
 })
-
+luchRequest.post("url", { 123: 60 }, {
+  baseURL: "/api"
+}).then(response=>{
+  response.config
+})
 // LuchRequestAbstract
 luchRequest
 
@@ -14,11 +18,13 @@ luchRequest.config
 const data = new FormData()
 // LuchRequestAbstract.interceptors
 luchRequest.interceptors.request.use(config => {
-  return config.file
+  return config
+}, (config) => {
+  return Promise.reject(config)
 })
 luchRequest.interceptors.response.use(
   response => {
-    return response
+    return response.data
   },
   (response) => {
     return Promise.reject(response)
