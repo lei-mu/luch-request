@@ -1,5 +1,4 @@
 type AnyObject = Record<string | number | symbol, any>
-type HttpPromise<T> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
   abort: () => void;
@@ -56,8 +55,6 @@ export interface HttpRequestConfig {
   /**  全局自定义验证器 */
   validateStatus?: (statusCode: number) => boolean | void;
 }
-
-
 export interface HttpResponse<T = any> {
   config: HttpRequestConfig;
   statusCode: number;
@@ -66,11 +63,15 @@ export interface HttpResponse<T = any> {
   errMsg: string;
   header: AnyObject;
 }
-
+export interface HttpUploadResponse<T = any> {
+  config: HttpRequestConfig;
+  statusCode: number;
+  data: T;
+  errMsg: string;
+}
 export interface HttpDownloadResponse extends HttpResponse {
   tempFilePath: string;
 }
-
 export interface HttpError {
   config: HttpRequestConfig;
   statusCode?: number;
@@ -93,17 +94,17 @@ export abstract class HttpRequestAbstract {
     request: HttpInterceptorManager<HttpRequestConfig>;
     response: HttpInterceptorManager<HttpResponse, HttpError>;
   }
-  middleware<T = any>(config: HttpRequestConfig): HttpPromise<T>;
-  request<T = any>(config: HttpRequestConfig): HttpPromise<T>;
-  get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  upload<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  delete<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  head<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  post<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  put<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  connect<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  options<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  trace<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  middleware<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
+  request<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
+  get<T = any>(url: string, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  upload<T = any>(url: string, config?: HttpRequestConfig): Promise<HttpUploadResponse<T>>;
+  delete<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  head<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  post<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  put<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  connect<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  options<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  trace<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
 
   download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
 
