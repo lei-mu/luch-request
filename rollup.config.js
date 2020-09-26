@@ -67,6 +67,7 @@ export default {
       targets: [
         {src: ['src/lib/utils.js', 'src/lib/core', 'src/lib/helpers', 'src/lib/adapters'], dest: 'DCloud/luch-request'},
         {src: 'src/lib/luch-request.js', dest: 'DCloud/luch-request', rename: 'index.js'},
+        {src: 'src/lib/luch-request.d.ts', dest: 'DCloud/luch-request', rename: 'index.d.ts'},
         {src: ['example/request-demo'], dest: 'DCloud/'},
       ]
     }),
