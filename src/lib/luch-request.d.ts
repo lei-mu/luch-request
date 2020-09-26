@@ -1,13 +1,10 @@
-type DiffKeys<K extends string> = K;
 type AnyObject = Record<string | number | symbol, any>
-type HttpPromise<T> = Promise<HttpResponse<T>>;
 
 export interface RequestTask {
   abort: () => void;
   offHeadersReceived: () => void;
   onHeadersReceived: () => void;
 }
-
 export interface HttpRequestConfig {
   /** 请求基地址 */
   baseURL?: string;
@@ -26,18 +23,22 @@ export interface HttpRequestConfig {
   /** 要上传文件资源的路径。 */
   filePath?: string;
   /** 需要上传的文件列表。使用 files 时，filePath 和 name 不生效，App、H5（ 2.6.15+） */
-  files?: Array<string>;
+  files?: Array<{
+    name?: string;
+    file?: File;
+    uri: string;
+  }>;
   /** 要上传的文件对象，仅H5（2.6.15+）支持 */
   file?: File;
 
   /** 请求头信息 */
   header?: AnyObject;
   /** 请求方式 */
-  method?: DiffKeys<"GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD">;
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD";
   /** 如果设为 json，会尝试对返回的数据做一次 JSON.parse */
-  dataType?: DiffKeys<"json" | string>;
+  dataType?: string;
   /** 设置响应的数据类型，App和支付宝小程序不支持 */
-  responseType?: DiffKeys<"text" | "arraybuffer">;
+  responseType?: "text" | "arraybuffer";
   /** 自定义参数 */
   custom?: AnyObject;
   /** 超时时间，仅微信小程序（2.10.0）、支付宝小程序支持 */
@@ -54,8 +55,6 @@ export interface HttpRequestConfig {
   /**  全局自定义验证器 */
   validateStatus?: (statusCode: number) => boolean | void;
 }
-
-
 export interface HttpResponse<T = any> {
   config: HttpRequestConfig;
   statusCode: number;
@@ -64,11 +63,15 @@ export interface HttpResponse<T = any> {
   errMsg: string;
   header: AnyObject;
 }
-
+export interface HttpUploadResponse<T = any> {
+  config: HttpRequestConfig;
+  statusCode: number;
+  data: T;
+  errMsg: string;
+}
 export interface HttpDownloadResponse extends HttpResponse {
   tempFilePath: string;
 }
-
 export interface HttpError {
   config: HttpRequestConfig;
   statusCode?: number;
@@ -77,7 +80,7 @@ export interface HttpError {
   errMsg: string;
   header?: AnyObject;
 }
-export interface HttpInterceptorManager<V, E> {
+export interface HttpInterceptorManager<V, E = V> {
   use(
     onFulfilled?: (config: V) => V,
     onRejected?: (config: E) => Promise<E> | E
@@ -88,20 +91,20 @@ export abstract class HttpRequestAbstract {
   constructor(config?: HttpRequestConfig);
   config: HttpRequestConfig;
   interceptors: {
-    request: HttpInterceptorManager<HttpRequestConfig, HttpRequestConfig>;
+    request: HttpInterceptorManager<HttpRequestConfig>;
     response: HttpInterceptorManager<HttpResponse, HttpError>;
   }
-  middleware<T = any>(config: HttpRequestConfig): HttpPromise<T>;
-  request<T = any>(config: HttpRequestConfig): HttpPromise<T>;
-  get<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  upload<T = any>(url: string, config?: HttpRequestConfig): HttpPromise<T>;
-  delete<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  head<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  post<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  put<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  connect<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  options<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
-  trace<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): HttpPromise<T>;
+  middleware<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
+  request<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>>;
+  get<T = any>(url: string, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  upload<T = any>(url: string, config?: HttpRequestConfig): Promise<HttpUploadResponse<T>>;
+  delete<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  head<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  post<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  put<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  connect<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  options<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
+  trace<T = any>(url: string, data?: AnyObject, config?: HttpRequestConfig): Promise<HttpResponse<T>>;
 
   download(url: string, config?: HttpRequestConfig): Promise<HttpDownloadResponse>;
 
