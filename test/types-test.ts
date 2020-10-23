@@ -31,7 +31,6 @@ luchRequest.interceptors.response.use(
   }
 )
 
-
 // mock request login
 interface UserInfo {
   username: string;
