@@ -95,5 +95,8 @@
       "helpMessage": "",
       "autoFix": false
     }
+  },
+  "dependencies": {
+    "@dcloudio/types": "^2.0.16"
   }
 }
