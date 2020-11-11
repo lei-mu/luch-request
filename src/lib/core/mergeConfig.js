@@ -31,6 +31,7 @@ export default (globalsConfig, config2 = {}) => {
     method: method,
     url: config2.url || '',
     params: config2.params || {},
+    path: config2.path || undefined,
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
     header: deepMerge(globalsConfig.header || {}, config2.header || {})
   }
