@@ -26,14 +26,20 @@ const mergeKeys = (keys, globalsConfig, config2) => {
  */
 export default (globalsConfig, config2 = {}) => {
   const method = config2.method || globalsConfig.method || 'GET'
+  const configPath = config2.path || undefined
   let config = {
     baseURL: globalsConfig.baseURL || '',
     method: method,
     url: config2.url || '',
     params: config2.params || {},
-    path: config2.path || undefined,
+    path: configPath,
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
     header: deepMerge(globalsConfig.header || {}, config2.header || {})
+  }
+  if (configPath) {
+    Object.keys(configPath).forEach(p1 => {
+      config.url.replace(p1, configPath[p1])
+    })
   }
   const defaultToConfig2Keys = ['getTask', 'validateStatus']
   config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
