@@ -246,7 +246,10 @@ issue
 
 土豪赞赏
 ------------
-[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")
+[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "wechat 打赏")
+[![支付宝 打赏](https://oss.quanzhan.co/images/common/my-alipay-qrcode.jpg?x-oss-process=image/resize,m_lfit,h_150,w_150 "支付宝 打赏")](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "支付宝 打赏")
+
+[打赏事宜具体说明](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "打赏事宜具体说明")
 
 
 ###### 您的鼓励是我更新的动力
