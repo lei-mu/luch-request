@@ -69,6 +69,8 @@ http.setConfig((config) => { /* 设置全局配置 */
     a: 1, // 演示
     b: 2 // 演示
   }
+	console.log('全局默认config');
+	console.log(config);
   return config
 })
 

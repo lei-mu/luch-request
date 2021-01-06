@@ -1,4 +1,4 @@
-import {deepMerge} from '../utils'
+import {deepMerge, isUndefined} from '../utils'
 
 /**
  * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
@@ -10,9 +10,9 @@ import {deepMerge} from '../utils'
 const mergeKeys = (keys, globalsConfig, config2) => {
   let config = {}
   keys.forEach(prop => {
-    if (typeof config2[prop] !== 'undefined') {
+    if (!isUndefined(config2[prop])) {
       config[prop] = config2[prop]
-    } else if (typeof globalsConfig[prop] !== 'undefined') {
+    } else if (!isUndefined(globalsConfig[prop])) {
       config[prop] = globalsConfig[prop]
     }
   })
@@ -39,7 +39,13 @@ export default (globalsConfig, config2 = {}) => {
 
   // eslint-disable-next-line no-empty
   if (method === 'DOWNLOAD') {
-
+    // #ifdef H5 || APP-PLUS
+    if (!isUndefined(config2.timeout)) {
+      config['timeout'] = config2['timeout']
+    } else if (!isUndefined(globalsConfig.timeout)) {
+      config['timeout'] = globalsConfig['timeout']
+    }
+    // #endif
   } else if (method === 'UPLOAD') {
     delete config.header['content-type']
     delete config.header['Content-Type']
@@ -55,17 +61,25 @@ export default (globalsConfig, config2 = {}) => {
       // #endif
       'filePath',
       'name',
+      // #ifdef H5 || APP-PLUS
+      'timeout',
+      // #endif
       'formData',
     ]
     uploadKeys.forEach(prop => {
-      if (typeof config2[prop] !== 'undefined') {
+      if (!isUndefined(config2[prop])) {
         config[prop] = config2[prop]
       }
     })
+    // #ifdef H5 || APP-PLUS
+    if (isUndefined(config.timeout) && !isUndefined(globalsConfig.timeout)) {
+      config['timeout'] = globalsConfig['timeout']
+    }
+    // #endif
   } else {
     const defaultsKeys = [
       'data',
-      // #ifdef MP-ALIPAY || MP-WEIXIN
+      // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
       'timeout',
       // #endif
       'dataType',

@@ -1,14 +1,14 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.4
+ * @version 3.0.5
  * @Author lu-ch
- * @Date 2020-07-05
+ * @Date 2021-01-06
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
  * DCloud: http://ext.dcloud.net.cn/plugin?id=392
- * HBuilderX: beat-2.7.14 alpha-2.8.0
+ * HBuilderX: beat-3.0.4 alpha-3.0.4
  */
 
 
@@ -27,7 +27,7 @@ export default class Request {
    * @param {String} arg.dataType = [json] - 全局默认的dataType
    * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。App和支付宝小程序不支持
    * @param {Object} arg.custom - 全局默认的自定义参数
-   * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认30000。仅微信小程序（2.10.0）、支付宝小程序支持
+   * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
    * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
    * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
    * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
@@ -129,7 +129,7 @@ export default class Request {
 
   // #endif
 
-  // #ifdef APP-PLUS || H5 || MP-WEIXIN
+  // #ifdef H5 || MP-WEIXIN
   connect(url, data, options = {}) {
     return this.middleware({
       url,
@@ -141,7 +141,7 @@ export default class Request {
 
   // #endif
 
-  // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
+  // #ifdef  H5 || MP-WEIXIN || MP-BAIDU
   head(url, data, options = {}) {
     return this.middleware({
       url,
@@ -165,7 +165,7 @@ export default class Request {
 
   // #endif
 
-  // #ifdef APP-PLUS || H5 || MP-WEIXIN
+  // #ifdef H5 || MP-WEIXIN
   trace(url, data, options = {}) {
     return this.middleware({
       url,
