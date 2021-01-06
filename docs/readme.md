@@ -27,7 +27,7 @@ footer: MIT Licensed | Copyright © 2020 quanzhan.co
 <div class="friend-link-content">
 <div class="friend-link-list">
 <a href="https://www.uviewui.com" target="_blank">
-<img src="http://placekitten.com/300/127" class="friend-link-img-list" alt="uview ui">
+<img src="https://cdn.jsdelivr.net/gh/lei-mu/qz/friendly-link/www.uviewui.com.png" class="friend-link-img-list" alt="uview ui">
 </a>
 </div>
 </div>
