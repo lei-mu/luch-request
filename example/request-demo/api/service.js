@@ -1,12 +1,13 @@
 /**
- * @version 3.0.4
+ * @version 3.0.5
  * @Author lu-ch
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
  * DCloud: http://ext.dcloud.net.cn/plugin?id=392
- * HBuilderX: beat-2.7.14 alpha-2.8.0
+ * HBuilderX: beat-3.0.4 alpha-3.0.4
  */
+
 import Request from '@/utils/luch-request/index.js'
 
 
