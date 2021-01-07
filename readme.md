@@ -65,8 +65,8 @@ http.get('/user/login', {
     // #ifndef MP-ALIPAY || APP-PLUS
     responseType: 'text',
     // #endif
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
+    // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
+    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
@@ -108,8 +108,8 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     // #ifndef MP-ALIPAY || APP-PLUS
     responseType: 'text',
     // #endif
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
+    // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
+    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
@@ -148,6 +148,9 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
     name: 'file', // 文件对应的 key , 开发者在服务器端通过这个 key 可以获取到文件二进制内容
+    // #ifdef H5 || APP-PLUS
+    timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
+    // #endif
     header: {},  /* 会与全局header合并，如有同名属性，局部覆盖全局 */
     formData: {}, // HTTP 请求中其他额外的 form data
     // 返回当前请求的task, options。请勿在此处修改options。非必填
@@ -205,7 +208,7 @@ luch-request Guide
 tip
 ------------
 - nvue 不支持全局挂载
-- 当前的hbuilderx 版本号：beat-2.7.14 alpha-2.8.0
+- 当前的hbuilderx 版本号：beat-3.0.4 alpha-3.0.4
 - 推荐使用下载插件的方式使用。如果本插件完全满足你的需求可直接使用 ` npm `安装
 - license: MIT
 
