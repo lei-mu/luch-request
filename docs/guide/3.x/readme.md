@@ -497,17 +497,6 @@ http.interceptors.response.use((response) => { /* 对响应成功做点什么 �
 ```
 
 
-
-
-其他
-------------
-### 参与插件贡献
-**代码pr**:理论上不允许任何人往`master`分支合并代码，如果你有重大改动，请联系我的邮箱（`webwork.s@qq.com`）或者qq(`370306150`),我会专门为你建立一条分支。
-
-**其他**：[鸣谢](/acknowledgement/)对插件做出贡献者
-### ts 支持
-<a href="https://github.com/lei-mu/luch-request/blob/master/src/lib/luch-request.d.ts" target="_blank" rel="noopener noreferrer nofollow">index.d.ts</a>。目前，该文件由<a href="https://github.com/TuiMao233" target="_blank" rel="noopener noreferrer nofollow">@TuiMao233</a>提供。希望更多的人可以参与进来，pr请提到`request-ts`分支。<a href="https://github.com/lei-mu/luch-request/tree/request-ts" target="_blank" rel="noopener noreferrer nofollow">request-ts</a>
-
 土豪赞赏
 ------------
 [打赏事宜具体说明](/acknowledgement/)

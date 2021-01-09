@@ -26,7 +26,7 @@ footer: MIT Licensed | Copyright © 2020 quanzhan.co
 </p>
 <div class="friend-link-content">
 <div class="friend-link-list">
-<a href="https://www.uviewui.com" target="_blank">
+<a href="https://www.uviewui.com" target="_blank" data-describe="uview 一直不给我给图，先用截图代替" title="uView UI，是uni-app生态最优秀的UI框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水">
 <img src="https://cdn.jsdelivr.net/gh/lei-mu/qz/friendly-link/www.uviewui.com.png" class="friend-link-img-list" alt="uview ui">
 </a>
 </div>
