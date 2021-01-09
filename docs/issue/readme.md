@@ -67,3 +67,14 @@ title: 常见问题
     }
   })
 ````
+
+#### 8. 发送FormData？
+uni 不支持发送`FormData`对象
+
+对于 POST 方法且 header['content-type'] 为 application/json 的数据，会进行 JSON 序列化。
+
+对于 POST 方法且 header['content-type'] 为 application/x-www-form-urlencoded 的数据，会将数据转换为 query string。
+
+所以，如果你想发送formData 类型数据，请将`header['content-type']` 设置为 `application/x-www-form-urlencoded`。
+
+如果你的formData 里有`file` 怎么办？请使用插件的[upload](/guide/3.x/#upload)方法。
