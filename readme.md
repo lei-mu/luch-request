@@ -66,7 +66,7 @@ http.get('/user/login', {
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
@@ -109,7 +109,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
