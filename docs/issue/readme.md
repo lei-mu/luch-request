@@ -34,3 +34,36 @@ title: 常见问题
 #### 6. 如何jwt无痛刷新？
 
 [jwt无痛刷新](/resources/article.html#jwt-%E6%97%A0%E7%97%9B%E5%88%B7%E6%96%B0)
+
+#### 7. 如何配置超时时间？
+**全局**
+
+网络请求的 超时时间 可以统一在 manifest.json 中配置 [networkTimeout](https://uniapp.dcloud.io/collocation/manifest?id=networktimeout)
+
+插件的全局配置超时时间：[插件-全局请求配置-timeout](/guide/3.x/#%E5%8F%AF%E9%85%8D%E7%BD%AE%E9%A1%B9)。必须请求方法和终端支持`timeout`,支持度参照[timeout 支持度](/guide/3.x/#middleware)
+
+**局部**
+
+局部配置项`timeout`：[timeout](/guide/3.x/#request)。必须请求方法和终端支持`timeout`,支持度参照[timeout 支持度](/guide/3.x/#middleware)
+
+如果终端和请求方式不支持`timeout`,可参考如下实现
+```` javascript
+ http.request({
+    method: 'POST', // 请求方法必须大写 [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE]
+    url: '/user/12345',
+    data: {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    },
+    params: { // 会拼接到url上
+      token: '1111'
+    },
+    // 返回当前请求的task, options。请勿在此处修改options。非必填
+    getTask: (task, options) => {
+      // 500ms 后终止请求
+      setTimeout(() => {
+       task.abort()
+      }, 500)
+    }
+  })
+````

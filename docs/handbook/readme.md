@@ -24,9 +24,11 @@ luch-request 是一个基于Promise 开发的uni-app跨平台、项目级别的�
 - 对参数的处理比uni.request 更强
 
 ### 它是如何工作的
-luch-request 基于Promise,使用条件编译开发，专用于uni-app项目（事实上，我们可以剔除对应的终端以外的代码，直接在对应终端原生语言使用）。为了降低学习成本，一些api参照axios 设计。并扩展一些其它的api
+luch-request 基于Promise,使用条件编译开发，专用于uni-app项目（事实上，我们可以剔除对应的终端以外的代码，直接在对应终端原生语言使用）。为了降低学习成本，一些api参照axios 设计。并扩展一些其它的api。
 <br>
-在项目中，我们可以通过`局部引入`和`全局引入`的方式去使用它。
+对于某些终端不支持的option,插件已通过内部实现，过滤不支持的参数。
+<br>
+在项目中，我们可以通过`局部引入`和`全局引入`的方式去使用它（参考：[示例项目](https://github.com/lei-mu/luch-request/tree/master/example/request-demo)）。
 
 ### 为什么不是...?
 

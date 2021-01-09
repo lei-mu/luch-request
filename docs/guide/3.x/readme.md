@@ -88,7 +88,7 @@ http.get('/user/login', {
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
@@ -134,7 +134,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true, // 验证 ssl 证书 仅5+App安卓端支持（HBuilderX 2.3.3+）
@@ -206,16 +206,17 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 luch-request API
 ------------
 ### request
+参考文档：[uni.request](https://uniapp.dcloud.io/api/request/request)
 ``` javascript 
  http.request({
-    method: 'POST', // 请求方法必须大写
+    method: 'POST', // 请求方法必须大写 [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE]
     url: '/user/12345',
     data: {
       firstName: 'Fred',
       lastName: 'Flintstone'
     },
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
+    // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     // #endif
     params: { // 会拼接到url上
       token: '1111'
@@ -237,6 +238,7 @@ luch-request API
   })
 ```
 ### upload
+参考文档：[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file?id=uploadfile)
 ``` javascript 
   // 具体参数说明：[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file)
   http.upload('api/upload/img', {
@@ -249,6 +251,9 @@ luch-request API
     // #endif
     filePath: '', // 要上传文件资源的路径。
     name: 'file', // 文件对应的 key , 开发者在服务器端通过这个 key 可以获取到文件二进制内容
+    // #ifdef H5 || APP-PLUS
+    timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
+    // #endif
     header: {}, /* 会与全局header合并，如有同名属性，局部覆盖全局 */
     custom: {}, // 自定义参数
     formData: {}, // HTTP 请求中其他额外的 form data
@@ -268,11 +273,15 @@ luch-request API
   })
 ```
 ### download
+参考文档：[uni.downloadFile](https://uniapp.dcloud.io/api/request/network-file?id=downloadfile)
 ``` javascript 
 
   // 具体参数说明：[uni.downloadFile](https://uniapp.dcloud.io/api/request/network-file?id=downloadfile)
   http.download('api/download', {
     params: {}, /* 会加在url上 */
+    // #ifdef H5 || APP-PLUS
+    timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
+    // #endif
     header: {}, /* 会与全局header合并，如有同名属性，局部覆盖全局 */
     custom: {}, // 自定义参数
     // 返回当前请求的task, options。非必填
@@ -300,9 +309,7 @@ luch-request API
       firstName: 'Fred',
       lastName: 'Flintstone'
     },
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000, // 仅微信小程序（2.10.0）、支付宝小程序支持
-    // #endif
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
     params: { // 会拼接到url上
       token: '1111'
     },
@@ -322,6 +329,39 @@ luch-request API
     //}
   })
 ```
+
+
+
+**method 支持度**
+
+|method|App|H5|微信小程序|支付宝小程序|百度小程序|字节跳动小程序|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|GET|√|√|√|√|√|√|
+|POST|√|√|√|√|√|√|
+|PUT|√|√|√|x|√|√|
+|DELETE|√|√|√|x|√|x|
+|CONNECT|x|√|√|x|x|x|
+|HEAD|x|√|√|x|√|x|
+|OPTIONS|√|√|√|x|√|x|
+|TRACE|x|√|√|x|x|x|
+|UPLOAD|√|√|√|√|√|√|
+|DOWNLOAD|√|√|√|√|√|√|
+
+**timeout 支持度**
+|method|App|H5|微信小程序|支付宝小程序|百度小程序|字节跳动小程序|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|GET|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|√ (2.10.0)|√|x|x|
+|POST|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|√ (2.10.0)|√|x|x|
+|PUT|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|DELETE|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|CONNECT|x|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|HEAD|x|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|OPTIONS|x|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|TRACE|x|√ (HBuilderX 2.9.9+)|√ (2.10.0)|x|x|x|
+|UPLOAD|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|x|x|x|x|
+|DOWNLOAD|√ (HBuilderX 2.9.9+)|√ (HBuilderX 2.9.9+)|x|x|x|x|
+
+
 ### 实例方法
 
 ``` javascript
@@ -352,8 +392,8 @@ http.trace(url[, data[, config]])
     // #endif
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {}, // 全局自定义参数默认值
-    // #ifdef MP-ALIPAY || MP-WEIXIN
-    timeout: 30000,
+    // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
+    timeout: 60000,
     // #endif
     // #ifdef APP-PLUS
     sslVerify: true,
@@ -459,6 +499,14 @@ http.interceptors.response.use((response) => { /* 对响应成功做点什么 �
 
 
 
+其他
+------------
+### 参与插件贡献
+**代码pr**:理论上不允许任何人往`master`分支合并代码，如果你有重大改动，请联系我的邮箱（`webwork.s@qq.com`）或者qq(`370306150`),我会专门为你建立一条分支。
+
+**其他**：[鸣谢](/acknowledgement/)对插件做出贡献者
+### ts 支持
+<a href="https://github.com/lei-mu/luch-request/blob/master/src/lib/luch-request.d.ts" target="_blank" rel="noopener noreferrer nofollow">index.d.ts</a>。目前，该文件由<a href="https://github.com/TuiMao233" target="_blank" rel="noopener noreferrer nofollow">@TuiMao233</a>提供。希望更多的人可以参与进来，pr请提到`request-ts`分支。<a href="https://github.com/lei-mu/luch-request/tree/request-ts" target="_blank" rel="noopener noreferrer nofollow">request-ts</a>
 
 土豪赞赏
 ------------
