@@ -1,3 +1,12 @@
+## 3.0.5 (2021-01-10)
+### Features
+
+* [重要] APP不再支持`CONNECT`、`HEAD`、`TRACE`请求方式。[uni.request](https://uniapp.dcloud.io/api/request/request)
+* [重要]全局默认`timeout`由`30000`ms,改为`60000`ms 
+* [重要]增加`index.d.ts`文件支持。感谢`Mr_Mao`的支持。github:`https://github.com/TuiMao233` 
+* [重要]网络请求相关接口 uni.request、uni.uploadFile、uni.downloadFile 支持 timeout 参数。 
+* [重要]返回结果response 增加`fullPath`参数。 
+
 ## 3.0.4 (2020-07-05)
 
 1. New Feature: request 方法增加 ` firstIpv4 `配置项  
