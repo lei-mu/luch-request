@@ -24,6 +24,7 @@ title: 鸣谢
 - qq:`78****245`
 - `346****37@qq.com`
 - 名字找不到了 0.0
+- <a href="https://www.regaing.cn" target="_blank" rel="noopener noreferrer nofollow">记得</a>
 - ...
 
 插件贡献
