@@ -38,7 +38,7 @@ export interface HttpRequestConfig<T = Tasks> {
   method?: "GET" | "POST" | "PUT" | "DELETE" | "CONNECT" | "HEAD" | "OPTIONS" | "TRACE" | "UPLOAD" | "DOWNLOAD";
   /** 如果设为 json，会尝试对返回的数据做一次 JSON.parse */
   dataType?: string;
-  /** 设置响应的数据类型，App和支付宝小程序不支持 */
+  /** 设置响应的数据类型，支付宝小程序不支持 */
   responseType?: "text" | "arraybuffer";
   /** 自定义参数 */
   custom?: AnyObject;

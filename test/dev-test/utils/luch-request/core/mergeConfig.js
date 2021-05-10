@@ -83,7 +83,7 @@ export default (globalsConfig, config2 = {}) => {
       'timeout',
       // #endif
       'dataType',
-      // #ifndef MP-ALIPAY || APP-PLUS
+      // #ifndef MP-ALIPAY
       'responseType',
       // #endif
       // #ifdef APP-PLUS

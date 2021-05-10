@@ -1,9 +1,9 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.5
+ * @version 3.0.6
  * @Author lu-ch
- * @Date 2021-01-06
+ * @Date 2021-05-10
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request

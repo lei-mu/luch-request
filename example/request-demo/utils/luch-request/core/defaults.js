@@ -8,7 +8,7 @@ export default {
   header: {},
   method: 'GET',
   dataType: 'json',
-  // #ifndef MP-ALIPAY || APP-PLUS
+  // #ifndef MP-ALIPAY
   responseType: 'text',
   // #endif
   custom: {},
