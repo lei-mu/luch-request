@@ -149,7 +149,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
     name: 'file', // 文件对应的 key , 开发者在服务器端通过这个 key 可以获取到文件二进制内容
     // #ifdef H5 || APP-PLUS
-    timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
     // #endif
     header: {},  /* 会与全局header合并，如有同名属性，局部覆盖全局 */
     formData: {}, // HTTP 请求中其他额外的 form data
