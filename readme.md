@@ -62,7 +62,7 @@ http.get('/user/login', {
     dataType: 'json',
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
-    // #ifndef MP-ALIPAY || APP-PLUS
+    // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
@@ -105,7 +105,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     dataType: 'json',
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
-    // #ifndef MP-ALIPAY || APP-PLUS
+    // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
