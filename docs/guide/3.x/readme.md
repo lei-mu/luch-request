@@ -41,7 +41,7 @@ cli 用户使用npm 包需增加以下配置(<a href="https://uniapp.dcloud.io/q
 ```
 
 ::: warning
-cli用户使用npm包，为什么要加以上配置[详见](/issue/#_1-%E4%B8%BA%E4%BB%80%E4%B9%88cli%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8-npm-%E6%96%B9%E5%BC%8F%E5%BC%95%E5%85%A5)
+cli用户使用npm包，为什么要加以上配置[详见](/issue/#%E5%A6%82%E6%9E%9Ccli-%E7%94%A8%E6%88%B7npm-%E5%BC%95%E5%85%A5%E6%8A%A5%E9%94%99%EF%BC%9F)
 :::
 
 ### github
@@ -84,7 +84,7 @@ http.get('/user/login', {
     dataType: 'json',
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
-    // #ifndef MP-ALIPAY || APP-PLUS
+    // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
@@ -130,7 +130,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     dataType: 'json',
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
-    // #ifndef MP-ALIPAY || APP-PLUS
+    // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
     // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
@@ -177,7 +177,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
     custom: {auth: true}, // 可以加一些自定义参数，在拦截器等地方使用。比如这里我加了一个auth，可在拦截器里拿到，如果true就传token
     name: 'file', // 文件对应的 key , 开发者在服务器端通过这个 key 可以获取到文件二进制内容
     // #ifdef H5 || APP-PLUS
-    timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
+    timeout: 60000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
     // #endif
     header: {},  /* 会与全局header合并，如有同名属性，局部覆盖全局 */
     formData: {}, // HTTP 请求中其他额外的 form data
@@ -387,7 +387,7 @@ http.trace(url[, data[, config]])
     header: {},
     method: 'GET',
     dataType: 'json',
-    // #ifndef MP-ALIPAY || APP-PLUS
+    // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
     // 注：如果局部custom与全局custom有同名属性，则后面的属性会覆盖前面的属性，相当于Object.assign(全局，局部)
