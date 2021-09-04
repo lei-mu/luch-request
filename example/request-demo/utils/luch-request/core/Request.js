@@ -1,9 +1,9 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.6
+ * @version 3.0.7
  * @Author lu-ch
- * @Date 2021-05-10
+ * @Date 2021-09-04
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
@@ -17,6 +17,7 @@ import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
 import defaults from './defaults'
 import { isPlainObject } from '../utils'
+import clone from '../utils/clone'
 
 export default class Request {
   /**
@@ -38,7 +39,7 @@ export default class Request {
       arg = {}
       console.warn('设置全局参数必须接收一个Object')
     }
-    this.config = {...defaults, ...arg}
+    this.config = clone({...defaults, ...arg})
     this.interceptors = {
       request: new InterceptorManager(),
       response: new InterceptorManager()
