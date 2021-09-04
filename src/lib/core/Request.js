@@ -17,6 +17,7 @@ import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
 import defaults from './defaults'
 import { isPlainObject } from '../utils'
+import clone from '../utils/clone'
 
 export default class Request {
   /**
@@ -38,7 +39,7 @@ export default class Request {
       arg = {}
       console.warn('设置全局参数必须接收一个Object')
     }
-    this.config = {...defaults, ...arg}
+    this.config = clone({...defaults, ...arg})
     this.interceptors = {
       request: new InterceptorManager(),
       response: new InterceptorManager()
