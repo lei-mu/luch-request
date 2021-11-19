@@ -1,9 +1,9 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.5
+ * @version 3.0.7
  * @Author lu-ch
- * @Date 2021-01-06
+ * @Date 2021-09-04
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
@@ -17,6 +17,7 @@ import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
 import defaults from './defaults'
 import { isPlainObject } from '../utils'
+import clone from '../utils/clone'
 
 export default class Request {
   /**
@@ -25,7 +26,7 @@ export default class Request {
    * @param {Object} arg.header - 全局header
    * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
    * @param {String} arg.dataType = [json] - 全局默认的dataType
-   * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。App和支付宝小程序不支持
+   * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。支付宝小程序不支持
    * @param {Object} arg.custom - 全局默认的自定义参数
    * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
    * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
@@ -38,7 +39,7 @@ export default class Request {
       arg = {}
       console.warn('设置全局参数必须接收一个Object')
     }
-    this.config = {...defaults, ...arg}
+    this.config = clone({...defaults, ...arg})
     this.interceptors = {
       request: new InterceptorManager(),
       response: new InterceptorManager()

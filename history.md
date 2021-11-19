@@ -1,3 +1,12 @@
+## 3.0.7 (2021-09-04)
+
+1. Bug Fix: 修复通过 `Request.config` 设置全局参数，多个实例`config`存在共同引用bug
+
+
+## 3.0.6 (2021-05-10)
+
+1. New Feature: APP端 增加`responseType`配置项
+
 ## 3.0.5 (2021-01-10)
 ### Features
 

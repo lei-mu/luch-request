@@ -11,3 +11,4 @@ zipDist/
 babel.config.js
 gruntfile.js
 rollup.config.js
+tsconfig.json
