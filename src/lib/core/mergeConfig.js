@@ -29,6 +29,7 @@ export default (globalsConfig, config2 = {}) => {
   let config = {
     baseURL: config2.baseURL || globalsConfig.baseURL || '',
     method: method,
+    paramsSerializer:config2.paramsSerializer || globalsConfig.paramsSerializer,
     url: config2.url || '',
     params: config2.params || {},
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},

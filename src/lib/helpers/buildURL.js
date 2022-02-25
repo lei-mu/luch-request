@@ -20,14 +20,16 @@ function encode(val) {
  * @param {object} [params] The params to be appended
  * @returns {string} The formatted url
  */
-export default function buildURL(url, params) {
+export default function buildURL(url, params,paramsSerializer) {
   /*eslint no-param-reassign:0*/
   if (!params) {
     return url
   }
 
   var serializedParams
-  if (utils.isURLSearchParams(params)) {
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params)
+  } else if (utils.isURLSearchParams(params)) {
     serializedParams = params.toString()
   } else {
     var parts = []
