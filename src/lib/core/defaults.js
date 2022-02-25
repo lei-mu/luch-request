@@ -8,6 +8,7 @@ export default {
   header: {},
   method: 'GET',
   dataType: 'json',
+  paramsSerializer:null,
   // #ifndef MP-ALIPAY
   responseType: 'text',
   // #endif
