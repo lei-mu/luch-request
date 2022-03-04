@@ -18,6 +18,7 @@ import mergeConfig from './mergeConfig'
 import defaults from './defaults'
 import { isPlainObject } from '../utils'
 import clone from '../utils/clone'
+import settings from "../settings";
 
 export default class Request {
   /**
@@ -46,6 +47,7 @@ export default class Request {
     }
   }
 
+  VERSION = settings.version
   /**
    * @Function
    * @param {Request~setConfigCallback} f - 设置全局默认配置
