@@ -142,3 +142,7 @@ export function merge(/* obj1, obj2, obj3, ... */) {
   }
   return result
 }
+
+export function isUndefined (val) {
+  return typeof val === 'undefined'
+}

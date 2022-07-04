@@ -1,23 +1,6 @@
 import {deepMerge, isUndefined} from '../utils'
 
-/**
- * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
- * @param {Array} keys - 配置项
- * @param {Object} globalsConfig - 当前的全局配置
- * @param {Object} config2 - 局部配置
- * @return {{}}
- */
-const mergeKeys = (keys, globalsConfig, config2) => {
-  let config = {}
-  keys.forEach(prop => {
-    if (!isUndefined(config2[prop])) {
-      config[prop] = config2[prop]
-    } else if (!isUndefined(globalsConfig[prop])) {
-      config[prop] = globalsConfig[prop]
-    }
-  })
-  return config
-}
+
 /**
  *
  * @param globalsConfig - 当前实例的全局配置
@@ -25,6 +8,7 @@ const mergeKeys = (keys, globalsConfig, config2) => {
  * @return - 合并后的配置
  */
 export default (globalsConfig, config2 = {}) => {
+
   const method = config2.method || globalsConfig.method || 'GET'
   let config = {
     baseURL: config2.baseURL || globalsConfig.baseURL || '',
@@ -34,8 +18,29 @@ export default (globalsConfig, config2 = {}) => {
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
     header: deepMerge(globalsConfig.header || {}, config2.header || {})
   }
+  /**
+   * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
+   * @param {Array} keys - 配置项
+   * @param {Object} globalsConfig - 当前的全局配置
+   * @param {Object} config2 - 局部配置
+   * @return {{}}
+   */
+  const mergeKeys = (keys) => {
+    keys.forEach(prop => {
+      if (!isUndefined(config2[prop])) {
+        config[prop] = config2[prop]
+      } else if (!isUndefined(globalsConfig[prop])) {
+        config[prop] = globalsConfig[prop]
+      }
+    })
+  }
   const defaultToConfig2Keys = ['getTask', 'validateStatus', 'paramsSerializer']
-  config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
+  // const setConfigToConfig2 = (keys) => {
+  //   config = {...config, ...mergeKeys(keys, globalsConfig, config2)}
+  //
+  // }
+  mergeKeys(defaultToConfig2Keys)
+  // config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
 
   // eslint-disable-next-line no-empty
   if (method === 'DOWNLOAD') {
@@ -96,7 +101,8 @@ export default (globalsConfig, config2 = {}) => {
       'firstIpv4',
       // #endif
     ]
-    config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
+    mergeKeys(defaultsKeys)
+    // config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
   }
 
   return config
