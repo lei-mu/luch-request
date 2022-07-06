@@ -20,7 +20,7 @@ const mergeKeys = (keys, config2) => {
 }
 export default (config) => {
   return new Promise((resolve, reject) => {
-    let fullPath = buildURL(buildFullPath(config.baseURL, config.url), config.params)
+    let fullPath = buildURL(buildFullPath(config.baseURL, config.url), config.params,config.paramsSerializer)
     const _config = {
       url: fullPath,
       header: config.header,

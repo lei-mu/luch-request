@@ -1,6 +1,6 @@
 {
   "name": "luch-request",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "基于Promise实现uni-app request 请求插件",
   "keywords": [
     "uni-app",
@@ -41,6 +41,7 @@
     "babel-eslint": "^10.1.0",
     "babel-preset-es2015": "^6.24.1",
     "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^6.8.0",
     "grunt": "^1.1.0",
