@@ -31,7 +31,7 @@ jobs:
           # 这里的 ACCESS_TOKEN 名字需要和下文中的相对应
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           # 打包后的文件部署到哪个分支上
-          BRANCH: docs
+          BRANCH: gh_pages
           # 打包后的文件在哪里
           FOLDER: docs/.vuepress/dist
 
