@@ -25,7 +25,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: lei-mu/luch-request
           TARGET_BRANCH: gh_pages
-          BUILD_SCRIPT: npm install && npm run docs:build
+          BUILD_SCRIPT: npm && npm run docs:build
           BUILD_DIR: docs/.vuepress/dist/
 
   
