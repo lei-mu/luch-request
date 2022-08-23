@@ -89,3 +89,8 @@ uni 不支持发送`FormData`对象
 所以，如果你想发送formData 类型数据，请将`header['content-type']` 设置为 `application/x-www-form-urlencoded`。
 
 如果你的formData 里有`file` 怎么办？请使用插件的[upload](/guide/3.x/#upload)方法。
+
+
+
+## 后台返回bigInt类型处理？
+`3.0.8`版本给`response` 新增 `rawData` 字段，保存原始数据。请在拦截器自定义处理该字段。或者局部处理。

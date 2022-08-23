@@ -209,6 +209,7 @@ luch-request API
 参考文档：[uni.request](https://uniapp.dcloud.io/api/request/request)
 ``` javascript 
  http.request({
+    // baseURL: '',
     method: 'POST', // 请求方法必须大写 [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE]
     url: '/user/12345',
     data: {
@@ -234,7 +235,11 @@ luch-request API
     },
     //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
     //	return statusCode >= 200 && statusCode < 300
-    //}
+    //},
+     // 自定义处理params 函数
+     //paramsSerializer: (params) => {
+     //   return qs.stringify(params)
+     //}
   })
 ```
 ### upload
@@ -242,6 +247,7 @@ luch-request API
 ``` javascript 
   // 具体参数说明：[uni.uploadFile](https://uniapp.dcloud.io/api/request/network-file)
   http.upload('api/upload/img', {
+    // baseURL: '',
     params: {}, /* 会加在url上 */
     // #ifdef APP-PLUS || H5
     files: [], // 需要上传的文件列表。使用 files 时，filePath 和 name 不生效。App、H5（ 2.6.15+）
@@ -265,7 +271,11 @@ luch-request API
     },
     //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
     //	return statusCode >= 200 && statusCode < 300
-    //}
+    //},
+     // 自定义处理params 函数
+     //paramsSerializer: (params) => {
+     //   return qs.stringify(params)
+     //}
   }).then(res => {
     // 返回的res.data 已经进行JSON.parse
   }).catch(err => {
@@ -278,6 +288,7 @@ luch-request API
 
   // 具体参数说明：[uni.downloadFile](https://uniapp.dcloud.io/api/request/network-file?id=downloadfile)
   http.download('api/download', {
+    // baseURL: '',
     params: {}, /* 会加在url上 */
     // #ifdef H5 || APP-PLUS
     timeout: 3000, // H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)
@@ -292,7 +303,11 @@ luch-request API
     },
     //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
    	//	return statusCode >= 200 && statusCode < 300
-   	//}
+   	//},
+     // 自定义处理params 函数
+     //paramsSerializer: (params) => {
+     //   return qs.stringify(params)
+     //}
   }).then(res => {
 
   }).catch(err => {
@@ -303,6 +318,7 @@ luch-request API
 所有请求方式的超集。包含UPLOAD、DOWNLOAD方法。对应method使用对应参数。
 ``` javascript 
  http.middleware({
+    // baseURL: '',
     method: 'POST', // 请求方法必须大写 [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE|UPLOAD|DOWNLOAD]
     url: '/user/12345',
     data: {
@@ -326,7 +342,11 @@ luch-request API
     },
     //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
     //	return statusCode >= 200 && statusCode < 300
-    //}
+    //},
+     // 自定义处理params 函数
+     //paramsSerializer: (params) => {
+     //   return qs.stringify(params)
+     //}
   })
 ```
 
@@ -387,6 +407,8 @@ http.trace(url[, data[, config]])
     header: {},
     method: 'GET',
     dataType: 'json',
+    // 自定义params 处理函数
+    paramsSerializer: null,
     // #ifndef MP-ALIPAY
     responseType: 'text',
     // #endif
