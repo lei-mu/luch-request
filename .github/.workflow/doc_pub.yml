@@ -15,24 +15,19 @@ jobs:
     steps:
       # 拉取代码
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@docs
         with:
           persist-credentials: false
 
-      # 生成静态文件
-      - name: Build
-        run: npm install && npm run docs:build
-
-      # 部署到 GitHub Pages
-      - name: Deploy
-        # 使用别人写好的一个 action
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          # 这里的 ACCESS_TOKEN 名字需要和下文中的相对应
+      - name: vuepress-deploy
+        uses: jenkey2011/vuepress-deploy@master
+        env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          # 打包后的文件部署到哪个分支上
-          BRANCH: gh-pages
-          # 打包后的文件在哪里
-          FOLDER: docs/.vuepress/dist
+          TARGET_REPO: lei-mu/luch-request
+          TARGET_BRANCH: gh_pages
+          BUILD_SCRIPT: npm && npm run docs:build
+          BUILD_DIR: docs/.vuepress/dist/
+
+  
 
 
