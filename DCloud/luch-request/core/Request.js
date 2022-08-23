@@ -106,7 +106,7 @@ export default class Request {
     })
   }
 
-  // #ifndef MP-ALIPAY
+  // #ifndef MP-ALIPAY || MP-KUAISHOU || MP-JD
   put(url, data, options = {}) {
     return this.middleware({
       url,

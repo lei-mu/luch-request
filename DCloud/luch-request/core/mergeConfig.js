@@ -27,14 +27,14 @@ const mergeKeys = (keys, globalsConfig, config2) => {
 export default (globalsConfig, config2 = {}) => {
   const method = config2.method || globalsConfig.method || 'GET'
   let config = {
-    baseURL: globalsConfig.baseURL || '',
+    baseURL: config2.baseURL || globalsConfig.baseURL || '',
     method: method,
     url: config2.url || '',
     params: config2.params || {},
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
     header: deepMerge(globalsConfig.header || {}, config2.header || {})
   }
-  const defaultToConfig2Keys = ['getTask', 'validateStatus']
+  const defaultToConfig2Keys = ['getTask', 'validateStatus', 'paramsSerializer']
   config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
 
   // eslint-disable-next-line no-empty
