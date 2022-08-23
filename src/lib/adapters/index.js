@@ -1,7 +1,7 @@
 import buildURL from '../helpers/buildURL'
 import buildFullPath from '../core/buildFullPath'
 import settle from '../core/settle'
-import { isUndefined } from "../utils"
+import {isUndefined} from "../utils"
 
 /**
  * 返回可选值存在的配置
@@ -20,13 +20,14 @@ const mergeKeys = (keys, config2) => {
 }
 export default (config) => {
   return new Promise((resolve, reject) => {
-    let fullPath = buildURL(buildFullPath(config.baseURL, config.url), config.params,config.paramsSerializer)
+    let fullPath = buildURL(buildFullPath(config.baseURL, config.url), config.params, config.paramsSerializer)
     const _config = {
       url: fullPath,
       header: config.header,
       complete: (response) => {
         config.fullPath = fullPath
         response.config = config
+        response.rawData = response.data
         try {
           // 对可能字符串不是json 的情况容错
           if (typeof response.data === 'string') {
@@ -90,7 +91,7 @@ export default (config) => {
         'firstIpv4',
         // #endif
       ]
-      requestTask = uni.request({..._config,...mergeKeys(optionalKeys, config)})
+      requestTask = uni.request({..._config, ...mergeKeys(optionalKeys, config)})
     }
     if (config.getTask) {
       config.getTask(requestTask, config)
