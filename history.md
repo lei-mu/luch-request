@@ -1,3 +1,16 @@
+## [3.0.8](https://github.com/lei-mu/luch-request/compare/3.0.7...3.0.8) (2022-08-23)
+
+
+### Features
+
+* `put` 方法增加快手小程序和京东小程序的支持 ([7e15dff](https://github.com/lei-mu/luch-request/commit/7e15dff0ac343ccbd6a298c7c9ae8ef0e2148eb9))
+* 参考axio源代码 添加支持paramsSerializer。 ([cae1043](https://github.com/lei-mu/luch-request/commit/cae10430dc7222d85e0cadb13512898d66998547))
+* 返回数据增加`rawData`,保留返回的原始数据 ([3924b7c](https://github.com/lei-mu/luch-request/commit/3924b7c3ea444526be436a31f9e7d5623749580b))
+* 局部请求配置支持baseURL ([df2d98f](https://github.com/lei-mu/luch-request/commit/df2d98fc063f356ffd525158e9cd47d7eb24f68f))
+
+
+
+
 ## 3.0.7 (2021-09-04)
 
 1. Bug Fix: 修复通过 `Request.config` 设置全局参数，多个实例`config`存在共同引用bug
