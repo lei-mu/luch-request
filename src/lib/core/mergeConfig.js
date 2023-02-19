@@ -99,5 +99,5 @@ export default (globalsConfig, config2 = {}) => {
     config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
   }
 
-  return config
+  return {...config2, ...config}
 }
