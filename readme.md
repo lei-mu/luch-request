@@ -21,7 +21,7 @@
 ###### 使用npm
 
 ``` javascript
-npm i luch-request -S
+npm install luch-request -S
 ```
 使用npm前阅读[快速上手](https://www.quanzhan.co/luch-request/handbook/#npm "快速上手")
 
@@ -83,7 +83,8 @@ http.get('/user/login', {
     // 自定义验证器。statusCode必存在。非必填
     validateStatus: function validateStatus(statusCode) {
        return statusCode >= 200 && statusCode < 300
-    }
+    },
+    // forcedJSONParsing: true, // 是否尝试将响应数据json化,默认为true。如果失败则返回原数据
 }).then(res => {
 
 }).catch(err => {
@@ -165,7 +166,9 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
       //     uploadTask.abort();
       //   }
       // });
-    }
+    },
+    // 是否尝试将响应数据json化。boolean 或者一个包含include的对象。非必填。默认true。include为数组，包含需要json化的method
+     // forcedJSONParsing: {include: ['UPLOAD', 'DOWNLOAD']}
   }).then(res => {
     // 返回的res.data 已经进行JSON.parse
   }).catch(err => {
