@@ -50,6 +50,7 @@
     "grunt-babel": "^8.0.0",
     "load-grunt-tasks": "^5.1.0",
     "node-zip": "^1.1.1",
+    "rollup": "^2.66.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.3.0",
@@ -62,6 +63,9 @@
     "rollup-plugin-zip": "^1.0.0",
     "validate-commit-msg": "^2.14.0",
     "vuepress": "^1.4.1"
+  },
+  "engines": {
+    "node": "16"
   },
   "config": {
     "commitizen": {

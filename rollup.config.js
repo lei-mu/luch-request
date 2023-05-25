@@ -10,11 +10,11 @@ import {eslint} from 'rollup-plugin-eslint'
 import copy from 'rollup-plugin-copy'
 // var path = require('path');
 
-const mode = process.env.NODE_ENV
+// const mode = process.env.NODE_ENV
 // const isWatch = process.env.ROLLUP_WATCH
 // const zip = require('rollup-plugin-zip')
 
-console.log('执行环境：', mode)
+// console.log('执行环境：', mode)
 
 // const isProd = mode === 'production'
 
