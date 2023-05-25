@@ -18,7 +18,7 @@ features:
   details: eslint、rollup等构建工具辅助开发。
 - title: 方便简单的自定义能力
   details: 有` custom ` 自定义参数的支持，满足你所有的自定义要求。
-footer: MIT Licensed | Copyright © 2020 quanzhan.co
+footer: MIT Licensed | Copyright © 2020-2023 quanzhan.co
 ---
 
 <p class="p-section-title">

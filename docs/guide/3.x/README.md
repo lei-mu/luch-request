@@ -28,7 +28,7 @@ title: 3.x文档
 ### npm
 
 ```` javascript
-npm i luch-request -S
+npm install luch-request -S
 ````
 cli 用户使用npm 包需增加以下配置(<a href="https://uniapp.dcloud.io/quickstart?id=_2-%e9%80%9a%e8%bf%87vue-cli%e5%91%bd%e4%bb%a4%e8%a1%8c" target="_blank" rel="noopener noreferrer nofollow">什么是cli用户</a>)
 <br>
@@ -108,7 +108,8 @@ http.get('/user/login', {
     },
     //validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置。演示，非必填选项
 	//	return statusCode >= 200 && statusCode < 300
-	//}
+	//},
+	// forcedJSONParsing: true, // 是否尝试将响应数据json化,默认为true。如果失败则返回原数据
 }).then(res => {
 
 }).catch(err => {
@@ -346,7 +347,9 @@ luch-request API
      // 自定义处理params 函数
      //paramsSerializer: (params) => {
      //   return qs.stringify(params)
-     //}
+     //},
+     // 是否尝试将响应数据json化。boolean 或者一个包含include的对象。非必填。默认true。include为数组，包含需要json化的method
+     // forcedJSONParsing: {include: ['UPLOAD', 'DOWNLOAD']}
   })
 ```
 
@@ -396,6 +399,7 @@ http.put(url[, data[, config]])
 http.connect(url[, data[, config]])
 http.options(url[, data[, config]])
 http.trace(url[, data[, config]])
+http.version // 返回插件版本号
 ```
 
 全局请求配置
@@ -437,7 +441,11 @@ http.trace(url[, data[, config]])
     // 全局自定义验证器。参数为statusCode 且必存在，不用判断空情况。
     validateStatus: (statusCode) => { // statusCode 必存在。此处示例为全局默认配置
         return statusCode >= 200 && statusCode < 300
-    }
+    },
+     // 是否尝试将响应数据json化。boolean 或者一个包含include的对象。非必填。默认true。include为数组，包含需要json化的method
+     // forcedJSONParsing: {include: ['UPLOAD', 'DOWNLOAD']}
+     // 是否尝试将响应数据json化
+     forcedJSONParsing: true
   }
 ```
 
