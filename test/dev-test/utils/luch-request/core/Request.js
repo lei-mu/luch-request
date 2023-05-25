@@ -1,14 +1,11 @@
 /**
  * @Class Request
  * @description luch-request http请求插件
- * @version 3.0.7
  * @Author lu-ch
- * @Date 2021-09-04
  * @Email webwork.s@qq.com
  * 文档: https://www.quanzhan.co/luch-request/
  * github: https://github.com/lei-mu/luch-request
  * DCloud: http://ext.dcloud.net.cn/plugin?id=392
- * HBuilderX: beat-3.0.4 alpha-3.0.4
  */
 
 
@@ -106,7 +103,7 @@ export default class Request {
     })
   }
 
-  // #ifndef MP-ALIPAY
+  // #ifndef MP-ALIPAY || MP-KUAISHOU || MP-JD
   put(url, data, options = {}) {
     return this.middleware({
       url,
@@ -188,6 +185,10 @@ export default class Request {
     config.url = url
     config.method = 'DOWNLOAD'
     return this.middleware(config)
+  }
+
+  get version () {
+    return '3.1.0'
   }
 }
 

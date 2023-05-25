@@ -42,7 +42,10 @@ export default {
 					that.$http
 						.upload('/api/upload/img', {
 							filePath: res.tempFilePaths[0],
-							name: 'file'
+							name: 'file',
+							forcedJSONParsing: {
+								include: ['POST']
+							}
 						})
 						.then(res => {
 							console.log('全局http 上传 get success----');

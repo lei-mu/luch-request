@@ -29,8 +29,17 @@ export default (config) => {
         response.config = config
         response.rawData = response.data
         try {
+          let jsonParseHandle = false
+          const forcedJSONParsingType = typeof config.forcedJSONParsing
+          if (forcedJSONParsingType === 'boolean') {
+            jsonParseHandle = config.forcedJSONParsing
+          } else if (forcedJSONParsingType === 'object') {
+            const includesMethod = config.forcedJSONParsing.include || []
+            jsonParseHandle = includesMethod.includes(config.method)
+          }
+
           // 对可能字符串不是json 的情况容错
-          if (typeof response.data === 'string') {
+          if (jsonParseHandle && typeof response.data === 'string') {
             response.data = JSON.parse(response.data)
           }
           // eslint-disable-next-line no-empty
@@ -57,19 +66,22 @@ export default (config) => {
         // #ifdef H5
         'file',
         // #endif
-        // #ifdef H5 || APP-PLUS
+        // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
         'timeout',
         // #endif
         'formData'
       ]
       requestTask = uni.uploadFile({..._config, ...otherConfig, ...mergeKeys(optionalKeys, config)})
     } else if (config.method === 'DOWNLOAD') {
-      // #ifdef H5 || APP-PLUS
-      if (!isUndefined(config['timeout'])) {
-        _config['timeout'] = config['timeout']
-      }
-      // #endif
-      requestTask = uni.downloadFile(_config)
+      const optionalKeys = [
+        // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
+        'timeout',
+        // #endif
+        // #ifdef MP
+        'filePath',
+        // #endif
+      ]
+      requestTask = uni.downloadFile({..._config, ...mergeKeys(optionalKeys, config)})
     } else {
       const optionalKeys = [
         'data',
@@ -89,6 +101,26 @@ export default (config) => {
         // #endif
         // #ifdef APP-PLUS
         'firstIpv4',
+        // #endif
+        // #ifdef MP-WEIXIN
+        'enableHttp2',
+        'enableQuic',
+        // #endif
+        // #ifdef MP-TOUTIAO || MP-WEIXIN
+        'enableCache',
+        // #endif
+        // #ifdef MP-WEIXIN
+        'enableHttpDNS',
+        'httpDNSServiceId',
+        'enableChunked',
+        'forceCellularNetwork',
+        // #endif
+        // #ifdef MP-ALIPAY
+        'enableCookie',
+        // #endif
+        // #ifdef MP-BAIDU
+        'cloudCache',
+        'defer'
         // #endif
       ]
       requestTask = uni.request({..._config, ...mergeKeys(optionalKeys, config)})

@@ -32,7 +32,7 @@ const test = new Request()
 })
  test.config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
  **/
-
+console.log(`test 请求实例的插件版本为：${test.version}`)
 test.setConfig((config) => { /* 设置全局配置 */
   config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
   config.header = {

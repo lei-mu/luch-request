@@ -186,6 +186,10 @@ export default class Request {
     config.method = 'DOWNLOAD'
     return this.middleware(config)
   }
+
+  get version () {
+    return '3.1.0'
+  }
 }
 
 

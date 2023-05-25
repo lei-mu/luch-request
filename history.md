@@ -1,3 +1,14 @@
+## [3.1.0](https://github.com/lei-mu/luch-request/compare/3.0.8...3.1.0) (2023-05-25)
+
+
+### Features
+
+* 更新请求新配置项。新增‘是否尝试将响应数据json化’配置项。 ([68344a1](https://github.com/lei-mu/luch-request/commit/68344a1d9dcbf586d4a0aff37d02aa0bb27ff45c)), closes [#113](https://github.com/lei-mu/luch-request/issues/113)
+* 增加`version` 属性，获取插件版本号 ([40403d2](https://github.com/lei-mu/luch-request/commit/40403d2ef57dead0f577a384ac686cc7dcc772da))
+
+
+
+
 ## [3.0.8](https://github.com/lei-mu/luch-request/compare/3.0.7...3.0.8) (2022-08-23)
 
 

@@ -27,25 +27,27 @@ const mergeKeys = (keys, globalsConfig, config2) => {
 export default (globalsConfig, config2 = {}) => {
   const method = config2.method || globalsConfig.method || 'GET'
   let config = {
-    baseURL: globalsConfig.baseURL || '',
+    baseURL: config2.baseURL || globalsConfig.baseURL || '',
     method: method,
     url: config2.url || '',
     params: config2.params || {},
     custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
     header: deepMerge(globalsConfig.header || {}, config2.header || {})
   }
-  const defaultToConfig2Keys = ['getTask', 'validateStatus']
+  const defaultToConfig2Keys = ['getTask', 'validateStatus', 'paramsSerializer', 'forcedJSONParsing']
   config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
 
   // eslint-disable-next-line no-empty
   if (method === 'DOWNLOAD') {
-    // #ifdef H5 || APP-PLUS
-    if (!isUndefined(config2.timeout)) {
-      config['timeout'] = config2['timeout']
-    } else if (!isUndefined(globalsConfig.timeout)) {
-      config['timeout'] = globalsConfig['timeout']
-    }
-    // #endif
+    const downloadKeys = [
+      // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
+      'timeout',
+      // #endif
+      // #ifdef MP
+      'filePath',
+      // #endif
+    ]
+    config = {...config, ...mergeKeys(downloadKeys, globalsConfig, config2)}
   } else if (method === 'UPLOAD') {
     delete config.header['content-type']
     delete config.header['Content-Type']
@@ -61,7 +63,7 @@ export default (globalsConfig, config2 = {}) => {
       // #endif
       'filePath',
       'name',
-      // #ifdef H5 || APP-PLUS
+      // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
       'timeout',
       // #endif
       'formData',
@@ -71,7 +73,7 @@ export default (globalsConfig, config2 = {}) => {
         config[prop] = config2[prop]
       }
     })
-    // #ifdef H5 || APP-PLUS
+    // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
     if (isUndefined(config.timeout) && !isUndefined(globalsConfig.timeout)) {
       config['timeout'] = globalsConfig['timeout']
     }
@@ -95,6 +97,27 @@ export default (globalsConfig, config2 = {}) => {
       // #ifdef APP-PLUS
       'firstIpv4',
       // #endif
+      // #ifdef MP-WEIXIN
+      'enableHttp2',
+      'enableQuic',
+      // #endif
+      // #ifdef MP-TOUTIAO || MP-WEIXIN
+      'enableCache',
+      // #endif
+      // #ifdef MP-WEIXIN
+      'enableHttpDNS',
+      'httpDNSServiceId',
+      'enableChunked',
+      'forceCellularNetwork',
+      // #endif
+      // #ifdef MP-ALIPAY
+      'enableCookie',
+      // #endif
+      // #ifdef MP-BAIDU
+      'cloudCache',
+      'defer'
+      // #endif
+
     ]
     config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
   }

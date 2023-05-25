@@ -13,7 +13,7 @@ export default {
   responseType: 'text',
   // #endif
   custom: {},
-  // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
+  // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
   timeout: 60000,
   // #endif
   // #ifdef APP-PLUS
@@ -27,5 +27,7 @@ export default {
   // #endif
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300
-  }
+  },
+  // 是否尝试将响应数据json化
+  forcedJSONParsing: true
 }

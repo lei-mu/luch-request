@@ -188,7 +188,7 @@ export default class Request {
   }
 
   get version () {
-    return '3.1.8'
+    return '3.1.0'
   }
 }
 
