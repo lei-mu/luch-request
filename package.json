@@ -1,6 +1,6 @@
 {
   "name": "luch-request",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "基于Promise实现uni-app request 请求插件",
   "keywords": [
     "uni-app",
@@ -65,7 +65,6 @@
     "vuepress": "^1.4.1"
   },
   "engines": {
-    "node": "16"
   },
   "config": {
     "commitizen": {
