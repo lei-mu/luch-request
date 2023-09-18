@@ -26,7 +26,7 @@ export type HttpData = Record<string, any>;
 
 export type HttpResponseType = 'arraybuffer' | 'text';
 
-export type HttpCustom = Record<string, any>;
+export interface HttpCustom extends AnyObject {}
 
 export type HttpFileType = 'image' | 'video' | 'audio';
 
