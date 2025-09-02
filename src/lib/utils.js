@@ -133,3 +133,8 @@ export function deepMerge(/* obj1, obj2, obj3, ... */) {
 export function isUndefined (val) {
   return typeof val === 'undefined'
 }
+
+
+export function isFunction (val) {
+  return typeof val === 'function'
+}

@@ -11,10 +11,11 @@
 
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
-import mergeConfig from './mergeConfig'
+import mergeConfig, {DEFAULT_TO_LOCAL_CONFIG, MERGE_DEEP_PROPERTIES, VALUE_FROM_LOCAL_CONFIG} from './mergeConfig'
 import defaults from './defaults'
-import { isPlainObject } from '../utils'
+import {isPlainObject} from '../utils'
 import clone from '../utils/clone'
+import mergeMap from './mergeMap.js'
 
 export default class Request {
   /**
@@ -36,6 +37,7 @@ export default class Request {
       arg = {}
       console.warn('设置全局参数必须接收一个Object')
     }
+    this.mergeMap = clone(mergeMap)
     this.config = clone({...defaults, ...arg})
     this.interceptors = {
       request: new InterceptorManager(),
@@ -187,9 +189,18 @@ export default class Request {
     return this.middleware(config)
   }
 
-  get version () {
+  get version() {
     return '3.1.0'
   }
+
+  get mergeMethod() {
+    return {
+      MERGE_DEEP_PROPERTIES,
+      VALUE_FROM_LOCAL_CONFIG,
+      DEFAULT_TO_LOCAL_CONFIG
+    }
+  }
+
 }
 
 

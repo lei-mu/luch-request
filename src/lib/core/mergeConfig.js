@@ -1,4 +1,48 @@
-import {deepMerge, isUndefined} from '../utils'
+import {deepMerge, isFunction, isPlainObject, isUndefined} from '../utils'
+
+
+// 合并全局、局部
+export const MERGE_DEEP_PROPERTIES = 'MERGE_DEEP_PROPERTIES'
+
+// 只获取局部配置
+export const VALUE_FROM_LOCAL_CONFIG = 'VALUE_FROM_LOCAL_CONFIG'
+// 优先获取局部，其次全局
+export const DEFAULT_TO_LOCAL_CONFIG = 'DEFAULT_TO_LOCAL_CONFIG'
+
+
+function mergeDeepProperties(g, l, prop) {
+  if (!isUndefined(l)) {
+    return getMergedValue(g, l);
+  } else if (!isUndefined(a)) {
+    return getMergedValue(undefined, l);
+  }
+}
+
+
+function getMergedValue(target, source) {
+  if (isPlainObject(target) && isPlainObject(source)) {
+    return deepMerge(target, source);
+  } else if (isPlainObject(source)) {
+    return deepMerge({}, source);
+  } else if (Array.isArray(source)) {
+    return source.slice();
+  }
+  return source;
+}
+
+function valueFromLocalConfig(g, l) {
+  if (!isUndefined(l)) {
+    return getMergedValue(undefined, l);
+  }
+}
+
+function defaultToLocalConfig(g, l) {
+  if (!isUndefined(l)) {
+    return getMergedValue(undefined, l);
+  } else if (!isUndefined(g)) {
+    return getMergedValue(undefined, g);
+  }
+}
 
 /**
  * 合并局部配置优先的配置，如果局部有该配置项则用局部，如果全局有该配置项则用全局
@@ -18,109 +62,66 @@ const mergeKeys = (keys, globalsConfig, config2) => {
   })
   return config
 }
+
+const mergeKeyMap = {
+  MERGE_DEEP_PROPERTIES: mergeDeepProperties,
+  VALUE_FROM_LOCAL_CONFIG: valueFromLocalConfig,
+  DEFAULT_TO_LOCAL_CONFIG: defaultToLocalConfig,
+
+}
+
+
 /**
  *
+ * @param mergeMap - 合并策略
  * @param globalsConfig - 当前实例的全局配置
  * @param config2 - 当前的局部配置
  * @return - 合并后的配置
  */
-export default (globalsConfig, config2 = {}) => {
-  const method = config2.method || globalsConfig.method || 'GET'
-  let config = {
-    baseURL: config2.baseURL || globalsConfig.baseURL || '',
-    method: method,
-    url: config2.url || '',
-    params: config2.params || {},
-    custom: {...(globalsConfig.custom || {}), ...(config2.custom || {})},
-    header: deepMerge(globalsConfig.header || {}, config2.header || {})
-  }
-  const defaultToConfig2Keys = ['getTask', 'validateStatus', 'paramsSerializer', 'forcedJSONParsing']
-  config = {...config, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2)}
+export default (mergeMap, globalsConfig, config2 = {}) => {
 
-  // eslint-disable-next-line no-empty
-  if (method === 'DOWNLOAD') {
-    const downloadKeys = [
-      // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
-      'timeout',
-      // #endif
-      // #ifdef MP
-      'filePath',
-      // #endif
-    ]
-    config = {...config, ...mergeKeys(downloadKeys, globalsConfig, config2)}
-  } else if (method === 'UPLOAD') {
-    delete config.header['content-type']
-    delete config.header['Content-Type']
-    const uploadKeys = [
-      // #ifdef APP-PLUS || H5
-      'files',
-      // #endif
-      // #ifdef MP-ALIPAY
-      'fileType',
-      // #endif
-      // #ifdef H5
-      'file',
-      // #endif
-      'filePath',
-      'name',
-      // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
-      'timeout',
-      // #endif
-      'formData',
-    ]
-    uploadKeys.forEach(prop => {
-      if (!isUndefined(config2[prop])) {
-        config[prop] = config2[prop]
-      }
-    })
-    // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
-    if (isUndefined(config.timeout) && !isUndefined(globalsConfig.timeout)) {
-      config['timeout'] = globalsConfig['timeout']
+  const getMergeMethod = (curMap, mergeKey) => {
+    const keyVal = curMap[mergeKey]
+    if (isFunction(keyVal)) {
+      return keyVal
+    } else if ([MERGE_DEEP_PROPERTIES, VALUE_FROM_LOCAL_CONFIG, DEFAULT_TO_LOCAL_CONFIG].includes(mergeKey)
+    ) {
+      return mergeKeyMap[mergeKey]
+    } else {
+      return mergeKeyMap[DEFAULT_TO_LOCAL_CONFIG]
     }
-    // #endif
-  } else {
-    const defaultsKeys = [
-      'data',
-      // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-      'timeout',
-      // #endif
-      'dataType',
-      // #ifndef MP-ALIPAY
-      'responseType',
-      // #endif
-      // #ifdef APP-PLUS
-      'sslVerify',
-      // #endif
-      // #ifdef H5
-      'withCredentials',
-      // #endif
-      // #ifdef APP-PLUS
-      'firstIpv4',
-      // #endif
-      // #ifdef MP-WEIXIN
-      'enableHttp2',
-      'enableQuic',
-      // #endif
-      // #ifdef MP-TOUTIAO || MP-WEIXIN
-      'enableCache',
-      // #endif
-      // #ifdef MP-WEIXIN
-      'enableHttpDNS',
-      'httpDNSServiceId',
-      'enableChunked',
-      'forceCellularNetwork',
-      // #endif
-      // #ifdef MP-ALIPAY
-      'enableCookie',
-      // #endif
-      // #ifdef MP-BAIDU
-      'cloudCache',
-      'defer'
-      // #endif
-
-    ]
-    config = {...config, ...mergeKeys(defaultsKeys, globalsConfig, config2)}
   }
-
+  const config = {}
+  const methodMerge = getMergeMethod(mergeMap.COMMON, 'method')
+  const method = methodMerge(globalsConfig['method'], config['method'])
+  let curMergeMap = {
+    ...mergeMap.COMMON
+  }
+  if (method === 'DOWNLOAD') {
+    curMergeMap = {
+      ...curMergeMap,
+      ...mergeMap.DOWNLOAD
+    }
+  } else if (method === 'UPLOAD') {
+    curMergeMap = {
+      ...curMergeMap,
+      ...mergeMap.UPLOAD
+    }
+  } else {
+    curMergeMap = {
+      ...curMergeMap,
+      ...mergeMap.REQUEST
+    }
+  }
+  Object.keys({
+    ...globalsConfig,
+    ...config2
+  }).forEach(prop => {
+    const merge = getMergeMethod(curMergeMap, prop);
+    const configValue = merge(globalsConfig[prop], config2[prop], prop);
+    if (!isUndefined(configValue)) {
+      config[prop] = configValue
+    }
+  })
   return config
 }
