@@ -55,7 +55,7 @@ export default class Request {
 
   middleware(config) {
     config = mergeConfig(this.config, config)
-    let chain = [dispatchRequest, undefined]
+    let chain = [(con) => dispatchRequest(con, this.mergeMap), undefined]
     let promise = Promise.resolve(config)
 
     this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {

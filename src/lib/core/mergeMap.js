@@ -1,5 +1,5 @@
 
-import mergeConfig, {DEFAULT_TO_LOCAL_CONFIG, MERGE_DEEP_PROPERTIES, VALUE_FROM_LOCAL_CONFIG} from './mergeConfig'
+import  {DEFAULT_TO_LOCAL_CONFIG, MERGE_DEEP_PROPERTIES, VALUE_FROM_LOCAL_CONFIG} from './mergeConfig'
 export default {
   'COMMON': {
     method: DEFAULT_TO_LOCAL_CONFIG,

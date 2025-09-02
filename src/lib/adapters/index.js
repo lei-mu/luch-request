@@ -18,7 +18,7 @@ const mergeKeys = (keys, config2) => {
   })
   return config
 }
-export default (config) => {
+export default (config, mergeMap) => {
   return new Promise((resolve, reject) => {
     let fullPath = buildURL(buildFullPath(config.baseURL, config.url), config.params, config.paramsSerializer)
     const _config = {
@@ -48,82 +48,31 @@ export default (config) => {
         settle(resolve, reject, response)
       }
     }
+    // const ignoreCommonKey = ['url', 'method', 'baseURL', 'params', 'custom', 'getTask', ]
+    // const commonKey = Object.keys(mergeMap.COMMON).filter((key) => {
+    //   return !ignoreCommonKey.includes(key)
+    // })
+    // _config = {..._config, ...mergeKeys(commonKey, config)}
+
     let requestTask
     if (config.method === 'UPLOAD') {
       delete _config.header['content-type']
       delete _config.header['Content-Type']
-      let otherConfig = {
-        // #ifdef MP-ALIPAY
-        fileType: config.fileType,
-        // #endif
-        filePath: config.filePath,
-        name: config.name
-      }
-      const optionalKeys = [
-        // #ifdef APP-PLUS || H5
-        'files',
-        // #endif
-        // #ifdef H5
-        'file',
-        // #endif
-        // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
-        'timeout',
-        // #endif
-        'formData'
-      ]
-      requestTask = uni.uploadFile({..._config, ...otherConfig, ...mergeKeys(optionalKeys, config)})
+
+      requestTask = uni.uploadFile({..._config, ...mergeKeys(Object.keys(mergeMap.UPLOAD), config)})
     } else if (config.method === 'DOWNLOAD') {
-      const optionalKeys = [
-        // #ifdef H5 || APP-PLUS || MP-WEIXIN || MP-ALIPAY || MP-TOUTIAO || MP-KUAISHOU
-        'timeout',
-        // #endif
-        // #ifdef MP
-        'filePath',
-        // #endif
-      ]
-      requestTask = uni.downloadFile({..._config, ...mergeKeys(optionalKeys, config)})
+
+      requestTask = uni.downloadFile({
+        ..._config,
+        ...mergeKeys(Object.keys(mergeMap.DOWNLOAD), config)
+      })
+
     } else {
-      const optionalKeys = [
-        'data',
-        'method',
-        // #ifdef H5 || APP-PLUS || MP-ALIPAY || MP-WEIXIN
-        'timeout',
-        // #endif
-        'dataType',
-        // #ifndef MP-ALIPAY
-        'responseType',
-        // #endif
-        // #ifdef APP-PLUS
-        'sslVerify',
-        // #endif
-        // #ifdef H5
-        'withCredentials',
-        // #endif
-        // #ifdef APP-PLUS
-        'firstIpv4',
-        // #endif
-        // #ifdef MP-WEIXIN
-        'enableHttp2',
-        'enableQuic',
-        // #endif
-        // #ifdef MP-TOUTIAO || MP-WEIXIN
-        'enableCache',
-        // #endif
-        // #ifdef MP-WEIXIN
-        'enableHttpDNS',
-        'httpDNSServiceId',
-        'enableChunked',
-        'forceCellularNetwork',
-        // #endif
-        // #ifdef MP-ALIPAY
-        'enableCookie',
-        // #endif
-        // #ifdef MP-BAIDU
-        'cloudCache',
-        'defer'
-        // #endif
-      ]
-      requestTask = uni.request({..._config, ...mergeKeys(optionalKeys, config)})
+      const reqConfig = {..._config, ...mergeKeys(Object.keys(mergeMap.REQUEST), config)}
+      if (config.method) {
+        reqConfig.method = config.method
+      }
+      requestTask = uni.request(reqConfig)
     }
     if (config.getTask) {
       config.getTask(requestTask, config)

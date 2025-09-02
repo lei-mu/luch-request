@@ -1,6 +1,6 @@
 import adapter from '../adapters/index'
 
 
-export default (config) => {
-  return adapter(config)
+export default (config, mergeMap) => {
+  return adapter(config, mergeMap)
 }

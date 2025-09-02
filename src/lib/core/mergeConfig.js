@@ -10,37 +10,37 @@ export const VALUE_FROM_LOCAL_CONFIG = 'VALUE_FROM_LOCAL_CONFIG'
 export const DEFAULT_TO_LOCAL_CONFIG = 'DEFAULT_TO_LOCAL_CONFIG'
 
 
-function mergeDeepProperties(g, l, prop) {
+function mergeDeepProperties(g, l) {
   if (!isUndefined(l)) {
-    return getMergedValue(g, l);
-  } else if (!isUndefined(a)) {
-    return getMergedValue(undefined, l);
+    return getMergedValue(g, l)
+  } else if (!isUndefined(g)) {
+    return getMergedValue(undefined, l)
   }
 }
 
 
 function getMergedValue(target, source) {
   if (isPlainObject(target) && isPlainObject(source)) {
-    return deepMerge(target, source);
+    return deepMerge(target, source)
   } else if (isPlainObject(source)) {
-    return deepMerge({}, source);
+    return deepMerge({}, source)
   } else if (Array.isArray(source)) {
-    return source.slice();
+    return source.slice()
   }
-  return source;
+  return source
 }
 
 function valueFromLocalConfig(g, l) {
   if (!isUndefined(l)) {
-    return getMergedValue(undefined, l);
+    return getMergedValue(undefined, l)
   }
 }
 
 function defaultToLocalConfig(g, l) {
   if (!isUndefined(l)) {
-    return getMergedValue(undefined, l);
+    return getMergedValue(undefined, l)
   } else if (!isUndefined(g)) {
-    return getMergedValue(undefined, g);
+    return getMergedValue(undefined, g)
   }
 }
 
@@ -51,17 +51,17 @@ function defaultToLocalConfig(g, l) {
  * @param {Object} config2 - 局部配置
  * @return {{}}
  */
-const mergeKeys = (keys, globalsConfig, config2) => {
-  let config = {}
-  keys.forEach(prop => {
-    if (!isUndefined(config2[prop])) {
-      config[prop] = config2[prop]
-    } else if (!isUndefined(globalsConfig[prop])) {
-      config[prop] = globalsConfig[prop]
-    }
-  })
-  return config
-}
+// const mergeKeys = (keys, globalsConfig, config2) => {
+//   let config = {}
+//   keys.forEach(prop => {
+//     if (!isUndefined(config2[prop])) {
+//       config[prop] = config2[prop]
+//     } else if (!isUndefined(globalsConfig[prop])) {
+//       config[prop] = globalsConfig[prop]
+//     }
+//   })
+//   return config
+// }
 
 const mergeKeyMap = {
   MERGE_DEEP_PROPERTIES: mergeDeepProperties,
@@ -117,11 +117,15 @@ export default (mergeMap, globalsConfig, config2 = {}) => {
     ...globalsConfig,
     ...config2
   }).forEach(prop => {
-    const merge = getMergeMethod(curMergeMap, prop);
-    const configValue = merge(globalsConfig[prop], config2[prop], prop);
+    const merge = getMergeMethod(curMergeMap, prop)
+    const configValue = merge(globalsConfig[prop], config2[prop], prop)
     if (!isUndefined(configValue)) {
       config[prop] = configValue
     }
   })
+  if (method === 'UPLOAD') {
+    delete config.header['content-type']
+    delete config.header['Content-Type']
+  }
   return config
 }
