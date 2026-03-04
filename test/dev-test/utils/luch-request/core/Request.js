@@ -115,7 +115,7 @@ export default class Request {
 
   // #endif
 
-  // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
+  // #ifdef APP-PLUS || APP-HARMONY || H5 || MP-WEIXIN || MP-BAIDU
   delete(url, data, options = {}) {
     return this.middleware({
       url,
@@ -151,7 +151,7 @@ export default class Request {
 
   // #endif
 
-  // #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-BAIDU
+  // #ifdef APP-PLUS || APP-HARMONY || H5 || MP-WEIXIN || MP-BAIDU
   options(url, data, options = {}) {
     return this.middleware({
       url,
