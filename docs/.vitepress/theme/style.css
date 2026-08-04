@@ -1,0 +1,111 @@
+:root {
+  --lr-ink: #13213c;
+  --lr-paper: #f5f7fb;
+  --lr-blue: #3157d5;
+  --lr-cyan: #3ec7c2;
+  --lr-amber: #f2a93b;
+  --lr-line: #ccd5e5;
+  --lr-muted: #59657a;
+  --lr-font-display: Bahnschrift, 'Arial Narrow', 'Segoe UI', sans-serif;
+  --lr-font-body: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --lr-font-code: 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+
+  --vp-c-brand-1: #3157d5;
+  --vp-c-brand-2: #2749ba;
+  --vp-c-brand-3: #1f3d9d;
+  --vp-c-brand-soft: rgba(49, 87, 213, 0.12);
+  --vp-c-bg: #f5f7fb;
+  --vp-c-bg-alt: #eef2f8;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-divider: #ccd5e5;
+  --vp-c-text-1: #13213c;
+  --vp-c-text-2: #59657a;
+  --vp-font-family-base: var(--lr-font-body);
+  --vp-font-family-mono: var(--lr-font-code);
+}
+
+.dark {
+  --lr-ink: #eef3ff;
+  --lr-paper: #101a2d;
+  --lr-line: #33405a;
+  --lr-muted: #9aa8c0;
+  --vp-c-bg: #101a2d;
+  --vp-c-bg-alt: #15213a;
+  --vp-c-bg-elv: #1a2741;
+  --vp-c-divider: #33405a;
+  --vp-c-text-1: #eef3ff;
+  --vp-c-text-2: #9aa8c0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--lr-font-body);
+}
+
+.VPNavBarTitle .title {
+  font-family: var(--lr-font-display);
+  font-weight: 720;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 960px) {
+  .VPNav.VPNav {
+    top: 43px;
+  }
+
+  .VPSidebar.VPSidebar {
+    top: 43px;
+  }
+}
+
+.VPDoc h1,
+.VPDoc h2,
+.VPDoc h3 {
+  font-family: var(--lr-font-display);
+  letter-spacing: -0.025em;
+}
+
+.VPDoc h1 {
+  font-size: 44px;
+  line-height: 1.05;
+}
+
+.VPDoc .custom-block {
+  border-radius: 0;
+}
+
+.VPDoc div[class*='language-'],
+.VPDoc div[class*='language-'] pre,
+.VPDoc code {
+  border-radius: 0;
+}
+
+.VPButton,
+.DocSearch-Button,
+.VPNavBarSearch .DocSearch-Button {
+  border-radius: 0 !important;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--lr-amber) 70%, transparent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

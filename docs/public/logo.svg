@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title id="title">luch-request</title>
+  <rect width="48" height="48" fill="#13213c"/>
+  <path d="M11 10h8v20h18v8H11z" fill="#f5f7fb"/>
+  <path d="M25 10h12v12h-7v-5h-5z" fill="#3ec7c2"/>
+  <rect x="32" y="30" width="5" height="8" fill="#f2a93b"/>
+</svg>
