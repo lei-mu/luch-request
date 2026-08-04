@@ -5,7 +5,7 @@
       <p class="alpha-banner__message">
         v4 尚未稳定，不建议未经验证直接替换生产项目。
       </p>
-      <a class="alpha-banner__link" href="/luch-request/v3/">
+      <a class="alpha-banner__link" href="https://v3.luch-request.quanzhan.co/">
         前往 v3 稳定版
         <span aria-hidden="true">↗</span>
       </a>

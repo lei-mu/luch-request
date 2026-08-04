@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import RequestFlow from './RequestFlow.vue'
 
 interface Capability {
@@ -36,10 +37,10 @@ const capabilities: Capability[] = [
 ]
 
 const docRoutes = [
-  { index: 'A', title: '第一次使用', detail: '安装、创建实例、发出请求', href: '/luch-request/v4/guide/getting-started' },
-  { index: 'B', title: '理解请求管线', detail: '配置合并、interceptor、响应', href: '/luch-request/v4/guide/configuration' },
-  { index: 'C', title: '处理失败与取消', detail: 'error.response、Task、signal', href: '/luch-request/v4/api/error' },
-  { index: 'D', title: '从 v3 升级', detail: 'breaking changes 与迁移边界', href: '/luch-request/v4/migration/v3-to-v4' }
+  { index: 'A', title: '第一次使用', detail: '安装、创建实例、发出请求', href: '/guide/getting-started' },
+  { index: 'B', title: '理解请求管线', detail: '配置合并、interceptor、响应', href: '/guide/configuration' },
+  { index: 'C', title: '处理失败与取消', detail: 'error.response、Task、signal', href: '/api/error' },
+  { index: 'D', title: '从 v3 升级', detail: 'breaking changes 与迁移边界', href: '/migration/v3-to-v4' }
 ]
 </script>
 
@@ -61,10 +62,10 @@ const docRoutes = [
           统一错误和跨平台边界重新设计。
         </p>
         <div class="home-actions">
-          <a class="home-action home-action--primary" href="/luch-request/v4/guide/getting-started">
+          <a class="home-action home-action--primary" :href="withBase('/guide/getting-started')">
             开始使用 <span aria-hidden="true">→</span>
           </a>
-          <a class="home-action" href="/luch-request/v4/guide/">
+          <a class="home-action" :href="withBase('/guide/')">
             了解 Alpha 边界
           </a>
         </div>
@@ -149,7 +150,7 @@ response.data[0].id</code></pre>
               <dd>原生中断或逻辑取消</dd>
             </div>
           </dl>
-          <a href="/luch-request/v4/api/error">阅读错误判断边界 →</a>
+          <a :href="withBase('/api/error')">阅读错误判断边界 →</a>
         </aside>
       </div>
     </section>
@@ -164,7 +165,7 @@ response.data[0].id</code></pre>
           v-for="route in docRoutes"
           :key="route.index"
           class="route-row"
-          :href="route.href"
+          :href="withBase(route.href)"
         >
           <span class="route-row__index">{{ route.index }}</span>
           <strong>{{ route.title }}</strong>
@@ -182,8 +183,8 @@ response.data[0].id</code></pre>
         生产项目请继续使用 v3，或先完成目标平台 smoke test。
       </p>
       <div class="home-actions">
-        <a class="home-action home-action--light" href="/luch-request/v4/compatibility/">查看兼容性清单</a>
-        <a class="home-action home-action--light" href="/luch-request/v3/">返回 v3 稳定版</a>
+        <a class="home-action home-action--light" :href="withBase('/compatibility/')">查看兼容性清单</a>
+        <a class="home-action home-action--light" href="https://v3.luch-request.quanzhan.co/">返回 v3 稳定版</a>
       </div>
     </section>
   </main>
