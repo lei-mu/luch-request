@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 const v3DocsUrl = 'https://v3.luch-request.quanzhan.co/'
 
-const docBase = process.env.V4_DOCS_BASE || '/'
+const docBase = process.env.VITE_V4_DOCS_BASE || '/'
 
 export default defineConfig({
   lang: 'zh-CN',
