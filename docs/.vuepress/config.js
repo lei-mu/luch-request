@@ -1,3 +1,5 @@
+const docsBase = process.env.VUE_APP_DOCS_BASE || '/luch-request/'
+
 module.exports = {
   locales: {
     '/': {
@@ -6,7 +8,7 @@ module.exports = {
       description: 'luch-request 是一个基于Promise开发的uni-app跨平台、项目级别的请求库，它有更小的体积，易用的api，方便简单的自定义能力。luch-request官网,luch的博客,uni-app,request插件,uni request封装,uni request插件'
     }
   },
-  base: '/luch-request/',
+  base: docsBase,
   title: 'luch-request',
   description: 'luch-request 是一个基于Promise开发的uni-app跨平台、项目级别的请求库，它有更小的体积，易用的api，方便简单的自定义能力。luch-request官网,luch的博客,uni-app,request插件,uni request封装,uni request插件',
   head: [
