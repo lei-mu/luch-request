@@ -2,11 +2,13 @@ import { defineConfig } from 'vitepress'
 
 const v3DocsUrl = 'https://v3.luch-request.quanzhan.co/'
 
+const docBase = process.env.V4_DOCS_BASE || '/'
+
 export default defineConfig({
   lang: 'zh-CN',
   title: 'luch-request v4',
   description: '面向传统 uni-app 的 TypeScript-first 请求库',
-  base: '/luch-request/v4/',
+  base: docBase,
   srcExclude: ['README.md'],
   cleanUrls: true,
   lastUpdated: true,

@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "types": ["vitepress/client"]
+    "types": ["vitepress/client", "node"]
   },
   "include": [".vitepress/**/*.ts", ".vitepress/**/*.vue"]
 }
