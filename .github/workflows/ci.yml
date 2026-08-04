@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v5
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            docs/pnpm-lock.yaml
+
+      - name: 安装库依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 检查库
+        run: pnpm check
+
+      - name: 检查 npm 发布内容
+        run: npm pack --dry-run
+
+      - name: 安装文档依赖
+        run: pnpm install --frozen-lockfile
+        working-directory: docs
+
+      - name: 检查文档类型
+        run: pnpm typecheck
+        working-directory: docs
+
+      - name: 构建文档
+        run: pnpm build
+        working-directory: docs
+
+      - name: 安装示例依赖
+        run: npm ci
+        working-directory: example/luch-request-v4-test
+
+      - name: 检查示例本地依赖
+        run: npm ls luch-request
+        working-directory: example/luch-request-v4-test
+
+      - name: 验证示例可以导入库
+        run: node --input-type=module -e "import('luch-request').then((module) => { if (typeof module.createLuchRequest !== 'function') process.exit(1) })"
+        working-directory: example/luch-request-v4-test

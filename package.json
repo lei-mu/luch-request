@@ -1,6 +1,7 @@
 {
   "name": "luch-request",
   "version": "4.0.0-alpha.1",
+  "packageManager": "pnpm@11.17.0",
   "description": "TypeScript-first HTTP client for uni-app",
   "type": "module",
   "exports": {
