@@ -1,16 +1,34 @@
-*.iml
-.idea
-.tscache
-.DS_Store
-.hbuilderx
-yarn-error.log
 node_modules/
-dist
-DCloud/*
-!DCloud/luch-request/
+dist/
+coverage/
+*.tgz
+*.tsbuildinfo
 
+# 日志
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-zipDist/
+# 本地环境变量
+.env
+.env.*
+!.env.example
 
-example/*
-!/example/request-demo
+# 编辑器与系统文件
+.DS_Store
+.idea/
+.vscode/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.hbuilderx/
+
+# 文档与 uni-app 构建产物
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+example/**/unpackage/
