@@ -34,7 +34,7 @@ const test = new Request()
  **/
 console.log(`test 请求实例的插件版本为：${test.version}`)
 test.setConfig((config) => { /* 设置全局配置 */
-  config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest'
+  config.baseURL = 'https://mock.quanzhan.co/mock/e56cd25d6a96b7e4a7ea4c2672bfa488/luch_request'
   config.header = {
     ...config.header,
     a: 1, // 演示
@@ -90,7 +90,7 @@ test.interceptors.response.use((response) => { /* 请求之后拦截器。可以
 
 const http = new Request()
 http.setConfig((config) => { /* 设置全局配置 */
-  config.baseURL = 'https://www.fastmock.site/mock/26243bdf9062eeae2848fc67603bda2d/luchrequest' /* 根域名不同 */
+  config.baseURL = 'https://mock.quanzhan.co/mock/e56cd25d6a96b7e4a7ea4c2672bfa488/luch_request' /* 根域名不同 */
   config.header = {
     ...config.header,
     a: 1, // 演示
