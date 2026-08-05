@@ -23,7 +23,7 @@
 ``` javascript
 npm install luch-request -S
 ```
-使用npm前阅读[快速上手](https://www.quanzhan.co/luch-request/handbook/#npm "快速上手")
+使用npm前阅读[快速上手](https://v3.luch-request.quanzhan.co/handbook/#npm "快速上手")
 
 
 ###### github
@@ -178,7 +178,7 @@ http.post('/user/login', {userName: 'name', password: '123456'}, {
 
 luch-request Guide
 ------------
-[luch-request 官网地址](https://www.quanzhan.co/luch-request/ "luch-request 官网地址")
+[luch-request 官网地址](https://v3.luch-request.quanzhan.co/ "luch-request 官网地址")
 <br>
 [github](https://github.com/lei-mu/luch-request "github")
 
@@ -252,10 +252,10 @@ issue
 
 土豪赞赏
 ------------
-[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "wechat 打赏")
-[![支付宝 打赏](https://oss.quanzhan.co/images/common/my-alipay-qrcode.jpg?x-oss-process=image/resize,m_lfit,h_150,w_150 "支付宝 打赏")](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "支付宝 打赏")
+[![wechat 打赏](https://oss.quanzhan.co/images/common/my-wechat-qrcode.png?x-oss-process=image/resize,m_lfit,h_150,w_150 "wechat 打赏")](https://v3.luch-request.quanzhan.co/acknowledgement/#前言 "wechat 打赏")
+[![支付宝 打赏](https://oss.quanzhan.co/images/common/my-alipay-qrcode.jpg?x-oss-process=image/resize,m_lfit,h_150,w_150 "支付宝 打赏")](https://v3.luch-request.quanzhan.co/acknowledgement/#前言 "支付宝 打赏")
 
-[打赏事宜具体说明](https://www.quanzhan.co/luch-request/acknowledgement/#前言 "打赏事宜具体说明")
+[打赏事宜具体说明](https://v3.luch-request.quanzhan.co/acknowledgement/#前言 "打赏事宜具体说明")
 
 
 ###### 您的鼓励是我更新的动力

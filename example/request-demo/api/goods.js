@@ -15,7 +15,7 @@ export const getGoodsList = (params) => {
   })
 }
 
-// 通用请求方法middleware 演示。文档：https://www.quanzhan.co/luch-request/guide/3.x/#middleware
+// 通用请求方法middleware 演示。文档：https://v3.luch-request.quanzhan.co/guide/3.x/#middleware
 /**
  * 查询商品信息
  * @param {Object} data - 查询数据

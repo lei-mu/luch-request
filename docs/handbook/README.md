@@ -133,7 +133,7 @@ issue
 - 最近发现有插件与我雷同，当初接触uni-app 就发现插件市场虽然有封装的不错的request库，但是都没有对多全局配置做处理，都是通过修改源码的方式配置。我首先推出通过class类，并仿照axios的api实现request请求库，并起名‘仿axios封装request网络请求库，支持拦截器全局配置’。他们虽然修改了部分代码，但是功能与性能并没有优化，反而使代码很冗余。希望能推出新的功能，和性能更加强悍的请求库。（2019-05）
 - 任何形式的‘参考’、‘借鉴’，请标明作者` luch-request `
  ```javascript
- <a href="https://www.quanzhan.co/luch-request/">luch-request</a>
+ <a href="https://v3.luch-request.quanzhan.co/">luch-request</a>
  ```
 
 

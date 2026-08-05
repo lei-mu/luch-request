@@ -5,7 +5,7 @@
 
 		<view class="nav-list">
 			luch-request:
-			<a href="https://www.quanzhan.co/luch-request/" target="_blank">luch-request官网</a>
+			<a href="https://v3.luch-request.quanzhan.co/" target="_blank">luch-request官网</a>
 		</view>
 		<view class="nav-list">
 			我的博客：
