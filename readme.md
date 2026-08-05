@@ -6,6 +6,16 @@
 [![github stars](https://img.shields.io/github/stars/lei-mu/luch-request.svg "github stars")](https://github.com/lei-mu/luch-request "github stars")
 [![github forks](https://img.shields.io/github/forks/lei-mu/luch-request.svg "github forks")](https://github.com/lei-mu/luch-request "github forks")
 
+## v4 Alpha 公测邀请
+
+> luch-request v4 已进入 Alpha 公测阶段，欢迎开发者提前体验新版本并反馈问题。当前 README 仍为 v3 稳定版说明，v4 Alpha 需要显式安装。
+
+```shell
+npm install luch-request@alpha
+```
+
+[查看 v4 文档](https://luch-request.quanzhan.co/) · [前往 GitHub Issues 反馈](https://github.com/lei-mu/luch-request/issues)
+
 - 基于 Promise 对象实现更简单的 request 使用方式，支持请求和响应拦截
 - 支持全局挂载
 - 支持多个全局配置实例
