@@ -4,6 +4,32 @@
 
 `src/` 是 TypeScript 库源码：`core/` 保存请求生命周期与拦截器，`adapters/` 封装 `uni.request`、上传和下载，`helpers/` 放置 URL 与原生选项工具；公共 API 统一从 `src/index.ts` 导出。运行时测试位于 `test/runtime/*.test.ts`，类型契约测试位于 `test/types/*.test-d.ts`。`docs/` 是独立的 VitePress 文档项目，`example/luch-request-v4-test/` 是 uni-app 集成示例。`dist/` 与 `zipDist/` 为生成产物，不要手工编辑。
 
+## 核心设计先于实现
+
+新增或调整 v4 核心能力时，必须先提交设计方案并获得确认，再修改业务代码。核心能力包括公共 API、配置合并、adapter、interceptor、错误模型、取消机制、公共 TypeScript 类型及跨平台行为。局部 bug 修复、测试补充和不改变外部行为的内部整理，可直接按最小改动原则执行。
+
+设计方案必须至少说明：
+
+- 目标、非目标与明确的成功标准；
+- 公共 API、调用示例及兼容性影响；
+- 配置的默认值、合并顺序和覆盖规则；
+- adapter 与 uni-app 原生 Task API 的职责边界；
+- interceptor 的执行顺序、异步行为和错误传播；
+- 错误分类、取消语义及降级行为；
+- TypeScript 类型约束、扩展方式和类型验证；
+- 各 uni-app 平台的能力差异、检测策略与最低版本；
+- runtime、类型、构建和平台集成的验证方式。
+
+设计未确认前，不得创建业务实现、预埋扩展点或引入“以后可能需要”的抽象。允许编写用于验证可行性的最小实验，但实验代码不得进入正式实现，且结论必须记录在设计方案中。
+
+需要进行方案对比时，可以查阅 Axios 等成熟 HTTP client 的当前官方文档或源码。Axios 是一个面向 JavaScript 环境的 HTTP client，仅作为设计案例，不代表本项目必须兼容或照搬其 API。引用外部方案时必须说明：
+
+1. 借鉴了什么机制，以及它解决的问题；
+2. 哪些部分不适合 uni-app 多平台环境；
+3. 最终方案在复杂度、稳定性、包体积和可测试性上的取舍。
+
+如果外部资料不可用或平台支持情况无法确认，应明确说明未知项，不得依赖模型记忆虚构行为。存在更简单、更健壮或更适合 uni-app 的方案时，应优先采用并说明理由。
+
 ## 跨平台兼容性
 
 所有功能设计必须优先保证 uni-app 多平台兼容，不能默认 Web API、DOM API、Node.js API 或某个小程序 API 在其他平台可用。例如，不得直接假设 `AbortController`、`AbortSignal`、`window` 或 Node.js 内置模块能够在所有运行环境中使用。
