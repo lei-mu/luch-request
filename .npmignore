@@ -18,3 +18,5 @@ pnpm-lock.yaml
 rollup.config.mjs
 tsconfig.json
 tsconfig.build.json
+
+AGENTS.md
