@@ -33,4 +33,6 @@ docs/.vitepress/cache/
 docs/.vitepress/dist/
 example/**/unpackage/
 
+# v3 构建物
 DCloud
+zipDist
