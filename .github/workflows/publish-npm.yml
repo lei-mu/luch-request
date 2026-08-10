@@ -1,0 +1,107 @@
+name: Publish npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+          registry-url: https://registry.npmjs.org
+
+      - name: 校验发布 tag
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git fetch origin master
+
+          tag_name="${GITHUB_REF_NAME}"
+          if [[ ! "${tag_name}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta)\.[0-9]+)?$ ]]; then
+            echo "发布 tag 必须形如 v4.0.0、v4.0.0-alpha.1 或 v4.0.0-beta.1"
+            exit 1
+          fi
+
+          release_version="${tag_name#v}"
+          package_version="$(node -p "require('./package.json').version")"
+          if [[ "${release_version}" != "${package_version}" ]]; then
+            echo "tag 版本 ${release_version} 与 package.json 版本 ${package_version} 不一致"
+            exit 1
+          fi
+
+          release_commit="$(git rev-list -n 1 "${tag_name}")"
+          if ! git merge-base --is-ancestor "${release_commit}" origin/master; then
+            echo "tag 指向的 commit 必须属于 origin/master 历史"
+            exit 1
+          fi
+
+          if [[ "${release_version}" == *"-alpha."* ]]; then
+            npm_tag="alpha"
+          elif [[ "${release_version}" == *"-beta."* ]]; then
+            npm_tag="beta"
+          else
+            npm_tag="latest"
+          fi
+
+          echo "version=${release_version}" >> "${GITHUB_OUTPUT}"
+          echo "npm_tag=${npm_tag}" >> "${GITHUB_OUTPUT}"
+
+      - name: 校验 npm token
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${NODE_AUTH_TOKEN:-}" ]]; then
+            echo "缺少 GitHub Secret: NPM_TOKEN"
+            exit 1
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 检查库
+        run: pnpm check
+
+      - name: 打包 npm 构建物
+        id: pack
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          pack_output="$(npm pack --json)"
+          package_file="$(node -e "const input = JSON.parse(process.argv[1]); console.log(input[0].filename)" "${pack_output}")"
+          echo "package_file=${package_file}" >> "${GITHUB_OUTPUT}"
+
+      - name: 上传 npm 构建物
+        uses: actions/upload-artifact@v4
+        with:
+          name: luch-request-${{ steps.release.outputs.version }}-npm-package
+          path: ${{ steps.pack.outputs.package_file }}
+          if-no-files-found: error
+
+      - name: 发布到 npm
+        run: npm publish "${{ steps.pack.outputs.package_file }}" --tag "${{ steps.release.outputs.npm_tag }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
