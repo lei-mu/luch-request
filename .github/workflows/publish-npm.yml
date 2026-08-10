@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   publish:
@@ -24,9 +25,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: 安装 npm 11
+        run: npm install --global npm@11
 
       - name: 校验发布 tag
         id: release
@@ -66,18 +69,6 @@ jobs:
           echo "version=${release_version}" >> "${GITHUB_OUTPUT}"
           echo "npm_tag=${npm_tag}" >> "${GITHUB_OUTPUT}"
 
-      - name: 校验 npm token
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if [[ -z "${NODE_AUTH_TOKEN:-}" ]]; then
-            echo "缺少 GitHub Secret: NPM_TOKEN"
-            exit 1
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
@@ -103,5 +94,3 @@ jobs:
 
       - name: 发布到 npm
         run: npm publish "${{ steps.pack.outputs.package_file }}" --tag "${{ steps.release.outputs.npm_tag }}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
