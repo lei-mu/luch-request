@@ -44,6 +44,11 @@ class LuchRequestError<TConfig = unknown, TResponse = unknown> extends Error {
 | `LuchRequestError.ERR_CANCELED` | 取消或业务主动终止时 | 库取消流程可通过 `cancelMode` 区分原生与逻辑取消 |
 | `LuchRequestError.ERR_INTERCEPTOR` | interceptor 执行或恢复时 | `cause` 保留 handler 异常，response 阶段可能带 `response` |
 
+未通过 `validateStatus` 的响应仍会执行 `transformResponse`。转换成功时继续抛出
+`ERR_BAD_STATUS`，且 `error.response.data` 已完成转换；转换失败时
+`ERR_BAD_RESPONSE` 优先，以便保留真正阻止调用方读取响应的错误原因。两种情况的
+`response.raw` 都保留平台原始响应。
+
 业务分支应比较静态常量，不要比较字符串字面量：
 
 ```ts

@@ -59,6 +59,10 @@ export default defineConfig({
           items: [
             { text: '请求与响应', link: '/api/request' },
             { text: '配置选项', link: '/api/config-options' },
+            {
+              text: '响应转换',
+              link: '/api/config-options#transform-response'
+            },
             { text: '公共导出', link: '/api/exported-types' },
             { text: 'Interceptor', link: '/api/interceptors' },
             { text: '错误处理', link: '/api/error' },

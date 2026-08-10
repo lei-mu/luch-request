@@ -67,6 +67,8 @@ module augmentation 的 interface，编译后不会生成运行时对象。
 | `UploadConfig<TNativeOptions>` | 原生扩展字段 | 单次 `upload()` 配置 |
 | `DownloadConfig<TNativeOptions>` | 原生扩展字段 | 单次 `download()` 配置 |
 | `CommonConfig<TParams>` | 查询参数 | 三类 operation 共用的库配置 |
+| `ResponseTransformer` | — | [同步转换响应 data 的函数类型](/api/config-options#transform-response) |
+| `ResponseTransformContext` | — | [transformer 可读取的只读请求与响应上下文](/api/config-options#transform-response) |
 
 ```ts
 interface CreateUserBody {

@@ -50,6 +50,7 @@ const response = await http.get<User>('/users/1')
 | `params` | `TParams` | 不追加 query | 追加到最终 URL，不等同于 `data` |
 | `paramsSerializer` | `(params) => string` | 使用内置 serializer | 自定义整个 `params` 的序列化结果 |
 | `validateStatus` | `(status) => boolean` | 接受 200–299 | 返回 `false` 时以 `LuchRequestError.ERR_BAD_STATUS` reject |
+| `transformResponse` | `readonly ResponseTransformer[]` | 内置 JSON transformer | 按数组顺序同步转换 `response.data` |
 
 内置 serializer 会忽略 `undefined`，把数组展开为 `key[]=value`，把 `Date`
 转换为 ISO 字符串，把普通对象转换为 JSON 字符串。`null` 不产生键值；URL 中已有
@@ -68,6 +69,87 @@ await http.get<User[]>('/users', {
 `params` 不与实例默认值做对象合并。它通常是一个完整的业务输入，深合并可能把
 其他接口的分页、租户或筛选条件带入当前请求。自定义 serializer 接管全部编码，
 库只移除开头多余的 `?`，因此动态文本仍应由调用方正确编码。
+
+## `transformResponse` {#transform-response}
+
+`transformResponse` 是同步的响应数据管线。实例默认数组包含内置 JSON
+transformer，多个 transformer 按数组顺序执行，后一个接收前一个的返回值。
+
+```ts
+import type {
+  ResponseTransformContext,
+  ResponseTransformer
+} from 'luch-request'
+
+const transformer: ResponseTransformer = (data, context) => {
+  const transformContext: ResponseTransformContext = context
+  console.log(transformContext.statusCode)
+  return data
+}
+```
+
+`context` 提供以下只读信息：
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `operation` | `LuchOperation` | 当前是 request、upload 或 download |
+| `config` | `Readonly<ResolvedRequestConfig>` | interceptor 完成后的最终请求配置 |
+| `statusCode` | `number \| undefined` | 平台返回并完成归一化的状态码 |
+| `statusAccepted` | `boolean` | 当前状态是否通过 `validateStatus` |
+| `header` | `Readonly<RequestHeaders> \| undefined` | 平台返回的响应头 |
+
+### 在默认转换后追加处理
+
+需要保留内置 JSON transformer，并在它之后继续处理时，应显式展开实例默认值：
+
+```ts
+import camelcaseKeys from 'camelcase-keys'
+import { createLuchRequest } from 'luch-request'
+
+const http = createLuchRequest()
+
+http.defaults.transformResponse = [
+  ...http.defaults.transformResponse,
+  (data) => camelcaseKeys(data as Record<string, unknown>, {
+    deep: true
+  })
+]
+```
+
+`http.defaults.transformResponse` 始终是数组，因此不需要额外判断或导入内部默认
+transformer。luch-request 不单独导出 `defaultTransformResponse`。
+
+### 单次请求完全接管解析
+
+单次请求传入 `transformResponse` 时会整体替换实例数组。这适合接管解析，例如使用
+支持大整数的 JSON parser：
+
+```ts
+import JSONbig from 'json-bigint'
+
+await http.get('/api', {
+  dataType: 'text',
+  transformResponse: [
+    (data) => JSONbig.parse(data as string)
+  ]
+})
+```
+
+这里必须让原生 request 返回文本，否则平台可能已经使用原生 JSON parser 转换
+数据，大整数精度会在自定义 transformer 执行前丢失。XML、CSV 或其他格式是否以
+字符串进入管线，同样取决于目标平台和原生 `dataType`；库不预设输入类型。
+
+### 合并、同步和错误规则
+
+- 修改实例默认值时，可通过展开数组保留内置 JSON transformer。
+- 单次配置整体替换实例数组，不自动拼接。
+- transformer 必须同步返回；返回 Promise 会以
+  `LuchRequestError.ERR_BAD_RESPONSE` reject。
+- `response.data` 保存最终转换结果，`response.raw` 始终保留平台原始响应。
+
+状态码未通过 `validateStatus` 时仍执行转换，使 `error.response.data` 与成功响应
+采用相同数据契约。若转换成功，保留 `ERR_BAD_STATUS`；若转换失败，转换错误
+`ERR_BAD_RESPONSE` 优先。
 
 ## 业务上下文与取消
 
@@ -199,7 +281,7 @@ upload 未显式设置 `Content-Type` 时不会继承实例默认的该 header�
 - 允许每项库功能定义自己的校验和合并规则，而不把越来越多的行为开关堆到配置
   顶层。
 
-例如 `jsonParsing` 控制 luch-request 收到响应后的 JSON 转换，
+例如 `jsonParsing` 控制内置 JSON transformer，
 `isNativeAbortError` 控制平台 fail payload 的错误分类；它们都不是 uni API 参数。
 如果一个选项描述的是“luch-request 应该如何处理请求或响应”，应放入
 `luchOptions`，而不是 `nativeOptions`。
@@ -210,6 +292,10 @@ upload 未显式设置 `Content-Type` 时不会继承实例默认的该 header�
 :::
 
 ### `jsonParsing`
+
+`jsonParsing` 不是独立的第二条解析管线，它只配置实例默认
+`transformResponse` 数组中的内置 JSON transformer。单次请求整体替换
+`transformResponse` 后，内置解析自然不会执行。
 
 ```ts
 import {

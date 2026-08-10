@@ -116,6 +116,7 @@ http.patch<TResponse, TData, TParams, TNativeOptions>(url, data, config)
 | `paramsSerializer` | 自定义 params 序列化 |
 | `luchMeta` | 业务元数据，不发送给 uni API |
 | `validateStatus` | 判断状态码是否成功，默认接受 2xx |
+| `transformResponse` | 按顺序同步转换响应 data；单次数组整体替换实例数组 |
 | `signal` | 结构化取消信号 |
 | `onTask` | 原生 Task 创建后调用的单次监听器，第二个参数提供统一取消能力 |
 | `timeout` | 超时时间，实际能力由平台决定 |
@@ -185,6 +186,38 @@ const http = createLuchRequest({
   validateStatus: (status) => status >= 200 && status < 400
 })
 ```
+
+## `transformResponse`
+
+`transformResponse` 用于同步转换平台返回的 `response.data`。例如，在保留内置
+JSON transformer 的基础上统一转换业务字段：
+
+```ts
+import camelcaseKeys from 'camelcase-keys'
+
+http.defaults.transformResponse = [
+  ...http.defaults.transformResponse,
+  (data) => camelcaseKeys(data as Record<string, unknown>, {
+    deep: true
+  })
+]
+```
+
+单次请求传入数组会整体替换实例默认数组，可用于 `json-bigint` 等自定义 parser：
+
+```ts
+import JSONbig from 'json-bigint'
+
+const response = await http.get('/orders/1', {
+  dataType: 'text',
+  transformResponse: [
+    (data) => JSONbig.parse(data as string)
+  ]
+})
+```
+
+完整的 context 字段、合并规则、状态错误优先级和 XML/CSV 输入边界见
+[配置选项：transformResponse](/api/config-options#transform-response)。
 
 ## JSON 响应解析
 

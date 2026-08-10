@@ -25,6 +25,7 @@ description: 实例默认配置、单次请求配置和原生参数的合并规�
 | `header` | 不主动添加请求头 |
 | `params` | 不追加查询参数 |
 | `validateStatus` | 接受 200–299 |
+| `transformResponse` | 运行内置 JSON transformer |
 | `luchOptions.jsonParsing` | 只对 upload 使用 `auto` 解析 |
 | `signal` | 不监听取消信号 |
 | `timeout` 等原生配置 | 不设置，由目标平台决定 |
@@ -39,6 +40,7 @@ description: 实例默认配置、单次请求配置和原生参数的合并规�
 | `header` | header 名大小写不敏感；单次值覆盖，`null/undefined` 删除继承值 |
 | `luchMeta` | 第一层浅合并，嵌套同名值整体替换 |
 | `luchOptions` | 按库功能定义；`jsonParsing` 对象按字段合并 |
+| `transformResponse` | 单次数组整体替换实例数组，不自动拼接 |
 | `nativeOptions` | request 的实例值与单次值浅合并；文件操作只用单次值 |
 | `onTask` | 只允许单次配置，不从实例 defaults 继承 |
 | `baseURL`、`params`、`signal` 等 | 单次值整体覆盖实例值 |
@@ -146,6 +148,6 @@ await http.get('/users/1', {
 ## 文件操作的隔离
 
 upload / download 只继承 `baseURL`、`header`、`params`、`luchMeta`、
-`validateStatus`、`signal`、`timeout`、`luchOptions` 等公共配置。实例中的
+`validateStatus`、`transformResponse`、`signal`、`timeout`、`luchOptions` 等公共配置。实例中的
 request 专属字段和 `nativeOptions` 不会进入文件操作；文件平台扩展应写在本次
 upload / download 的 `nativeOptions` 中。
