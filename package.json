@@ -15,6 +15,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "MIGRATION.md",
     "COMPATIBILITY.md"
   ],
@@ -32,7 +33,9 @@
     "publish:alpha": "npm publish --tag alpha",
     "publish:beta": "npm publish --tag beta",
     "publish:release": "npm publish --tag latest",
-    "publish:dry-run": "pnpm check && npm pack --dry-run"
+    "publish:dry-run": "pnpm check && npm pack --dry-run",
+    "changelog": "conventional-changelog -p conventionalcommits --from 4.0.0-alpha.1 -r 0 -o CHANGELOG.md",
+    "changelog:dry-run": "conventional-changelog -p conventionalcommits --from 4.0.0-alpha.1 -r 0 --stdout"
   },
   "keywords": [
     "uni-app",
@@ -54,6 +57,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.3.0",
+    "conventional-changelog": "^8.1.1",
+    "conventional-changelog-conventionalcommits": "^10.2.1",
     "rollup": "^4.62.2",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
