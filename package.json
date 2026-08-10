@@ -27,7 +27,12 @@
     "typecheck": "tsc --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "tsc --project tsconfig.json && vitest run && node ./scripts/clean.mjs && rollup --config && tsc --project tsconfig.build.json"
+    "check": "tsc --project tsconfig.json && vitest run && node ./scripts/clean.mjs && rollup --config && tsc --project tsconfig.build.json",
+    "prepublishOnly": "pnpm check",
+    "publish:alpha": "npm publish --tag alpha",
+    "publish:beta": "npm publish --tag beta",
+    "publish:release": "npm publish --tag latest",
+    "publish:dry-run": "pnpm check && npm pack --dry-run"
   },
   "keywords": [
     "uni-app",
