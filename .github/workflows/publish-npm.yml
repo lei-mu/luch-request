@@ -46,9 +46,15 @@ jobs:
           fi
 
           release_version="${tag_name#v}"
+          package_name="$(node -p "require('./package.json').name")"
           package_version="$(node -p "require('./package.json').version")"
           if [[ "${release_version}" != "${package_version}" ]]; then
             echo "tag 版本 ${release_version} 与 package.json 版本 ${package_version} 不一致"
+            exit 1
+          fi
+
+          if npm view "${package_name}@${release_version}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "${package_name}@${release_version} 已经发布到 npm"
             exit 1
           fi
 
@@ -94,3 +100,6 @@ jobs:
 
       - name: 发布到 npm
         run: npm publish "${{ steps.pack.outputs.package_file }}" --tag "${{ steps.release.outputs.npm_tag }}"
+
+      - name: 同步 cnpm
+        run: npx cnpm sync luch-request
