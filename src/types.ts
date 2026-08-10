@@ -43,6 +43,26 @@ export type QueryValue =
 
 export type QueryParams = Record<string, QueryValue>
 
+/** 响应转换器可读取的只读请求与响应上下文。 */
+export interface ResponseTransformContext {
+  /** 当前调用对应的 uni API 类型。 */
+  readonly operation: LuchOperation
+  /** request interceptor 完成后的最终请求配置。 */
+  readonly config: Readonly<ResolvedRequestConfig>
+  /** 已归一化的状态码；平台未提供有效状态码时为空。 */
+  readonly statusCode: number | undefined
+  /** validateStatus 是否接受当前响应。 */
+  readonly statusAccepted: boolean
+  /** 平台返回的响应头；键名大小写由平台决定。 */
+  readonly header: Readonly<RequestHeaders> | undefined
+}
+
+/** 同步转换 response.data；多个转换器按数组顺序执行。 */
+export type ResponseTransformer = (
+  data: unknown,
+  context: ResponseTransformContext
+) => unknown
+
 /** 按请求操作启用 JSON 响应解析。 */
 export interface JSONParsingOptions {
   /** 需要解析字符串 data 的 operation；默认只包含 upload。 */
@@ -218,6 +238,8 @@ export interface CommonConfig<
   luchMeta?: LuchMeta
   /** 判断 HTTP 状态是否成功；默认接受 200 至 299。 */
   validateStatus?: (status: number) => boolean
+  /** 按顺序同步转换响应 data；单次配置整体替换实例数组。 */
+  transformResponse?: readonly ResponseTransformer[]
   /** 可选的结构化取消信号，不要求原生 AbortSignal 实例。 */
   signal?: AbortSignalLike
   /** 请求超时时间，具体支持范围由运行平台决定。 */

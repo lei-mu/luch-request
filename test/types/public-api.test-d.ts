@@ -17,6 +17,8 @@ import type {
   RequestConfig,
   RequestHeaders,
   ResolvedRequestConfig,
+  ResponseTransformContext,
+  ResponseTransformer,
   TaskListener
 } from '../../src'
 import {
@@ -214,8 +216,37 @@ createLuchRequest({
 })
 const defaultMethod: string | undefined = http.defaults.method
 const acceptsOK: boolean = http.defaults.validateStatus(200)
+const transformResponse: ResponseTransformer = (data, context) => {
+  const operation: LuchOperation = context.operation
+  const statusCode: number | undefined = context.statusCode
+  const statusAccepted: boolean = context.statusAccepted
+  const header: Readonly<RequestHeaders> | undefined = context.header
+  const url: string = context.config.url
+  void operation
+  void statusCode
+  void statusAccepted
+  void header
+  void url
+  return data
+}
+const readTransformContext = (context: ResponseTransformContext): void => {
+  const config: Readonly<ResolvedRequestConfig> = context.config
+  void config
+}
+http.defaults.transformResponse = [
+  ...http.defaults.transformResponse,
+  transformResponse
+]
+http.get('/transform', {
+  transformResponse: [transformResponse]
+})
+http.get('/invalid-transform', {
+  // @ts-expect-error transformResponse 只接受函数数组
+  transformResponse: ['invalid']
+})
 void defaultMethod
 void acceptsOK
+void readTransformContext
 const pending = http.request<{ id: number }>({
   url: '/users/1',
   nativeOptions: {

@@ -15,7 +15,11 @@ const blockedKeys = new Set([
 type ConfigRecord = Record<string, unknown>
 type MergeableConfig = Pick<
   CommonConfig,
-  'header' | 'luchMeta' | 'luchOptions' | 'nativeOptions'
+  | 'header'
+  | 'luchMeta'
+  | 'luchOptions'
+  | 'nativeOptions'
+  | 'transformResponse'
 >
 
 // 取消依赖对象身份传播状态，不能作为普通配置对象复制。
@@ -260,6 +264,9 @@ export function mergeConfig<
     defaultConfig?.luchOptions,
     localConfig.luchOptions
   )
+  const transformResponse = localConfig.transformResponse === undefined
+    ? defaultConfig?.transformResponse
+    : localConfig.transformResponse
   const nativeOptions: ConfigRecord = Object.create(null)
   assignSafe(nativeOptions, defaultConfig?.nativeOptions)
   assignSafe(nativeOptions, localConfig.nativeOptions)
@@ -274,6 +281,12 @@ export function mergeConfig<
 
   if (luchOptions) {
     result.luchOptions = luchOptions
+  }
+
+  if (transformResponse !== undefined) {
+    result.transformResponse = Array.isArray(transformResponse)
+      ? [...transformResponse]
+      : transformResponse
   }
 
   if (Object.keys(nativeOptions).length > 0) {

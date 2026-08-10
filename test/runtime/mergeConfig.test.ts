@@ -176,6 +176,27 @@ describe('mergeConfig', () => {
     expect(disabled.luchOptions?.jsonParsing).toBe(false)
   })
 
+  it('单次 transformResponse 整体替换实例数组并生成私有副本', () => {
+    const defaultTransform = (data: unknown): unknown => data
+    const localTransform = (data: unknown): unknown => data
+    const defaults = {
+      transformResponse: [defaultTransform]
+    }
+
+    const inherited = mergeConfig(defaults, {
+      url: '/inherited'
+    })
+    const overridden = mergeConfig(defaults, {
+      url: '/overridden',
+      transformResponse: [localTransform]
+    })
+
+    expect(inherited.transformResponse).toEqual([defaultTransform])
+    expect(inherited.transformResponse).not.toBe(defaults.transformResponse)
+    expect(overridden.transformResponse).toEqual([localTransform])
+    expect(overridden.transformResponse).not.toBe(defaults.transformResponse)
+  })
+
   it('单次请求完全替换实例的原生 abort 识别器', () => {
     const defaultDetector = (): boolean => true
     const localDetector = (): boolean => false

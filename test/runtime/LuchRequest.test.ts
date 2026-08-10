@@ -21,7 +21,8 @@ import type {
 } from '../../src'
 import type {
   AnyLuchResponse,
-  AnyRequestConfig
+  AnyRequestConfig,
+  ResponseTransformer
 } from '../../src/types'
 
 interface CallbackOptions {
@@ -808,6 +809,7 @@ describe('LuchRequest', () => {
     let release: ((
       config: AnyRequestConfig & {
         validateStatus: (status: number) => boolean
+        transformResponse: readonly ResponseTransformer[]
       }
     ) => void) | undefined
     const request = vi.fn()
@@ -820,6 +822,7 @@ describe('LuchRequest', () => {
     http.interceptors.request.use((config) => (
       new Promise<AnyRequestConfig & {
         validateStatus: (status: number) => boolean
+        transformResponse: readonly ResponseTransformer[]
       }>((resolve) => {
         release = resolve
       })
@@ -837,7 +840,8 @@ describe('LuchRequest', () => {
 
     release?.({
       url: '/slow',
-      validateStatus: () => true
+      validateStatus: () => true,
+      transformResponse: []
     })
     await Promise.resolve()
 
@@ -1675,6 +1679,247 @@ describe('LuchRequest', () => {
 
     expect(requestResponse.data).toBe(data)
     expect(downloadResponse).toHaveProperty('data', data)
+  })
+
+  it('允许在实例默认 JSON transformer 后追加同步转换器', async () => {
+    const data = '{"user_id":1}'
+    const header = {
+      'content-type': 'application/json'
+    }
+    const request = vi.fn((options: CallbackOptions) => {
+      succeed(options, {
+        data,
+        statusCode: 200,
+        header
+      })
+    })
+    vi.stubGlobal('uni', {
+      request
+    })
+
+    const contexts: Array<{
+      operation: LuchOperation
+      statusCode: number | undefined
+      statusAccepted: boolean
+      header: unknown
+      metadata: unknown
+    }> = []
+    const http = createLuchRequest({
+      luchMeta: {
+        source: 'default'
+      },
+      luchOptions: {
+        jsonParsing: {
+          include: [LuchOperation.REQUEST],
+          mode: JSONParsingMode.STRICT
+        }
+      }
+    })
+    const inheritedTransforms = http.defaults.transformResponse
+    http.defaults.transformResponse = [
+      ...http.defaults.transformResponse,
+      (value, context) => {
+        contexts.push({
+          operation: context.operation,
+          statusCode: context.statusCode,
+          statusAccepted: context.statusAccepted,
+          header: context.header,
+          metadata: context.config.luchMeta
+        })
+
+        const parsed = value as { user_id: number }
+        return {
+          userId: parsed.user_id
+        }
+      },
+      (value) => ({
+        result: value
+      })
+    ]
+
+    const response = await http.get('/users')
+
+    expect(response.data).toEqual({
+      result: {
+        userId: 1
+      }
+    })
+    expect(response.raw.data).toBe(data)
+    expect(contexts).toEqual([{
+      operation: LuchOperation.REQUEST,
+      statusCode: 200,
+      statusAccepted: true,
+      header,
+      metadata: {
+        source: 'default'
+      }
+    }])
+    expect(http.defaults.transformResponse).not.toBe(inheritedTransforms)
+    expect(request.mock.calls[0]![0]).not.toHaveProperty(
+      'transformResponse'
+    )
+  })
+
+  it('单次 transformResponse 整体替换默认 JSON transformer', async () => {
+    const data = '{"id":9007199254740993}'
+    const request = vi.fn((options: CallbackOptions) => {
+      succeed(options, {
+        data,
+        statusCode: 200,
+        header: {}
+      })
+    })
+    vi.stubGlobal('uni', {
+      request
+    })
+
+    const http = createLuchRequest({
+      luchOptions: {
+        jsonParsing: {
+          include: [LuchOperation.REQUEST],
+          mode: JSONParsingMode.STRICT
+        }
+      }
+    })
+    const response = await http.get('/big-integer', {
+      dataType: 'text',
+      transformResponse: [
+        (value) => ({
+          raw: value
+        })
+      ]
+    })
+
+    expect(response.data).toEqual({
+      raw: data
+    })
+  })
+
+  it('状态拒绝后仍转换 error.response.data 并保留 BAD_STATUS', async () => {
+    const data = '{"error_code":"UNAVAILABLE"}'
+    const request = vi.fn((options: CallbackOptions) => {
+      succeed(options, {
+        data,
+        statusCode: 500,
+        header: {}
+      })
+    })
+    vi.stubGlobal('uni', {
+      request
+    })
+
+    const http = createLuchRequest({
+      luchOptions: {
+        jsonParsing: {
+          include: [LuchOperation.REQUEST],
+          mode: JSONParsingMode.STRICT
+        }
+      }
+    })
+    http.defaults.transformResponse = [
+      ...http.defaults.transformResponse,
+      (value, context) => ({
+        errorCode: (value as { error_code: string }).error_code,
+        statusAccepted: context.statusAccepted
+      })
+    ]
+
+    const error = await http.get('/failure').catch(
+      (reason: unknown) => reason
+    )
+
+    expect(error).toMatchObject({
+      code: LuchRequestError.ERR_BAD_STATUS,
+      response: {
+        data: {
+          errorCode: 'UNAVAILABLE',
+          statusAccepted: false
+        }
+      }
+    })
+    expect(isLuchRequestError(error)).toBe(true)
+    if (!isLuchRequestError(error)) {
+      throw new TypeError('Expected a LuchRequestError')
+    }
+    expect(
+      ((error.response as AnyLuchResponse).raw as { data: unknown }).data
+    ).toBe(data)
+  })
+
+  it('状态拒绝且严格 JSON 解析失败时由 BAD_RESPONSE 替代', async () => {
+    const data = '{"error":'
+    const request = vi.fn((options: CallbackOptions) => {
+      succeed(options, {
+        data,
+        statusCode: 500,
+        header: {}
+      })
+    })
+    vi.stubGlobal('uni', {
+      request
+    })
+
+    const error = await createLuchRequest({
+      luchOptions: {
+        jsonParsing: {
+          include: [LuchOperation.REQUEST],
+          mode: JSONParsingMode.STRICT
+        }
+      }
+    }).get('/invalid-json').catch((reason: unknown) => reason)
+
+    expect(error).toMatchObject({
+      code: LuchRequestError.ERR_BAD_RESPONSE,
+      message: 'Response data is not valid JSON',
+      response: {
+        data,
+        statusCode: 500
+      }
+    })
+    expect(isLuchRequestError(error)).toBe(true)
+    if (!isLuchRequestError(error)) {
+      throw new TypeError('Expected a LuchRequestError')
+    }
+    expect(error.cause).toBeInstanceOf(SyntaxError)
+  })
+
+  it('拒绝异步和运行时非法的 transformResponse', async () => {
+    const request = vi.fn((options: CallbackOptions) => {
+      succeed(options, {
+        data: 'value',
+        statusCode: 200,
+        header: {}
+      })
+    })
+    vi.stubGlobal('uni', {
+      request
+    })
+
+    const asyncError = await createLuchRequest({
+      transformResponse: [
+        async (value) => value
+      ]
+    }).get('/async-transform').catch((reason: unknown) => reason)
+    const invalidError = await createLuchRequest({
+      transformResponse: ['invalid']
+    } as never).get('/invalid-transform').catch(
+      (reason: unknown) => reason
+    )
+
+    expect(asyncError).toMatchObject({
+      code: LuchRequestError.ERR_BAD_RESPONSE,
+      message: 'Response transformation failed',
+      cause: {
+        message: 'Response transformer must return synchronously'
+      }
+    })
+    expect(invalidError).toMatchObject({
+      code: LuchRequestError.ERR_INVALID_CONFIG,
+      cause: {
+        message: 'transformResponse must contain only functions'
+      }
+    })
+    expect(request).toHaveBeenCalledTimes(1)
   })
 
   it('拒绝运行时非法的 jsonParsing 配置', async () => {

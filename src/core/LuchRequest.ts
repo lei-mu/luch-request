@@ -12,9 +12,6 @@ import {
   LuchOperation
 } from './LuchOperation'
 import {
-  JSONParsingMode
-} from './JSONParsingMode'
-import {
   CancellationMode,
   isLuchRequestError,
   LuchRequestError
@@ -29,6 +26,10 @@ import {
   defaultValidateStatus,
   settleResponse
 } from './settle'
+import {
+  defaultJSONTransformer,
+  transformResponseData
+} from './transformResponse'
 import type {
   AnyLuchResponse,
   AnyRequestConfig,
@@ -43,6 +44,7 @@ import type {
   RequestResponse,
   RequestTask,
   ResolvedRequestConfig,
+  ResponseTransformer,
   TransferTask,
   UploadConfig,
   UploadResponse
@@ -57,6 +59,7 @@ type Adapter<TTask extends NativeTask> = (
 /** request interceptor 收到的配置始终包含实际使用的状态校验函数。 */
 type InterceptorRequestConfig = AnyRequestConfig & {
   validateStatus: (status: number) => boolean
+  transformResponse: readonly ResponseTransformer[]
 }
 
 const transferDefaultKeys = new Set([
@@ -66,6 +69,7 @@ const transferDefaultKeys = new Set([
   'paramsSerializer',
   'luchMeta',
   'validateStatus',
+  'transformResponse',
   'signal',
   'timeout',
   'luchOptions'
@@ -169,6 +173,21 @@ function ensureConfig(value: unknown): asserts value is AnyRequestConfig {
   }
 }
 
+/** 校验并复制同步响应转换器数组。 */
+function normalizeResponseTransformers(
+  value: unknown
+): readonly ResponseTransformer[] {
+  if (!Array.isArray(value)) {
+    throw new TypeError('transformResponse must be an array')
+  }
+
+  if (value.some((transformer) => typeof transformer !== 'function')) {
+    throw new TypeError('transformResponse must contain only functions')
+  }
+
+  return [...value] as ResponseTransformer[]
+}
+
 /** 校验 luchOptions 中需要参与请求管线判断的配置。 */
 function ensureLuchOptions(value: unknown): void {
   if (typeof value !== 'object' || value === null) {
@@ -263,6 +282,9 @@ function normalizeBehaviorConfig(
     const validateStatus = config.validateStatus === undefined
       ? defaultValidateStatus
       : config.validateStatus
+    const transformResponse = normalizeResponseTransformers(
+      config.transformResponse ?? []
+    )
 
     if (typeof validateStatus !== 'function') {
       throw new TypeError('validateStatus must be a function')
@@ -277,7 +299,8 @@ function normalizeBehaviorConfig(
 
     const result: InterceptorRequestConfig = {
       ...config,
-      validateStatus
+      validateStatus,
+      transformResponse
     }
 
     if (operation === LuchOperation.REQUEST) {
@@ -588,57 +611,6 @@ function applyInterceptors<TValue>(
   return chain
 }
 
-/** 用户未配置时只尝试解析 upload 的字符串 data。 */
-const defaultJSONParsingOperations: readonly LuchOperation[] = [
-  LuchOperation.UPLOAD
-]
-
-/**
- * 按 luchOptions 解析字符串 data；raw 始终保留平台原始响应。
- */
-function transformResponseData(
-  response: AnyLuchResponse,
-  operation: LuchOperation
-): AnyLuchResponse {
-  const options = response.config.luchOptions?.jsonParsing
-
-  if (options === false) {
-    return response
-  }
-
-  const include = options?.include ?? defaultJSONParsingOperations
-
-  if (
-    !include.includes(operation) ||
-    typeof response.data !== 'string'
-  ) {
-    return response
-  }
-
-  try {
-    response.data = JSON.parse(response.data)
-    return response
-  } catch (cause) {
-    if (
-      (options?.mode ?? JSONParsingMode.AUTO) === JSONParsingMode.AUTO
-    ) {
-      return response
-    }
-
-    throw new LuchRequestError(
-      'Response data is not valid JSON',
-      LuchRequestError.ERR_BAD_RESPONSE,
-      {
-        config: response.config,
-        task: response.task,
-        response,
-        cause,
-        raw: response.raw
-      }
-    )
-  }
-}
-
 /**
  * 单个 luch-request 实例的内部实现。
  * 实例之间的默认配置和 interceptor 完全隔离。
@@ -652,6 +624,7 @@ export class LuchRequest<TNativeOptions extends object = {}> {
   /** 已合并 luch-request 行为默认值的实例默认配置。 */
   readonly defaults: RequestDefaults<TNativeOptions> & {
     validateStatus: (status: number) => boolean
+    transformResponse: readonly ResponseTransformer[]
   }
   /** request 与 response 使用各自独立的 interceptor 管理器。 */
   readonly interceptors: {
@@ -665,7 +638,8 @@ export class LuchRequest<TNativeOptions extends object = {}> {
   constructor(defaults: RequestDefaults<TNativeOptions>) {
     this.defaults = mergeConfig(
       {
-        validateStatus: defaultValidateStatus
+        validateStatus: defaultValidateStatus,
+        transformResponse: [defaultJSONTransformer]
       },
       defaults
     )
@@ -1133,18 +1107,29 @@ export class LuchRequest<TNativeOptions extends object = {}> {
               )
             )
 
-            const response = settleResponse(
-              createResponse(
-                raw,
-                prepared,
-                controller.task
-              )
+            const response = createResponse(
+              raw,
+              prepared,
+              controller.task
             )
 
-            return transformResponseData(response, operation)
+            try {
+              settleResponse(response)
+            } catch (error) {
+              if (
+                isLuchRequestError(error) &&
+                error.code === LuchRequestError.ERR_BAD_STATUS
+              ) {
+                transformResponseData(response, operation, false)
+              }
+
+              throw error
+            }
+
+            return transformResponseData(response, operation, true)
           })
 
-          // 只有成功获得且通过状态检查的响应才进入成功拦截链。
+          // 转换后仍只有通过状态检查的响应进入成功拦截链。
           return await applyInterceptors(
             dispatched,
             this.responseInterceptors,

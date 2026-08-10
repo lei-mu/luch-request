@@ -86,6 +86,8 @@ export type {
   RequestResponse,
   RequestTask,
   ResolvedRequestConfig,
+  ResponseTransformContext,
+  ResponseTransformer,
   TransferTask,
   TaskListener,
   UploadConfig,
