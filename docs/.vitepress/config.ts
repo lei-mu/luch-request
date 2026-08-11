@@ -29,8 +29,8 @@ export default defineConfig({
   ],
   themeConfig: {
     logo: {
-      light: '/logo.svg',
-      dark: '/logo-dark.svg',
+      light: '/logo-qunzhan-light.png',
+      dark: '/logo-qunzhan-dark.png',
       alt: 'luch-request'
     },
     siteTitle: 'luch-request / v4 Alpha',
