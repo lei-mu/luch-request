@@ -92,20 +92,47 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/lei-mu/luch-request' }
     ],
     search: {
-      provider: 'local',
+      provider: 'algolia',
       options: {
+        appId: 'OC6EI0UUPW',
+        indexName: 'luch-request-v4',
+        apiKey: 'fa95338dd8a0e6346376ffcf74b6818a',
+        placeholder: '搜索文档',
         translations: {
           button: {
             buttonText: '搜索文档',
             buttonAriaLabel: '搜索文档'
           },
           modal: {
-            noResultsText: '没有找到相关结果',
-            resetButtonTitle: '清除查询条件',
+            searchBox: {
+              resetButtonTitle: '清除查询条件',
+              resetButtonAriaLabel: '清除查询条件',
+              cancelButtonText: '取消',
+              cancelButtonAriaLabel: '取消'
+            },
+            startScreen: {
+              recentSearchesTitle: '最近搜索',
+              noRecentSearchesText: '没有最近搜索',
+              saveRecentSearchButtonTitle: '保存此搜索',
+              removeRecentSearchButtonTitle: '从历史记录中删除此搜索',
+              favoriteSearchesTitle: '收藏',
+              removeFavoriteSearchButtonTitle: '从收藏中删除此搜索'
+            },
+            errorScreen: {
+              titleText: '无法获取结果',
+              helpText: '请检查网络连接。'
+            },
             footer: {
               selectText: '选择',
               navigateText: '切换',
-              closeText: '关闭'
+              closeText: '关闭',
+              searchByText: '搜索提供'
+            },
+            noResultsScreen: {
+              noResultsText: '没有找到相关结果',
+              suggestedQueryText: '你可以尝试查询',
+              reportMissingResultsText: '认为这里应该有结果？',
+              reportMissingResultsLinkText: '反馈问题'
             }
           }
         }
