@@ -65,7 +65,6 @@ http.interceptors.response.use(
     if (body.code === 401) {
       clearSession()
       redirectToLogin()
-      return response
     }
 
     if (!meta.hideToast && body.code != null && body.code !== 200) {
@@ -80,6 +79,7 @@ http.interceptors.response.use(
       msg?: string
       message?: string
     } | undefined
+    // responseData?.message 是服务器特殊异常返回非标响应体message
     const errorMessage = responseData?.msg
       ?? responseData?.message
       ?? error.message

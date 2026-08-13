@@ -51,16 +51,6 @@ body {
   letter-spacing: -0.025em;
 }
 
-@media (min-width: 960px) {
-  .VPNav.VPNav {
-    top: 43px;
-  }
-
-  .VPSidebar.VPSidebar {
-    top: 43px;
-  }
-}
-
 .VPDoc h1,
 .VPDoc h2,
 .VPDoc h3 {
