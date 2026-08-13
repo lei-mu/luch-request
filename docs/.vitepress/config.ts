@@ -49,7 +49,8 @@ export default defineConfig({
             { text: '认识 v4 Alpha', link: '/guide/' },
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '配置与合并', link: '/guide/configuration' },
-            { text: 'TypeScript 设计', link: '/guide/typescript' }
+            { text: 'TypeScript 设计', link: '/guide/typescript' },
+            { text: '最佳实践与常见场景', link: '/guide/best-practices' }
           ]
         }
       ],

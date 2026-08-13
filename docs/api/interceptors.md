@@ -127,10 +127,7 @@ const interceptorId = http.interceptors.response.use(
     return response
   },
   (error) => {
-    if (
-      isLuchRequestError(error) &&
-      error.code === LuchRequestError.ERR_NETWORK
-    ) {
+    if (error.code === LuchRequestError.ERR_NETWORK) {
       console.log('网络请求失败', error.raw)
     }
 

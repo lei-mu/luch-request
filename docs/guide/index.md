@@ -59,8 +59,9 @@ WebSocket 与 `uni_modules` 分发。业务可以使用 interceptor 组合自己
 
 1. [快速开始](./getting-started)
 2. [配置与合并](./configuration)
-3. [请求与响应 API](/api/request)
-4. [错误处理](/api/error)
-5. [兼容性](/compatibility/)
+3. [最佳实践与常见场景](./best-practices)
+4. [请求与响应 API](/api/request)
+5. [错误处理](/api/error)
+6. [兼容性](/compatibility/)
 
 从 v3 升级时，直接阅读[从 v3 迁移到 v4](/migration/v3-to-v4)。
