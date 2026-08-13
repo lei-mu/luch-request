@@ -45,7 +45,7 @@ http.post<TResponse, TData, TParams, TNativeOptions>(
 `TParams` 会约束输入 `params` 和 `paramsSerializer`。defaults 和 request
 interceptor 可以替换最终 params，因此 `response.config.params` 从本次
 修订起只保留宽 `object | undefined` 类型，不再承诺输入侧的 `TParams`。
-由于 v4 alpha 早期版本曾把单次 `TNativeOptions` 放在 `get` 的第二位、
+由于 v4 早期版本曾把单次 `TNativeOptions` 放在 `get` 的第二位、
 `request` 的第三位，使用过这些泛型位置的代码需要顺延一个位置。
 
 `upload` 和 `download` 使用各自的配置类型，不再通过 `UPLOAD`、`DOWNLOAD` 等伪 method 进入普通请求配置。

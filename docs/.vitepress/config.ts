@@ -33,7 +33,7 @@ export default defineConfig({
       dark: '/logo-qunzhan-dark.png',
       alt: 'luch-request'
     },
-    siteTitle: 'luch-request / v4 Alpha',
+    siteTitle: 'luch-request / v4',
     nav: [
       { text: '指南', link: '/guide/' },
       { text: 'API', link: '/api/request' },
@@ -46,7 +46,7 @@ export default defineConfig({
         {
           text: '开始',
           items: [
-            { text: '认识 v4 Alpha', link: '/guide/' },
+            { text: '认识 v4', link: '/guide/' },
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '配置与合并', link: '/guide/configuration' },
             { text: 'TypeScript 设计', link: '/guide/typescript' },
@@ -151,7 +151,7 @@ export default defineConfig({
       text: '最后更新'
     },
     footer: {
-      message: 'v4 处于 Alpha 阶段，公共 API 仍可能调整。',
+      message: 'v4 正式版 · 面向传统 uni-app 的 TypeScript-first 请求库',
       copyright: 'MIT Licensed · luch-request'
     }
   }

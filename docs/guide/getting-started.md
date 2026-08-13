@@ -5,15 +5,11 @@ description: 在项目中安装并发出第一个 luch-request v4 请求
 
 # 快速开始
 
-## 安装 Alpha
-
-v4 alpha 已发布到 npm。使用 `alpha` dist-tag 安装：
+## 安装
 
 ```sh
-npm install luch-request@alpha
+npm install luch-request
 ```
-
-不带 `@alpha` 的 `npm install luch-request` 会安装 npm `latest` 通道对应的稳定版本。
 
 ::: info ESM only
 v4 只提供 ESM，不再提供默认导出、CommonJS 或 UMD。使用方构建工具需要能消费

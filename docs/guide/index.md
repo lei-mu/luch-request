@@ -1,20 +1,13 @@
 ---
-title: 认识 v4 Alpha
+title: 认识 v4
 description: luch-request v4 的定位、当前能力和采用边界
 ---
 
-# 认识 v4 Alpha
+# 认识 v4
 
 `luch-request v4` 是面向**传统 uni-app** 的 TypeScript-first 请求库。它不是
 v3 的内部重构，而是围绕 uni API、原生 Task、类型边界和统一错误重新设计的
 breaking version。
-
-::: warning 当前状态
-文档对应 `4.0.0-alpha.1`。v4 alpha 已发布到 npm，可通过
-`npm install luch-request@alpha` 安装；公共 API 在稳定版前仍可能调整。
-生产项目应继续使用 [v3 稳定版](https://www.quanzhan.co/luch-request/v3/)，或先在
-所有目标平台完成验证。
-:::
 
 ## 当前能力
 
@@ -47,7 +40,7 @@ response 或 LuchRequestError
 
 ## 设计边界
 
-v4 首个稳定版本计划只支持传统 uni-app，不支持 uni-app x / UTS。包只输出
+v4 正式版本只支持传统 uni-app，不支持 uni-app x / UTS。包只输出
 ESM，构建目标为 ES2017，核心不提供 polyfill，也不依赖 DOM、Node.js API
 或某个小程序的全局对象。
 

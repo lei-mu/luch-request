@@ -2,7 +2,7 @@
 
 `luch-request v4` 是面向传统 uni-app 的 TypeScript-first 请求库。
 
-当前版本处于 `4.0.0-alpha` 阶段，已通过 npm `alpha` dist-tag 发布。
+当前版本为 `4.0.0` 正式版。
 
 ## 当前能力
 
@@ -17,10 +17,8 @@
 ## 安装
 
 ```sh
-npm install luch-request@alpha
+npm install luch-request
 ```
-
-`alpha` 指向当前 v4 预发布版本；不带 `@alpha` 会使用 npm `latest` 通道。
 
 v4 只提供 ESM：
 
@@ -35,7 +33,7 @@ import {
 ```
 
 构建产物使用 ES2017 语法，不提供 CommonJS、UMD、ES5 legacy bundle 或
-运行时 polyfill。首个稳定版本计划支持传统 uni-app，App iOS 的正式支持
+运行时 polyfill。正式版本支持传统 uni-app，App iOS 的正式支持
 下限为 iOS 13；不支持 uni-app x / UTS。完整范围和验证要求见
 [`COMPATIBILITY.md`](./COMPATIBILITY.md)。
 

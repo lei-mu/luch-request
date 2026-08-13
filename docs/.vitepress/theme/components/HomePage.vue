@@ -50,7 +50,7 @@ const docRoutes = [
       <div class="home-hero__copy">
         <p class="home-eyebrow">
           <span>luch-request</span>
-          <span>4.0.0-alpha.1</span>
+          <span>4.0.0</span>
         </p>
         <h1 class="home-title">
           让 uni-app 请求<br>
@@ -66,7 +66,7 @@ const docRoutes = [
             开始使用 <span aria-hidden="true">→</span>
           </a>
           <a class="home-action" :href="withBase('/guide/')">
-            了解 Alpha 边界
+            查看兼容性
           </a>
         </div>
       </div>
@@ -78,7 +78,6 @@ const docRoutes = [
       <span>ES2017</span>
       <span>TRADITIONAL UNI-APP</span>
       <span>ZERO RUNTIME DEPS</span>
-      <span class="home-scope__warning">ALPHA CONTRACT</span>
     </div>
 
     <section class="home-section home-capabilities">
@@ -175,18 +174,6 @@ response.data[0].id</code></pre>
       </nav>
     </section>
 
-    <section class="home-alpha">
-      <p class="home-alpha__stamp">ALPHA / USE WITH VERIFICATION</p>
-      <h2>v4 仍在收敛公共契约。</h2>
-      <p>
-        当前文档对应仓库中的 <code>4.0.0-alpha.1</code>。正式版前可能发生 breaking change；
-        生产项目请继续使用 v3，或先完成目标平台 smoke test。
-      </p>
-      <div class="home-actions">
-        <a class="home-action home-action--light" :href="withBase('/compatibility/')">查看兼容性清单</a>
-        <a class="home-action home-action--light" href="https://v3.luch-request.quanzhan.co/">返回 v3 稳定版</a>
-      </div>
-    </section>
   </main>
 </template>
 
@@ -427,8 +414,7 @@ response.data[0].id</code></pre>
   background: var(--lr-paper);
 }
 
-.error-anatomy__label,
-.home-alpha__stamp {
+.error-anatomy__label {
   color: var(--lr-blue);
   font-family: var(--lr-font-code);
   font-size: 10px;
@@ -493,43 +479,6 @@ response.data[0].id</code></pre>
 
 .route-row > span:nth-child(3) {
   color: var(--lr-muted);
-}
-
-.home-alpha {
-  padding: 96px max(32px, calc((100vw - 1256px) / 2));
-  background: var(--lr-blue);
-  color: #ffffff;
-}
-
-.home-alpha__stamp {
-  color: #dfe7ff;
-}
-
-.home-alpha h2 {
-  max-width: 820px;
-  margin: 18px 0 24px;
-  font-family: var(--lr-font-display);
-  font-size: clamp(42px, 6vw, 78px);
-  letter-spacing: -0.05em;
-  line-height: 0.98;
-}
-
-.home-alpha p:not(.home-alpha__stamp) {
-  max-width: 760px;
-  color: #e1e7fb;
-  font-size: 17px;
-  line-height: 1.75;
-}
-
-.home-action--light {
-  border-color: rgba(255, 255, 255, 0.45);
-  color: #ffffff;
-}
-
-.home-action--light:hover {
-  border-color: #ffffff;
-  background: #ffffff;
-  color: var(--lr-blue);
 }
 
 @media (max-width: 980px) {
@@ -634,8 +583,5 @@ response.data[0].id</code></pre>
     grid-row: 1 / span 2;
   }
 
-  .home-alpha {
-    padding: 72px 20px;
-  }
 }
 </style>

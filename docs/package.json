@@ -1,7 +1,7 @@
 {
   "name": "@luch-request/docs-v4",
   "private": true,
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev . --port 8911 --strictPort",
