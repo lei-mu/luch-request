@@ -2,6 +2,8 @@
 
 `luch-request v4` 是面向传统 uni-app 的 TypeScript-first 请求库。
 
+文档：[在线文档](https://luch-request.quanzhan.co/)
+
 
 ## 当前能力
 
