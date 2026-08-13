@@ -50,7 +50,7 @@ const docRoutes = [
       <div class="home-hero__copy">
         <p class="home-eyebrow">
           <span>luch-request</span>
-          <span>4.0.0</span>
+          <span>4.x</span>
         </p>
         <h1 class="home-title">
           让 uni-app 请求<br>
