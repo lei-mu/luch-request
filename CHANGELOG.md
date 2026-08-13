@@ -1,4 +1,6 @@
-## [4.0.0-alpha.2](https://github.com/lei-mu/luch-request/compare/4.0.0-alpha.1...4.0.0-alpha.2) (2026-08-10)
+## [4.0.0](https://github.com/lei-mu/luch-request/compare/v4.0.0-alpha.2...v4.0.0) (2026-08-13)
+
+## [4.0.0-alpha.2](https://github.com/lei-mu/luch-request/compare/4.0.0-alpha.1...v4.0.0-alpha.2) (2026-08-10)
 
 ### Features
 
