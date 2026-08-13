@@ -14,3 +14,5 @@ zipDist/
 
 example/*
 !/example/request-demo
+
+docs/.vitepress

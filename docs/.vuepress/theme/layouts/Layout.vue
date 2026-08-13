@@ -4,19 +4,19 @@
     :class="{'v4-docs-layout--with-navbar': shouldShowNavbar}"
   >
     <ParentLayout />
-    <V4AlphaBanner />
+    <V4Banner />
   </div>
 </template>
 
 <script>
 import ParentLayout from '@parent-theme/layouts/Layout.vue'
-import V4AlphaBanner from '../../components/V4AlphaBanner.vue'
+import V4Banner from '../../components/V4AlphaBanner.vue'
 
 export default {
   name: 'Layout',
   components: {
     ParentLayout,
-    V4AlphaBanner
+    V4Banner
   },
   computed: {
     shouldShowNavbar () {

@@ -44,7 +44,7 @@ module.exports = {
     editLinkText: '帮助我改善此页面！',
     nav: [
       {text: '首页', link: '/'},
-      {text: 'v4 Alpha', link: 'https://luch-request.quanzhan.co/', target: '_blank', rel: 'noopener noreferrer'},
+      {text: 'v4 正式版', link: 'https://luch-request.quanzhan.co/', target: '_blank', rel: 'noopener noreferrer'},
       {
         text: '文档',
         ariaLabel: '文档',

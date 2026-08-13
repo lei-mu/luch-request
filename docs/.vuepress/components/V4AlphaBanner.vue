@@ -1,30 +1,30 @@
 <template>
-  <aside class="v4-alpha-banner" role="status">
-    <span class="v4-alpha-banner__message v4-alpha-banner__message--desktop">
-      luch-request v4 Alpha 已发布，欢迎开发者体验并反馈
+  <aside class="v4-banner" role="status">
+    <span class="v4-banner__message v4-banner__message--desktop">
+      luch-request v4 正式版已发布，欢迎使用
     </span>
-    <span class="v4-alpha-banner__message v4-alpha-banner__message--mobile">
-      v4 Alpha 已发布
+    <span class="v4-banner__message v4-banner__message--mobile">
+      v4 正式版已发布
     </span>
     <a
-      class="v4-alpha-banner__link"
+      class="v4-banner__link"
       href="https://luch-request.quanzhan.co/"
       target="_blank"
       rel="noopener noreferrer"
     >
-      查看 v4 文档 <span aria-hidden="true">→</span>
+      进入 v4 正式版文档 <span aria-hidden="true">→</span>
     </a>
   </aside>
 </template>
 
 <script>
 export default {
-  name: 'V4AlphaBanner'
+  name: 'V4Banner'
 }
 </script>
 
 <style lang="stylus" scoped>
-.v4-alpha-banner
+.v4-banner
   position fixed
   z-index 19
   top 0
@@ -55,7 +55,7 @@ export default {
       text-decoration underline
 
 @media (max-width: 719px)
-  .v4-alpha-banner
+  .v4-banner
     justify-content space-between
     gap .5rem
     padding 0 .75rem

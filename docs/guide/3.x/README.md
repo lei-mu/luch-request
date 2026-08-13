@@ -28,7 +28,7 @@ title: 3.x文档
 ### npm
 
 ```` javascript
-npm install luch-request -S
+npm install luch-request@3 -S
 ````
 cli 用户使用npm 包需增加以下配置(<a href="https://uniapp.dcloud.io/quickstart?id=_2-%e9%80%9a%e8%bf%87vue-cli%e5%91%bd%e4%bb%a4%e8%a1%8c" target="_blank" rel="noopener noreferrer nofollow">什么是cli用户</a>)
 <br>
