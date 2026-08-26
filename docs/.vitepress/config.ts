@@ -1,8 +1,14 @@
+import { writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import { defineConfig } from 'vitepress'
 
 const v3DocsUrl = 'https://v3.luch-request.quanzhan.co/'
 
 const docBase = process.env.VITE_V4_DOCS_BASE || '/'
+const docsBaseUrl = process.env.VITE_V4_DOCS_BASE_URL
+const docsSiteUrl = docsBaseUrl
+  ? new URL(docBase, docsBaseUrl).toString()
+  : undefined
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -12,6 +18,19 @@ export default defineConfig({
   srcExclude: ['README.md'],
   cleanUrls: true,
   lastUpdated: true,
+  ...(docsSiteUrl
+    ? {
+        sitemap: {
+          hostname: docsSiteUrl
+        },
+        async buildEnd(siteConfig) {
+          await writeFile(
+            join(siteConfig.outDir, 'robots.txt'),
+            `User-agent: *\nAllow: /\n\nSitemap: ${docsSiteUrl}sitemap.xml\n`
+          )
+        }
+      }
+    : {}),
   head: [
     ['meta', { name: 'theme-color', content: '#13213c' }],
     ['meta', { name: 'color-scheme', content: 'light dark' }],
