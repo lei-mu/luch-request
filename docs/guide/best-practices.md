@@ -114,6 +114,78 @@ HTTP 请求成功（例如 `statusCode` 为 200）与业务成功（例如响应
 第一个 handler 判断。若希望业务码失败也进入 `catch`，应在这里明确 `throw` 一个错误，
 并让全项目统一采用这一约定。
 
+### 业务码失败进入 catch
+
+当业务层希望把 `code !== 200` 与网络错误一样交给调用方 `catch` 时，可在 response
+fulfilled handler 中抛出异常。全局 interceptor 同时作用于 `request`、`upload` 与
+`download`；`download()` 的响应不保证有 `data`，因此应使用 `context.operation` 明确
+只校验采用该业务响应体的操作。
+
+```ts
+import {
+  LuchOperation,
+  LuchRequestError,
+  createLuchRequest,
+  isLuchRequestError
+} from 'luch-request'
+
+interface BusinessResponse {
+  code: number
+  msg?: string
+}
+
+const http = createLuchRequest()
+
+http.interceptors.response.use((response, context) => {
+  // 仅普通 HTTP 请求采用 { code, msg } 业务响应体。
+  // download 没有统一的 data；upload 是否校验业务码由项目自行明确。
+  if (context.operation !== LuchOperation.REQUEST) {
+    return response
+  }
+
+  const data = response.data as BusinessResponse
+
+  if (data.code !== 200) {
+    throw new Error(data.msg ?? '业务请求失败')
+  }
+
+  return response
+})
+
+try {
+  await http.get('/users/1')
+} catch (error: unknown) {
+  if (!isLuchRequestError<unknown, { data?: BusinessResponse }>(error)) {
+    throw error
+  }
+
+  console.log(error.code)
+  console.log(error.config)
+  console.log(error.task)
+  console.log(error.response)
+  console.log(error.response?.data)
+}
+```
+
+response fulfilled handler 中抛出的普通 `Error` 会统一转换为
+`LuchRequestError.ERR_INTERCEPTOR`。请求管线会补齐 `config`、`task` 与 `response`，
+原始 `Error` 保留在 `error.cause`；所以局部 `catch` 不会因使用 `throw new Error()` 而
+丢失响应上下文。
+
+也可以显式抛出统一错误：
+
+```ts
+throw new LuchRequestError(
+  data.msg ?? '业务请求失败',
+  LuchRequestError.ERR_INTERCEPTOR
+)
+```
+
+两种写法最终都能在局部 `catch` 中取得 `error.config`、`error.task` 和
+`error.response`，且错误码都是 `ERR_INTERCEPTOR`。前者更短，推荐用于业务码拒绝；后者
+适合确实需要主动指定 luch-request 错误码或错误元数据的场景。当前没有独立的
+`ERR_BUSINESS`，因此仅为 `code !== 200` 使用后者不会带来额外的错误分类能力。
+
 ### 避免 401 重复提示
 
 示例在 401 时只清理会话并跳转登录，不额外调用 `showWarning()`。如果
