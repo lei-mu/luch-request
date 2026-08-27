@@ -54,7 +54,12 @@ http.interceptors.request.use((config) => {
 })
 
 http.interceptors.response.use(
-  (response) => {
+  (response, context) => {
+    // 仅request/upload 请求采用 { code, msg } 业务响应体。
+    // download 没有统一的 data；upload 是否校验业务码由项目自行明确。
+    if (context.operation !== LuchOperation.DOWNLOAD) {
+      return response
+    }
     const meta = response.config.luchMeta ?? {}
     const body = response.data as {
       code?: number
@@ -106,6 +111,10 @@ response error interceptor 收到的是 v4 统一的 `LuchRequestError`，请求
 当 `error.response` 存在时，说明请求已取得服务端响应（常见于 HTTP 状态未通过
 `validateStatus`）；示例优先使用响应体中的 `msg`、`message`，再回退到 v4 统一的
 `error.message`。网络失败通常没有 `error.response`，会直接显示 `error.message`。
+
+::: tip 
+注意：`showWarning`、`showError` 如果使用`uni.showToast`应该延迟（如延迟100ms）,因为业务代码可能存在`uni.showLoading`，会导致`uni.showToast`不显示；
+:::
 
 ### 为什么业务错误码在成功分支处理
 
