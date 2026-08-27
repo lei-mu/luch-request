@@ -14,7 +14,7 @@ description: 创建统一请求实例、处理鉴权、业务状态码、取消�
 登录跳转与 UI 提示属于应用层策略。本页示例不是必须的固定模板。
 :::
 
-## 统一创建请求实例
+## luchMeta 实现全局toast 提示
 
 将服务端地址、超时、公共请求头和全局 interceptor 集中到一个模块，业务代码只导入
 该实例。`luchMeta` 保存业务控制信息，不会发送给服务端。
@@ -114,77 +114,6 @@ HTTP 请求成功（例如 `statusCode` 为 200）与业务成功（例如响应
 第一个 handler 判断。若希望业务码失败也进入 `catch`，应在这里明确 `throw` 一个错误，
 并让全项目统一采用这一约定。
 
-### 业务码失败进入 catch
-
-当业务层希望把 `code !== 200` 与网络错误一样交给调用方 `catch` 时，可在 response
-fulfilled handler 中抛出异常。全局 interceptor 同时作用于 `request`、`upload` 与
-`download`；`download()` 的响应不保证有 `data`，因此应使用 `context.operation` 明确
-只校验采用该业务响应体的操作。
-
-```ts
-import {
-  LuchOperation,
-  LuchRequestError,
-  createLuchRequest,
-  isLuchRequestError
-} from 'luch-request'
-
-interface BusinessResponse {
-  code: number
-  msg?: string
-}
-
-const http = createLuchRequest()
-
-http.interceptors.response.use((response, context) => {
-  // 仅普通 HTTP 请求采用 { code, msg } 业务响应体。
-  // download 没有统一的 data；upload 是否校验业务码由项目自行明确。
-  if (context.operation !== LuchOperation.REQUEST) {
-    return response
-  }
-
-  const data = response.data as BusinessResponse
-
-  if (data.code !== 200) {
-    throw new Error(data.msg ?? '业务请求失败')
-  }
-
-  return response
-})
-
-try {
-  await http.get('/users/1')
-} catch (error: unknown) {
-  if (!isLuchRequestError<unknown, { data?: BusinessResponse }>(error)) {
-    throw error
-  }
-
-  console.log(error.code)
-  console.log(error.config)
-  console.log(error.task)
-  console.log(error.response)
-  console.log(error.response?.data)
-}
-```
-
-response fulfilled handler 中抛出的普通 `Error` 会统一转换为
-`LuchRequestError.ERR_INTERCEPTOR`。请求管线会补齐 `config`、`task` 与 `response`，
-原始 `Error` 保留在 `error.cause`；所以局部 `catch` 不会因使用 `throw new Error()` 而
-丢失响应上下文。
-
-也可以显式抛出统一错误：
-
-```ts
-throw new LuchRequestError(
-  data.msg ?? '业务请求失败',
-  LuchRequestError.ERR_INTERCEPTOR
-)
-```
-
-两种写法最终都能在局部 `catch` 中取得 `error.config`、`error.task` 和
-`error.response`，且错误码都是 `ERR_INTERCEPTOR`。前者更短，推荐用于业务码拒绝；后者
-适合确实需要主动指定 luch-request 错误码或错误元数据的场景。当前没有独立的
-`ERR_BUSINESS`，因此仅为 `code !== 200` 使用后者不会带来额外的错误分类能力。
 
 ### 避免 401 重复提示
 
@@ -192,7 +121,7 @@ throw new LuchRequestError(
 `redirectToLogin()` 本身会提示登录失效，这能避免同一事件出现两次提示。项目若不在跳转
 时提示，也可以在该分支单独提示一次。
 
-## 单次请求关闭全局提示
+### 单次请求关闭全局提示
 
 为不需要全局提示的请求传入 `luchMeta`，不要把 UI 控制字段混进 `header`、`params` 或
 请求体：
@@ -300,6 +229,81 @@ const uploadApi = createLuchRequest({
 
 实例的默认配置和 interceptor 互不共享。上传与下载的配置边界见
 [上传与下载](/api/upload-download)。
+
+
+## 业务码失败进入 catch
+
+当业务层希望把 `code !== 200` 与网络错误一样交给调用方 `catch` 时，可在 response
+fulfilled handler 中抛出异常。全局 interceptor 同时作用于 `request`、`upload` 与
+`download`；`download()` 的响应不保证有 `data`，因此应使用 `context.operation` 明确
+只校验采用该业务响应体的操作。
+
+```ts
+import {
+  LuchOperation,
+  LuchRequestError,
+  createLuchRequest,
+  isLuchRequestError
+} from 'luch-request'
+
+interface BusinessResponse {
+  code: number
+  msg?: string
+}
+
+const http = createLuchRequest()
+
+http.interceptors.response.use((response, context) => {
+  // 仅request/upload 请求采用 { code, msg } 业务响应体。
+  // download 没有统一的 data；upload 是否校验业务码由项目自行明确。
+  if (context.operation !== LuchOperation.DOWNLOAD) {
+    return response
+  }
+
+  const data = response.data as BusinessResponse
+
+  if (data.code !== 200) {
+    throw new Error(data.msg ?? '业务请求失败')
+  }
+
+  return response
+})
+
+try {
+  await http.get('/users/1')
+} catch (error: unknown) {
+  if (!isLuchRequestError<unknown, { data?: BusinessResponse }>(error)) {
+    throw error
+  }
+
+  console.log(error.code)
+  console.log(error.config)
+  console.log(error.task)
+  console.log(error.response)
+  console.log(error.response?.data)
+}
+```
+
+response fulfilled handler 中抛出的普通 `Error` 会统一转换为
+`LuchRequestError.ERR_INTERCEPTOR`。请求管线会补齐 `config`、`task` 与 `response`，
+原始 `Error` 保留在 `error.cause`；所以局部 `catch` 不会因使用 `throw new Error()` 而
+丢失响应上下文。
+
+也可以显式抛出统一错误：
+
+```ts
+throw new LuchRequestError(
+  data.msg ?? '业务请求失败',
+  LuchRequestError.ERR_INTERCEPTOR
+)
+```
+
+两种写法最终都能在局部 `catch` 中取得 `error.config`、`error.task` 和
+`error.response`，且错误码都是 `ERR_INTERCEPTOR`。前者更短，推荐用于业务码拒绝；后者
+适合确实需要主动指定 luch-request 错误码或错误元数据的场景。当前没有独立的
+`ERR_BUSINESS`，因此仅为 `code !== 200` 使用后者不会带来额外的错误分类能力。
+
+
 
 ## 常见误区
 
