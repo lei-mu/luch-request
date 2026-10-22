@@ -34,6 +34,7 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#13213c' }],
     ['meta', { name: 'color-scheme', content: 'light dark' }],
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-Lg26aoEXLE' }],
     [
       'script',
       {},
